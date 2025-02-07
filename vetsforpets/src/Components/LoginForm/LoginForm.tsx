@@ -62,7 +62,7 @@ export default function LoginForm() {
             })}
             type="password"
             placeholder="••••••"
-            className="formInput"
+            className="customInput"
           ></input>
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -71,7 +71,7 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
 
-        <button type="button" className="formButton">
+        <button type="button" className="customButton">
           Iniciar Sesión
         </button>
       </form>
