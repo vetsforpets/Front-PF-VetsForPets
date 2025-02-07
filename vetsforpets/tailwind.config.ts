@@ -13,11 +13,13 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        customBeige: "#FFFAD7",
+        customLightBrown: "#DDA15E",
+        customBrown: "#BC6C25",
+        customGreen: "#606C38",
+        customDarkGreen: "#1d202c",
       },
     },
   },
-  plugins: [
-    flowbite.plugin(),
-
-  ],
+  plugins: [flowbite.plugin()],
 } satisfies Config;
