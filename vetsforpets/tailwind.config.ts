@@ -17,7 +17,7 @@ export default {
         customLightBrown: "#DDA15E",
         customBrown: "#BC6C25",
         customGreen: "#606C38",
-        customDarkGreen: "#1d202c",
+        customDarkGreen: "#283618",
       },
     },
   },
