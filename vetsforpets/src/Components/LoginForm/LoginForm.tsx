@@ -79,7 +79,7 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
 
-        <button type="button" className="customButton">
+        <button type="submit" className="customButton">
           Iniciar Sesión
         </button>
       </form>
