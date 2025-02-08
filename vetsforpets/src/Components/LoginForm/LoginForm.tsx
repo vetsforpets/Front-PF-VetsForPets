@@ -2,6 +2,7 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
+// import { loginUser } from "@/services/services";
 
 interface LoginFormInputs {
   email: string;
@@ -18,10 +19,11 @@ export default function LoginForm() {
 
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<LoginFormInputs> = (data) => {
-    console.log("Datos enviados:", data);
+  const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
+    // const data = await loginUser(userCredentials);
+    // setUserData({ ...data.user, token: data.token });
     reset();
-    router.push("/dashboard");
+    router.push("/users/dashboard");
   };
 
   return (
