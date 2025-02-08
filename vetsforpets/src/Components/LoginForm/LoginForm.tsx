@@ -2,7 +2,8 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-// import { loginUser } from "@/services/services";
+import { loginUser } from "@/services/services";
+import { useUserStore } from "@/store";
 
 interface LoginFormInputs {
   email: string;
@@ -10,6 +11,8 @@ interface LoginFormInputs {
 }
 
 export default function LoginForm() {
+  const { setUserData } = useUserStore();
+
   const {
     register,
     handleSubmit,
@@ -20,12 +23,15 @@ export default function LoginForm() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
-    // const data = await loginUser(userCredentials);
-    // setUserData({ ...data.user, token: data.token });
-    reset();
-    router.push("/users/dashboard");
+    try {
+      const data = await loginUser(userCredentials);
+      setUserData({ ...data.user, token: data.token });
+      reset();
+      router.push("/users/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h2>
@@ -73,7 +79,7 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
 
-        <button type="button" className="customButton">
+        <button type="submit" className="customButton">
           Iniciar Sesión
         </button>
       </form>
