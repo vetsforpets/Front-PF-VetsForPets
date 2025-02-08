@@ -19,6 +19,10 @@ export default {
         customGreen: "#606C38",
         customDarkGreen: "#283618",
       },
+      fontFamily: {
+        kiwi: ["Kiwi Maru", "serif"],
+        tenor: ["Tenor Sans", "sans-serif"],
+      },
     },
   },
   plugins: [flowbite.plugin()],
