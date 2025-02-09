@@ -16,19 +16,21 @@ import { RegisterUser, RegisterVet } from '@/services/services';
 function VetFormRegister() {
   const router = useRouter()
   const user = localStorage.getItem("user")
-  
+
   const { handleSubmit, control, watch } = useForm<IVetFormData>({
     defaultValues: {
       name: "",
-    createdAt: "",
-    email: "",
-    is24Hours: "",
-    phoneNumber: "",
-    imgProfile: "",
-    isVet: true
+      imgProfile: "",
+      createdAtPetShop: "",
+      veterinarian: "",
+      veterinaryLicense: "",
+      schedule: "",
+      email: "",
+      is24Hours: false,
+      phoneNumber: "",
     },
     mode: "onChange"
-  });
+  }); 
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
     await RegisterVet(data)
@@ -36,8 +38,8 @@ function VetFormRegister() {
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     router.push("/sign-in")
   };
-  useEffect(()=>{
-    if(user){
+  useEffect(() => {
+    if (user) {
       // toast.warning("Protected route")
       redirect("/products")
     }
@@ -50,7 +52,7 @@ function VetFormRegister() {
 
       <h1 className="text-3xl text-customBrown">Registro veterinaria</h1>
       <p className="mt-4 mb-3">Already have an account? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > Log in</Link></p>
-      
+
       <Controller
         name="name"
         control={control}
@@ -61,25 +63,41 @@ function VetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div >
-            <label className='mt-1' >Nombre veterinaria</label>
-            <input {...field} type='text' className="customInput"/>
+            {/* <label className='mt-1' >Nombre veterinaria</label> */}
+            <input {...field} type='text' placeholder='Nombre veterinaria' className="customInput" />
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
+      <Controller
+        name="veterinarian"
+        control={control}
+        rules={{
+          required: { value: true, message: "Nombre obligatorio." },
+          minLength: { value: 5, message: "El nombre debe tener al menos 5 caracteres." },
+          maxLength: { value: 50, message: "El nombre no puede superar los 50 caracteres." },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div >
+            {/* <label className='mt-1' >Nombre veterinaria</label> */}
+            <input {...field} type='text' className="customInput" placeholder='Nombre veterinario acargo'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
       <Controller
-        name="createdAt"
+        name="createdAtPetShop"
         control={control}
         rules={{
           required: { value: true, message: "Fecha de creación requerida" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div > 
-            <label className='mt-1'>
-            Fecha de creación
-            </label>
-            <input {...field} type='date' className="customInput"/>
+          <div >
+            {/* <label className='mt-1'>
+              Fecha de creación
+            </label> */}
+            <input {...field} type='date' className="customInput" placeholder='Fecha de creación'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -96,11 +114,11 @@ function VetFormRegister() {
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div > 
-            <label className='mt-1'>
-            Email
-            </label>
-            <input {...field} type="email" className="customInput"/>
+          <div >
+            {/* <label className='mt-1'>
+              Email
+            </label> */}
+            <input {...field} type="email" className="customInput" placeholder='Email'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -114,32 +132,32 @@ function VetFormRegister() {
           required: { value: true, message: "Campo requerido" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div > 
-            <label className='mt-1'>
-            Celular
-            </label>
-            <input {...field} type="tel" className="customInput"/>
+          <div >
+            {/* <label className='mt-1'>
+              Celular
+            </label> */}
+            <input {...field} type="checkbox" checked={field.value} className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
-        <Controller
-          name="imgProfile"
-          control={control}
-          rules={{
-            required: { value: true, message: "Imagen de perfil obligatoria" },
-          }}
-          render={({ field, fieldState: { error } }) => (
-            <div > 
-              <label className='mt-1'>
+      <Controller
+        name="imgProfile"
+        control={control}
+        rules={{
+          required: { value: true, message: "Imagen de perfil obligatoria" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div >
+            <label className='mt-1'>
               Imgen de perfil
-              </label>
-              <input {...field}  type="file" className="customInput"/>
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-            </div>
-          )}
-        />
+            </label>
+            <input {...field} type="file" className="customInput" />
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
 
       <button type="submit" className="customButton mt-6">
         Sign Up
