@@ -122,12 +122,12 @@ function VetFormRegister() {
             <label className='mt-1'>
             Celular
             </label>
-            <input {...field} type="checkbox" className="customInput"/>
+            <input {...field} type="tel" className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
-      
+
         <Controller
           name="imgProfile"
           control={control}
