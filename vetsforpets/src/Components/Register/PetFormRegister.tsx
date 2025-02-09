@@ -2,33 +2,40 @@
 
 import React from 'react'
 // import { IFormInputsRegister } from "@/interfaces/types";
+import { IUserFormData } from '@/interfaces/registerTypes';
 // import { registerUserfetch } from "@/services/userServices";
 // import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { RegisterUser } from '@/services/services';
+
 // import { toast } from "react-toastify";
 
 function PetFormRegister() {
   const router = useRouter()
   const user = localStorage.getItem("user")
   
-  const { handleSubmit, control, watch } = useForm<IFormInputsRegister>({
+  const { handleSubmit, control, watch } = useForm<IUserFormData>({
     defaultValues: {
       name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      address: "",
-      phone: "",
+    lastName: "",
+    age: 0,
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+    imgProfile: "",
+    isVet: false,
     },
     mode: "onChange"
   });
   const password = watch("password");
 
-  const onSubmit: SubmitHandler<IFormInputsRegister> = async (data: IFormInputsRegister) => {
+  const onSubmit: SubmitHandler<IUserFormData> = async (data: IUserFormData) => {
     const { confirmPassword, ...submitData } = data;  
+    await RegisterUser(submitData)
     // await registerUserfetch(submitData)    
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     router.push("/sign-in")
@@ -41,24 +48,59 @@ function PetFormRegister() {
   }, [])
   return (
     <form
-      className="border-none rounded-lg w-80 mx-auto my-20 pb-10 pt-7 px-12 sm:px-5 z-10"
+      className="border-none rounded-lg  sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
       onSubmit={handleSubmit(onSubmit)}
     >
 
-      <h1 className="text-3xl text-neutral-300">Register</h1>
-      <p className="mt-3">Already have an account? <Link href="/sign-in" className=" text-purple-400 hover:text-purple-300" > Log in</Link></p>
+      <h1 className="text-3xl text-customBrown">Registro dueño de mascota</h1>
+      <p className="mt-4 mb-3">Already have an account? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > Log in</Link></p>
       
       <Controller
         name="name"
         control={control}
         rules={{
-          required: { value: true, message: "Name is required." },
-          minLength: { value: 5, message: "Name must have at least 5 characters." },
-          maxLength: { value: 50, message: "Name cannot exceed 50 characters." },
+          required: { value: true, message: "Nombre obligatorio." },
+          minLength: { value: 5, message: "El nombre debe tener al menos 5 caracteres." },
+          maxLength: { value: 50, message: "El nombre no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired label="Name" size="sm" /> */}
+          <div >
+            <label className='mt-1' >Nombre</label>
+            <input {...field} type='text' className="customInput"/>
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
+      <Controller
+        name="lastName"
+        control={control}
+        rules={{
+          required: { value: true, message: "Apellido obligatorio." },
+          minLength: { value: 5, message: "El apellido debe tener al menos 5 caracteres." },
+          maxLength: { value: 50, message: "El apellido no puede superar los 50 caracteres." },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div >
+            <label className='mt-1'>
+            Apellido
+            </label>
+            <input {...field} type='text' className="customInput"/>
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
+      <Controller
+        name="age"
+        control={control}
+        rules={{
+          required: { value: true, message: "Edad requerida" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div > 
+            <label className='mt-1'>
+            Cumpleaños
+            </label>
+            <input {...field} type='date' className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -68,15 +110,18 @@ function PetFormRegister() {
         name="email"
         control={control}
         rules={{
-          required: { value: true, message: "Email is required." },
+          required: { value: true, message: "Email oliqgatorio" },
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-            message: "Invalid email address format.",
+            message: "Formato de email invalido.",
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired type="email" label="Email" size="sm" /> */}
+          <div > 
+            <label className='mt-1'>
+            Email
+            </label>
+            <input {...field} type="email" className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -86,17 +131,20 @@ function PetFormRegister() {
         name="password"
         control={control}
         rules={{
-          required: { value: true, message: "Password is required." },
-          minLength: { value: 8, message: "Password must have at least 8 characters." },
+          required: { value: true, message: "Contraseña obligatoria" },
+          minLength: { value: 8, message: "La contraseña debe tener al menos 8 caracteres." },
           pattern: {
             value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
             message:
-              "Password must include uppercase, lowercase, number, and special character.",
+              "La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.",
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired type="password" label="Password" size="sm" /> */}
+          <div > 
+            <label className='mt-1'>
+            Contraseña
+            </label>
+            <input {...field} type="password" className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -106,56 +154,64 @@ function PetFormRegister() {
         name="confirmPassword"
         control={control}
         rules={{
-          required: { value: true, message: "Confirm Password is required." },
+          required: { value: true, message: "Es necesario comfirmar la contraseña" },
           validate: (value) =>
-            value === password || "Passwords do not match.",
+            value === password || "La contraseña no coincide",
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired type="password" label="Confirm Password" size="sm" /> */}
+          <div > 
+            <label className='mt-1'>
+            Comfirmar contraseña
+            </label>
+            <input {...field}  type="password" className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
-      <Controller
-        name="address"
-        control={control}
-        rules={{
-          required: { value: true, message: "Address is required." },
-          minLength: { value: 10, message: "Address must have at least 10 characters." },
-        }}
-        render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired type="text" label="Address" size="sm" /> */}
-            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-          </div>
-        )}
-      />
 
       <Controller
-        name="phone"
+        name="phoneNumber"
         control={control}
         rules={{
-          required: { value: true, message: "Phone number is required." },
+          required: { value: true, message: "Numero de telefono obligatorio" },
           pattern: {
             value: /^\d{10,15}$/,
-            message: "Phone number must be between 10 and 15 digits.",
+            message: "El numero de telefono debe tener entre 10y 15 caracteres.",
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="mt-3">
-            {/* <Input {...field} isRequired type="tel" label="Phone" size="sm" /> */}
+          <div > 
+            <label className='mt-1'>
+            Celular
+            </label>
+            <input {...field} type="tel" className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
+        <Controller
+          name="imgProfile"
+          control={control}
+          rules={{
+            required: { value: true, message: "Imagen de perfil obligatoria" },
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <div > 
+              <label className='mt-1'>
+              Imgen de perfil
+              </label>
+              <input {...field}  type="file" className="customInput"/>
+              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+            </div>
+          )}
+        />
 
-      {/* <Button type="submit" className="mt-3 bg-purple-300 text-gray-800">
+      <button type="submit" className="customButton mt-6">
         Sign Up
-      </Button> */}
+      </button>
     </form>
   );
 }
 
-export default SignUp;
+export default PetFormRegister;
