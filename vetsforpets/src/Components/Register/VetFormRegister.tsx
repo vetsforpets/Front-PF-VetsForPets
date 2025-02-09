@@ -49,7 +49,7 @@ function VetFormRegister() {
     >
 
       <h1 className="text-3xl text-customBrown">Registro veterinaria</h1>
-      <p className="mt-4 mb-3">Already have an account? <Link href="/login" className=" text-customBrown hover:text-purple-300" > Log in</Link></p>
+      <p className="mt-4 mb-3">Already have an account? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > Log in</Link></p>
       
       <Controller
         name="name"
@@ -61,7 +61,7 @@ function VetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div >
-            <label className='mt-1' >Nombre</label>
+            <label className='mt-1' >Nombre veterinaria</label>
             <input {...field} type='text' className="customInput"/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
@@ -89,7 +89,7 @@ function VetFormRegister() {
         name="email"
         control={control}
         rules={{
-          required: { value: true, message: "Email oliqgatorio" },
+          required: { value: true, message: "Email obligatorio" },
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
             message: "Formato de email invalido.",
@@ -111,11 +111,7 @@ function VetFormRegister() {
         name="is24Hours"
         control={control}
         rules={{
-          required: { value: true, message: "Numero de telefono obligatorio" },
-          pattern: {
-            value: /^\d{10,15}$/,
-            message: "El numero de telefono debe tener entre 10y 15 caracteres.",
-          },
+          required: { value: true, message: "Campo requerido" },
         }}
         render={({ field, fieldState: { error } }) => (
           <div > 

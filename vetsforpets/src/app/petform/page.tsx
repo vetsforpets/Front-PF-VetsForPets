@@ -1,9 +1,9 @@
-import PetFormRegister from '@/components/Register/PetFormRegister'
+import OwnPetFormRegister from '@/Components/Register/OwnPetFormRegister'
 import React from 'react'
 
 function page() {
   return (
-    <PetFormRegister/>
+    <OwnPetFormRegister/>
   )
 }
 

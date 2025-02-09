@@ -1,10 +1,7 @@
 "use client";
 
 import React from 'react'
-// import { IFormInputsRegister } from "@/interfaces/types";
 import { IUserFormData } from '@/interfaces/registerTypes';
-// import { registerUserfetch } from "@/services/userServices";
-// import { Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -13,7 +10,7 @@ import { RegisterUser } from '@/services/services';
 
 // import { toast } from "react-toastify";
 
-function PetFormRegister() {
+function OwnPetFormRegister() {
   const router = useRouter()
   const user = localStorage.getItem("user")
   
@@ -34,16 +31,15 @@ function PetFormRegister() {
   const password = watch("password");
 
   const onSubmit: SubmitHandler<IUserFormData> = async (data: IUserFormData) => {
-    const { confirmPassword, ...submitData } = data;  
-    await RegisterUser(submitData)
+    await RegisterUser(data)
     // await registerUserfetch(submitData)    
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
-    router.push("/sign-in")
+    router.push("/login")
   };
   useEffect(()=>{
     if(user){
       // toast.warning("Protected route")
-      redirect("/products")
+      redirect("/")
     }
   }, [])
   return (
@@ -214,4 +210,4 @@ function PetFormRegister() {
   );
 }
 
-export default PetFormRegister;
+export default OwnPetFormRegister;
