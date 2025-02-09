@@ -25,9 +25,10 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
       const data = await loginUser(userCredentials);
+
       setUserData({ ...data.user, token: data.token });
       reset();
-      router.push("/users/dashboard");
+      router.push("/");
     } catch (error) {
       console.log(error);
     }

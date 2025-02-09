@@ -6,7 +6,7 @@ export async function loginUser(
   userCredentials: IUserCredentials
 ): Promise<ILoginResponse> {
   try {
-    const response = await fetch(`${apiURL}/users/login`, {
+    const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
