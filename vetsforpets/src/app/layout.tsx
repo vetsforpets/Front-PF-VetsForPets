@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Kiwi_Maru, Tenor_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/Components/Header/Header";
+import Footer from "@/Components/Footer/Footer";
 
 const kiwiMaru = Kiwi_Maru({
   variable: "--font-kiwi-maru",
@@ -35,7 +36,7 @@ export default function RootLayout({
       >
         <Header />
         <div className="flex flex-col flex-grow">{children}</div>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
