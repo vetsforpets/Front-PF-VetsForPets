@@ -16,8 +16,19 @@ function OwnPetFormRegister() {
   
   const { handleSubmit, control, watch } = useForm<IUserFormData>({
     defaultValues: {
+      // {
+      //   "name": "string",
+      //   "lastName": "string",
+      //   "age": 0,
+      //   "email": "user@example.com",
+      //   "password": "/qrczJr2j@2e0dk",
+      //   "confirmPassword": "/ejH1hMhMht!tck",
+      //   "phoneNumber": "stringstri",
+      //   "imgProfile": "string"
+      // }
       name: "",
     lastName: "",
+    age: 0,
     email: "",
     password: "",
     confirmPassword: "",
@@ -29,6 +40,9 @@ function OwnPetFormRegister() {
   const password = watch("password");
 
   const onSubmit: SubmitHandler<IUserFormData> = async (data: IUserFormData) => {
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
     await RegisterUser(data)
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     router.push("/login")
@@ -85,7 +99,7 @@ function OwnPetFormRegister() {
         control={control}
         rules={{
           required: { value: true, message: "Apellido obligatorio." },
-          minLength: { value: 5, message: "El apellido debe tener al menos 5 caracteres." },
+          minLength: { value: 6, message: "El apellido debe tener al menos 6 caracteres." },
           maxLength: { value: 50, message: "El apellido no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
