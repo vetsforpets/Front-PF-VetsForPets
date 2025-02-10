@@ -57,7 +57,7 @@ function OwnPetFormRegister() {
         render={({ field, fieldState: { error } }) => (
           <div className='flex gap-4 items-center justify-center'>
             <label className='text-sm ml-2 w-40'>
-              Imgen de perfil
+              Imagen de perfil
             </label>
             <input {...field} type="file" className="customInput" />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
@@ -113,41 +113,43 @@ function OwnPetFormRegister() {
         )}
       />
 
-      <Controller
-        name="password"
-        control={control}
-        rules={{
-          required: { value: true, message: "Contraseña obligatoria" },
-          minLength: { value: 8, message: "La contraseña debe tener al menos 8 caracteres." },
-          pattern: {
-            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
-            message:
-              "La contraseña debe incluir mayúsculas, minúsculas, números y caracteres especiales.",
-          },
-        }}
-        render={({ field, fieldState: { error } }) => (
-          <div > 
-            <input {...field} type="password" className="customInput" placeholder='contraseña'/>
-            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-          </div>
-        )}
-      />
+<div className='flex gap-4 items-center justify-between'>
+        <Controller
+          name="password"
+          control={control}
+          rules={{
+            required: { value: true, message: "Password is required." },
+            minLength: { value: 8, message: "Password must have at least 8 characters." },
+            pattern: {
+              value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+              message:
+                "Password must include uppercase, lowercase, number, and special character.",
+            },
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <div className="">
+              <input {...field} type="password" className="customInput" placeholder='contraseña' />
+              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+            </div>
+          )}
+        />
 
-      <Controller
-        name="confirmPassword"
-        control={control}
-        rules={{
-          required: { value: true, message: "Es necesario comfirmar la contraseña" },
-          validate: (value) =>
-            value === password || "La contraseña no coincide",
-        }}
-        render={({ field, fieldState: { error } }) => (
-          <div > 
-            <input {...field}  type="password" className="customInput" placeholder='comfirmar contraseña'/>
-            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-          </div>
-        )}
-      />
+        <Controller
+          name="confirmPassword"
+          control={control}
+          rules={{
+            required: { value: true, message: "Confirm Password is required." },
+            validate: (value) =>
+              value === password || "Passwords do not match.",
+          }}
+          render={({ field, fieldState: { error } }) => (
+            <div className="">
+              <input {...field} type="password" className="customInput w-full" placeholder='repetir contraseña' />
+              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+            </div>
+          )}
+        />
+      </div>
 
 
       <Controller

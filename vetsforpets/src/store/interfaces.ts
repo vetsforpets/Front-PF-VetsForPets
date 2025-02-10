@@ -13,6 +13,6 @@ export interface IUserStored {
 
 export interface IUserState {
   userData: IUserStored | null;
-  setUserData: (newData: IUserStored) => void;
+  setUserData: (token: string) => void;
   clearUserData: () => void;
 }

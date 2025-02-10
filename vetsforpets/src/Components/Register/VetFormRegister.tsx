@@ -68,7 +68,7 @@ function VetFormRegister() {
         render={({ field, fieldState: { error } }) => (
           <div className='flex gap-4 items-center justify-center'>
             <label className='text-sm ml-2 w-40'>
-              Imgen de perfil
+              Imagen de perfil
             </label>
             <input {...field} type="file" className="customInput" />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
