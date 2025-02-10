@@ -1,4 +1,4 @@
-import { IUserFormData, IUserResponseData, IVetFormData, IVetResponseData } from "@/interfaces/registerTypes";
+import { IUserFormData, IUserResponseData, IVetFormData, IVetFormDataPrev, IVetResponseData } from "@/interfaces/registerTypes";
 import { ILoginResponse, IUserCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -59,10 +59,10 @@ export async function RegisterUser(
 
 
 export async function RegisterVet (
-  vetRegisterData: IVetFormData
+  vetRegisterData: IVetFormDataPrev
 ): Promise<IVetResponseData> {
   try {
-    const response = await fetch(`${apiURL}/auth/signupvet`, {
+    const response = await fetch(`${apiURL}/auth/vetsignup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

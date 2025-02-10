@@ -28,7 +28,7 @@ h6 {
 }
 
 .customInput {
-  @apply focus:ring-0 block w-full p-2 text-customDarkGreen border border-gray-300 rounded-lg bg-gray-50 text-xs  focus:border-customBrown dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-customBrown;
+  @apply focus:ring-0 block mt-2 w-full p-2 text-customDarkGreen border border-gray-300 rounded-lg bg-gray-50 text-xs  focus:border-customBrown dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-customBrown;
 }
 
 .shadowFull {
