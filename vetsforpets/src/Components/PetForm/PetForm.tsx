@@ -2,36 +2,38 @@
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 interface PetFormInputs {
-  petName: string;
-  ownerName: string;
-  age: number;
+  name: string;
+  birthDate: number;
   animalType: string;
   breed: string;
-  color: string;
   sex: string;
-  birthDate: string;
   notes: string;
+  imgProfile: string;
+  weight: number;
+  isSterilized: boolean;
+  clinicalNotes: string;
 }
 
 export default function PetRegisterForm() {
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
-      petName: "",
-      ownerName: "",
-      age: 0,
+      name: "",
+      birthDate: 0,
       animalType: "",
       breed: "",
-      color: "",
       sex: "",
-      birthDate: "",
       notes: "",
+      imgProfile: "",
+      weight: 0,
+      isSterilized: false,
+      clinicalNotes: "",
     },
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<PetFormInputs> = (data) => {
     console.log("Pet data submitted: ", data);
-    reset(); 
+    reset();
   };
 
   return (
@@ -40,13 +42,13 @@ export default function PetRegisterForm() {
       className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg"
     >
       <Controller
-        name="petName"
+        name="name"
         control={control}
         rules={{ required: "El nombre de la mascota es obligatorio" }}
         render={({ field, fieldState: { error } }) => (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
-              Nombre de la mascota:
+              Nombre:
             </label>
             <input
               {...field}
@@ -59,31 +61,14 @@ export default function PetRegisterForm() {
       />
 
       <Controller
-        name="ownerName"
+        name="birthDate"
         control={control}
-        rules={{ required: "El nombre del tutor es obligatorio" }}
+        rules={{ required: "La fecha de nacimiento es obligatoria" }}
         render={({ field, fieldState: { error } }) => (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
-              Nombre del tutor:
+              Fecha de Nacimiento:
             </label>
-            <input
-              {...field}
-              className="customInput"
-              placeholder="Ej: Juan Pérez"
-            />
-            {error && <p className="text-red-500 text-sm">{error.message}</p>}
-          </div>
-        )}
-      />
-
-      <Controller
-        name="age"
-        control={control}
-        rules={{ required: "La edad es obligatoria" }}
-        render={({ field, fieldState: { error } }) => (
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Edad:</label>
             <input
               {...field}
               type="number"
@@ -123,18 +108,11 @@ export default function PetRegisterForm() {
         render={({ field }) => (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">Raza:</label>
-            <input {...field} className="customInput" placeholder="Ej: Labrador" />
-          </div>
-        )}
-      />
-
-      <Controller
-        name="color"
-        control={control}
-        render={({ field }) => (
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Color:</label>
-            <input {...field} className="customInput" placeholder="Ej: Negro" />
+            <input
+              {...field}
+              className="customInput"
+              placeholder="Ej: Labrador"
+            />
           </div>
         )}
       />
@@ -155,28 +133,69 @@ export default function PetRegisterForm() {
       />
 
       <Controller
-        name="birthDate"
+        name="imgProfile"
         control={control}
         render={({ field }) => (
           <div className="mb-4">
             <label className="block text-sm font-medium mb-1">
-              Fecha de nacimiento:
+              Imagen de perfil:
             </label>
-            <input {...field} type="date" className="customInput" />
+            <input
+              {...field}
+              type="text"
+              className="customInput"
+              placeholder="URL de la imagen"
+            />
           </div>
         )}
       />
 
       <Controller
-        name="notes"
+        name="weight"
         control={control}
         render={({ field }) => (
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Notas:</label>
+            <label className="block text-sm font-medium mb-1">Peso (kg):</label>
+            <input
+              {...field}
+              type="number"
+              className="customInput"
+              placeholder="Ej: 5.2"
+            />
+          </div>
+        )}
+      />
+
+<Controller
+  name="isSterilized"
+  control={control}
+  render={({ field }) => (
+    <div className="mb-4">
+      <label className="block text-sm font-medium mb-1">¿Está esterilizado?</label>
+      <select
+        {...field}
+        className="customInput"
+        value={field.value ? "true" : "false"} 
+      >
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+  )}
+/>
+
+ 
+
+      <Controller
+        name="clinicalNotes"
+        control={control}
+        render={({ field }) => (
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">Notas clínicas:</label>
             <textarea
               {...field}
               className="customInput"
-              placeholder="Ej: Vacunado, castrado, etc."
+              placeholder="Notas sobre la salud de la mascota"
             />
           </div>
         )}

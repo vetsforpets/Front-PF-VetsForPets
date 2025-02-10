@@ -2,7 +2,7 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/services/services";
+import { loginUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import { CredentialResponse } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
