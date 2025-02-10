@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
-import DashboardUI from './DashboardUI';
-import { IVetCredentials } from '@/services/interfaces';
+'use client'
+
+import { useState, useEffect } from "react";
+import DashboardUI from "./DashboardUI";
+import { IVetCredentials } from "@/services/interfaces";
+import { fetchVetData } from "@/services/servicesVet";
 
 const DashboardData = () => {
     const [veterinaria, setVeterinaria] = useState<IVetCredentials | null>(null);
@@ -8,32 +11,33 @@ const DashboardData = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        fetch('/api/veterinaria')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al obtener los datos');
+        const getData = async () => {
+            try {
+                const data = await fetchVetData();
+                
+                if (data && data.length > 0) {
+                    setVeterinaria(data[0]);  
+                } else {
+                    setError("No se encontró la veterinaria logueada");
                 }
-                return response.json();
-            })
-            .then((data: IVetCredentials) => {
-                setVeterinaria(data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("Ocurrió un error desconocido");
+                }
+            } finally {
                 setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
-            });
+            }
+        };
+
+        getData();
     }, []);
 
-    if (loading) {
-        return <div>Cargando...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    return <DashboardUI veterinaria={veterinaria!} />;
+    if (loading) return <div>Cargando...</div>;
+    if (error) return <div>Error: {error}</div>;
+    
+    return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
 };
 
 export default DashboardData;
