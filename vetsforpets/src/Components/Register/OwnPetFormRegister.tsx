@@ -16,8 +16,19 @@ function OwnPetFormRegister() {
   
   const { handleSubmit, control, watch } = useForm<IUserFormData>({
     defaultValues: {
+      // {
+      //   "name": "string",
+      //   "lastName": "string",
+      //   "age": 0,
+      //   "email": "user@example.com",
+      //   "password": "/qrczJr2j@2e0dk",
+      //   "confirmPassword": "/ejH1hMhMht!tck",
+      //   "phoneNumber": "stringstri",
+      //   "imgProfile": "string"
+      // }
       name: "",
     lastName: "",
+    age: 0,
     email: "",
     password: "",
     confirmPassword: "",
@@ -29,6 +40,9 @@ function OwnPetFormRegister() {
   const password = watch("password");
 
   const onSubmit: SubmitHandler<IUserFormData> = async (data: IUserFormData) => {
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
     await RegisterUser(data)
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     router.push("/login")

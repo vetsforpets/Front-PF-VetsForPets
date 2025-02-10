@@ -72,7 +72,9 @@ export async function RegisterVet(
       },
       body: JSON.stringify(vetRegisterData),
     });
-
+    console.log('====================================');
+    console.log(response);
+    console.log('====================================');
     if (!response.ok) {
       throw new Error("Error al enviar formulario de registro de veterinaria");
     }
