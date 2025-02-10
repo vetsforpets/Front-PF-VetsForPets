@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { RegisterUser } from '@/services/services';
+import { RegisterUser } from '@/services/servicesUser';
 
 // import { toast } from "react-toastify";
 
@@ -18,13 +18,11 @@ function OwnPetFormRegister() {
     defaultValues: {
       name: "",
     lastName: "",
-    age: 0,
     email: "",
     password: "",
     confirmPassword: "",
     phoneNumber: "",
     imgProfile: "",
-    isVet: false,
     },
     mode: "onChange"
   });
@@ -32,7 +30,6 @@ function OwnPetFormRegister() {
 
   const onSubmit: SubmitHandler<IUserFormData> = async (data: IUserFormData) => {
     await RegisterUser(data)
-    // await registerUserfetch(submitData)    
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     router.push("/login")
   };
@@ -49,8 +46,25 @@ function OwnPetFormRegister() {
     >
 
       <h1 className="text-3xl text-customBrown">Registro dueño de mascota</h1>
-      <p className="mt-4 mb-3">Already have an account? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > Log in</Link></p>
+      <p className="mt-4 mb-3">¿Ya tienes cuenta? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > inicia sesión</Link></p>
       
+      <Controller
+        name="imgProfile"
+        control={control}
+        rules={{
+          required: { value: true, message: "Imagen de perfil obligatoria" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div className='flex gap-4 items-center justify-center'>
+            <label className='text-sm ml-2 w-40'>
+              Imgen de perfil
+            </label>
+            <input {...field} type="file" className="customInput" />
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
+
       <Controller
         name="name"
         control={control}
@@ -61,8 +75,7 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div >
-            <label className='mt-1' >Nombre</label>
-            <input {...field} type='text' className="customInput"/>
+            <input {...field} type='text' className="customInput" placeholder='nombre'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -77,31 +90,11 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div >
-            <label className='mt-1'>
-            Apellido
-            </label>
-            <input {...field} type='text' className="customInput"/>
+            <input {...field} type='text' className="customInput" placeholder='apellido'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
-      <Controller
-        name="age"
-        control={control}
-        rules={{
-          required: { value: true, message: "Edad requerida" },
-        }}
-        render={({ field, fieldState: { error } }) => (
-          <div > 
-            <label className='mt-1'>
-            Cumpleaños
-            </label>
-            <input {...field} type='date' className="customInput"/>
-            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-          </div>
-        )}
-      />
-
       <Controller
         name="email"
         control={control}
@@ -114,10 +107,7 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div > 
-            <label className='mt-1'>
-            Email
-            </label>
-            <input {...field} type="email" className="customInput"/>
+            <input {...field} type="email" className="customInput" placeholder='email@example.co'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -137,10 +127,7 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div > 
-            <label className='mt-1'>
-            Contraseña
-            </label>
-            <input {...field} type="password" className="customInput"/>
+            <input {...field} type="password" className="customInput" placeholder='contraseña'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -156,10 +143,7 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div > 
-            <label className='mt-1'>
-            Comfirmar contraseña
-            </label>
-            <input {...field}  type="password" className="customInput"/>
+            <input {...field}  type="password" className="customInput" placeholder='comfirmar contraseña'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -177,34 +161,15 @@ function OwnPetFormRegister() {
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div > 
-            <label className='mt-1'>
-            Celular
-            </label>
-            <input {...field} type="tel" className="customInput"/>
+          <div >
+            <input {...field} type="tel" className="customInput" placeholder='30000000'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
-        <Controller
-          name="imgProfile"
-          control={control}
-          rules={{
-            required: { value: true, message: "Imagen de perfil obligatoria" },
-          }}
-          render={({ field, fieldState: { error } }) => (
-            <div > 
-              <label className='mt-1'>
-              Imgen de perfil
-              </label>
-              <input {...field}  type="file" className="customInput"/>
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-            </div>
-          )}
-        />
 
       <button type="submit" className="customButton mt-6">
-        Sign Up
+        Register
       </button>
     </form>
   );

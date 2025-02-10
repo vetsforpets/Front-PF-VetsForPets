@@ -1,4 +1,4 @@
-import VetFormRegister from '@/components/Register/VetFormRegister'
+import VetFormRegister from "@/Components/Register/VetFormRegister"
 import React from 'react'
 
 function page() {

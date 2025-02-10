@@ -2,13 +2,11 @@
   export interface IUserFormData {
     name: string,
     lastName: string,
-    age: 0,
     email: string,
     password: string,
     confirmPassword?: string,
     phoneNumber: string,
     imgProfile: string,
-    isVet: boolean
   } 
   export interface IUserResponseData {
           id: string,
@@ -18,13 +16,59 @@
   } 
   export interface IVetFormData {
     name: string,
-    createdAt: string,
+    createdAtPetShop?: string,
+    veterinarian?: string,
+    license?: string,
+    password?: string, 
+    confirmPassword?: string,
+    dayOpenings?: string,
     email: string,
-    is24Hours: string,
+    is24Hours: boolean,
     phoneNumber: string,
     imgProfile: string,
-    isVet: boolean
+    location: string
   } 
+  export interface IVetFormDataPrev {
+    name: string,
+    password?: string, 
+    confirmPassword?: string,
+    email: string,
+    is24Hours: Boolean,
+    phoneNumber: string,
+    imgProfile: string,
+    location: string
+  } 
+  export interface dayOpenings {
+    monday:{
+      apertura: string;
+      cierre: string;
+    },
+    tuesday:{
+      apertura: string;
+      cierre: string;
+    },
+    wednesday:{
+      apertura: string;
+      cierre: string;
+    },
+    thursday:{
+      apertura: string;
+      cierre: string;
+    },
+    friday:{
+      apertura: string;
+      cierre: string;
+    },
+    saturday:{
+      apertura: string;
+      cierre: string;
+    },
+    Sunday:{
+      apertura: string;
+      cierre: string;
+    },
+  }
+
   export interface IVetResponseData {
           id: string,
           nombre: string,
