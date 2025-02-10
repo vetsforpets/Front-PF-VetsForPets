@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { loginUser } from "@/services/services";
 import { useUserStore } from "@/store";
+import { CredentialResponse } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 
 interface LoginFormInputs {
   email: string;
@@ -12,35 +14,46 @@ interface LoginFormInputs {
 
 export default function LoginForm() {
   const { setUserData } = useUserStore();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<LoginFormInputs>();
-
   const router = useRouter();
+
+  const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
+    console.log("Token de Google:", credentialResponse.credential);
+    router.push("/");
+  };
+
+  const handleGoogleError = () => {
+    console.error("Error al iniciar sesión con Google");
+  };
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
-      const data = await loginUser(userCredentials);
+      const token = await loginUser(userCredentials);
 
-      setUserData({ ...data.user, token: data.token });
-      reset();
-      router.push("/");
+      if (token) {
+        setUserData(token);
+        reset();
+        router.push("/");
+      } else {
+        console.error("No se recibió un token válido");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error al iniciar sesión:", error);
     }
   };
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+    <div className="w-1/4 mx-auto mt-10 mb-20">
+      <img src="./images/logo.png" alt="logo" className="justify-self-center" />
       <h2 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Email */}
         <div>
-          <label className="block text-gray-700">Correo Electrónico</label>
           <input
             {...register("email", {
               required: "El email es obligatorio",
@@ -50,7 +63,7 @@ export default function LoginForm() {
               },
             })}
             type="email"
-            className="w-full p-2 border border-gray-300 rounded mt-1"
+            className="customInput"
             placeholder="ejemplo@email.com"
           />
           {errors.email && (
@@ -60,7 +73,6 @@ export default function LoginForm() {
 
         {/* Contraseña */}
         <div>
-          <label className="block text-gray-700">Contraseña</label>
           <input
             {...register("password", {
               required: "La contraseña es obligatoria",
@@ -70,7 +82,7 @@ export default function LoginForm() {
               },
             })}
             type="password"
-            placeholder="••••••"
+            placeholder="Contraseña"
             className="customInput"
           ></input>
           {errors.password && (
@@ -79,10 +91,15 @@ export default function LoginForm() {
         </div>
 
         {/* Botón de envío */}
-
-        <button type="submit" className="customButton">
-          Iniciar Sesión
-        </button>
+        <div className="flex justify-evenly text-sm">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={handleGoogleError}
+          />
+          <button type="submit" className="customButton">
+            Iniciar Sesión
+          </button>
+        </div>
       </form>
     </div>
   );

@@ -1,10 +1,10 @@
-import { ILoginResponse, IUserCredentials } from "./interfaces";
+import { IUserCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function loginUser(
   userCredentials: IUserCredentials
-): Promise<ILoginResponse> {
+): Promise<string> {
   try {
     const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",
@@ -18,7 +18,7 @@ export async function loginUser(
       throw new Error("Error al enviar formulario de inicio de sesión");
     }
 
-    const data: ILoginResponse = await response.json();
+    const data: string = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Error) {
