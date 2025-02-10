@@ -99,7 +99,7 @@ function OwnPetFormRegister() {
         control={control}
         rules={{
           required: { value: true, message: "Apellido obligatorio." },
-          minLength: { value: 5, message: "El apellido debe tener al menos 5 caracteres." },
+          minLength: { value: 6, message: "El apellido debe tener al menos 6 caracteres." },
           maxLength: { value: 50, message: "El apellido no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
