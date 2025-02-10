@@ -15,12 +15,6 @@ export interface IUserData {
   phone: string;
 }
 
-export interface ILoginResponse {
-  login: boolean;
-  token: string;
-  user: IUserData;
-}
-
 export interface IUserCredentials {
   email: string;
   password: string;
