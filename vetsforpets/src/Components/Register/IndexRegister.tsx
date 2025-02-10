@@ -1,6 +1,8 @@
 import React from 'react'
 import Link from "next/link"
+
 const IndexRegister = () => {
+
   return (
     <div className="flex items-center justify-center min-h-80 ">
       <div className="flex gap-6 flex-wrap items-center justify-center py-6">

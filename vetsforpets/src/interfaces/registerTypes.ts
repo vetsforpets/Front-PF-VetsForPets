@@ -16,17 +16,29 @@
   } 
   export interface IVetFormData {
     name: string,
-    createdAtPetShop: string,
-    veterinarian: string,
-    veterinaryLicense: string,
-    schedule: string,
+    createdAtPetShop?: string,
+    veterinarian?: string,
+    license?: string,
+    password?: string, 
+    confirmPassword?: string,
+    dayOpenings?: string,
     email: string,
-    is24Hours?: boolean,
+    is24Hours: boolean,
     phoneNumber: string,
     imgProfile: string,
+    location: string
   } 
-  
-  export interface daySchedule {
+  export interface IVetFormDataPrev {
+    name: string,
+    password?: string, 
+    confirmPassword?: string,
+    email: string,
+    is24Hours: Boolean,
+    phoneNumber: string,
+    imgProfile: string,
+    location: string
+  } 
+  export interface dayOpenings {
     monday:{
       apertura: string;
       cierre: string;
