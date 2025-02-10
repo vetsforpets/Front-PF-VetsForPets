@@ -9,7 +9,7 @@ import Link from "next/link";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { RegisterUser, RegisterVet } from '@/services/services';
+import { RegisterUser, RegisterVet } from '@/services/servicesUser';
 
 // import { toast } from "react-toastify";
 
