@@ -16,6 +16,9 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
         }
 
         const data: IVetCredentials[] = await response.json();
+
+        localStorage.setItem('vetData', JSON.stringify(data));
+
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -23,4 +26,18 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
         }
         throw new Error("Ocurrió un error desconocido al obtener los datos");
     }
+}
+
+
+export function getVetById(vetId: string): IVetCredentials | null {
+    const storedData = localStorage.getItem('vetData');
+    
+    if (storedData) {
+        const vetData: IVetCredentials[] = JSON.parse(storedData);
+
+        const vet = vetData.find((vet) => vet.id === vetId);
+        return vet || null;
+    }
+
+    return null;
 }
