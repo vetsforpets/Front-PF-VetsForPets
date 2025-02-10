@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="w-full bottom-0 mt-auto"> 
+    <footer className="w-full bottom-0 mt-14"> 
       <div className="relative w-full flex justify-center items-start pt-[139px]"> 
         {/* Imagen SVG */}
         <div className="absolute top-0 left-0 w-full flex justify-center z-10"> 
@@ -58,7 +58,7 @@ const Footer = () => {
             </div>
 
             {/* Contáctanos */}
-            <div className="flex-auto text-center flex flex-col items-center mt-20"> 
+            <div className="flex-auto text-center flex flex-col items-center mt-20 mb-6"> 
               <h2 className="text-black text-lg font-tenor mb-4">Contáctanos</h2>
               <p className="mb-2">📞 +1 234 567 890</p>
               <p>✉️ contacto@innova.com</p>
