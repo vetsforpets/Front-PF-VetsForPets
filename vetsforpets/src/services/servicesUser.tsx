@@ -13,7 +13,7 @@ export async function loginUser(
   userCredentials: IUserCredentials
 ): Promise<{ success: string; token: string }> {
   try {
-    const response = await fetch(`${apiURL}auth/signIn`, {
+    const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
