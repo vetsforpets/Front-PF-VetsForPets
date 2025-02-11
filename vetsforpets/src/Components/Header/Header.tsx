@@ -1,24 +1,33 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export function Header() {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleNavigation = (path: string): void => {
     router.push(path);
+    setIsOpen(false);
   };
 
   return (
-    <div className="flex justify-evenly items-center m-7 p-2 rounded-full font-tenor shadowFull">
-      <div className="flex-col">
+    <div className="flex justify-between items-center m-7 p-4 rounded-full font-tenor shadowFull bg-[#FFFAD7] relative">
+      {/* Logo */}
+      <div className="flex items-center">
+      <button
+          onClick={() => handleNavigation("/")}
+          className="flex flex-col items-center"
+        >
         <img src="/images/logo.png" className="w-20" alt="Logo" />
+        </button>
       </div>
       <div>
         <button
           onClick={() => handleNavigation("/vets")}
           className="customButton"
-        >
+          >
           Veterinarias
         </button>
       </div>
@@ -27,30 +36,14 @@ export function Header() {
           onClick={() => handleNavigation("/register")}
           className="flex flex-col items-center"
         >
-          <img
-            src="/images/emergency.png"
-            className="w-10 bg-yellow-200 rounded-full"
-            alt="sirena"
-          />
-          <p className="font-kiwi">URGENCIA</p>
+        <img
+          src="/images/emergency.png"
+          className="w-10 bg-yellow-200 rounded-full"
+          alt="sirena"
+        />
+        <p className="font-kiwi">URGENCIA</p>
         </button>
       </div>
-
-      <div className="flex gap-5">
-        <button
-          onClick={() => handleNavigation("/dashboard")}
-          className="customButton"
-        >
-          Perfil Usuario
-        </button>
-        <button
-          onClick={() => handleNavigation("/dashboard-vet")}
-          className="customButton"
-        >
-          Perfil Veterinaria
-        </button>
-      </div>
-
       <div className="flex gap-5">
         <button
           onClick={() => handleNavigation("/login")}
@@ -58,62 +51,51 @@ export function Header() {
         >
           Iniciar Sesión
         </button>
-        <button
-          onClick={() => handleNavigation("/register")}
-          className="customButton"
-        >
-          Crear Cuenta
-        </button>
       </div>
+
+      {/* Botón del menú hamburguesa (con animación) */}
+      <button onClick={() => setIsOpen(!isOpen)} className="p-2 z-10">
+        <div className="w-6 h-6 flex flex-col justify-between items-center space-y-1 hover:scale-105 transform transition-all duration-300">
+          <div
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "rotate-45 translate-y-2" : ""
+            }`}
+          ></div>
+          <div
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "opacity-0" : ""
+            }`}
+          ></div>
+          <div
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
+          ></div>
+        </div>
+      </button>
+
+      {isOpen && (
+        <div className="absolute top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-5 w-[240px] h-[240px]">
+          <button
+            onClick={() => handleNavigation("/dashboard")}
+            className="customButtonDos"
+          >
+            Perfil Usuario
+          </button>
+          <button
+            onClick={() => handleNavigation("/dashboard-vet")}
+            className="customButtonDos"
+          >
+            Perfil Veterinaria
+          </button>
+          <button
+            onClick={() => handleNavigation("/register")}
+            className="customButtonDos"
+          >
+            Crear Cuenta
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-
-// import Link from "next/link";
-
-// export function Header() {
-//   return (
-//     <>
-//       <div className="flex justify-evenly items-center m-7 p-2 rounded-full font-tenor shadowFull">
-//         <div className="flex-col">
-//           <img src="/images/logo.png" className="w-20" alt="Logo" />
-//         </div>
-//         <div>
-//           <Link href={"/vets"} className="customButton">
-//             Veterinarias
-//           </Link>
-//         </div>
-//         <div>
-//           <Link href={"/register"} className="flex flex-col items-center">
-//             <img
-//               src="/images/emergency.png"
-//               className="w-10 bg-yellow-200 rounded-full"
-//               alt="sirena"
-//             />
-//             <p className="font-kiwi">URGENCIA</p>
-//           </Link>
-//         </div>
-
-//         <div className="flex gap-5">
-//           <Link href={"/dashboard"} className="customButton">
-//             Perfil Usuario
-//           </Link>
-//           <Link href={"/dashboard-vet"} className="customButton">
-//             Perfil Veterinaria
-//           </Link>
-//         </div>
-
-//         <div className="flex gap-5">
-//           <Link href={"/login"} className="customButton">
-//             Iniciar Sesión
-//           </Link>
-//           <Link href={"/register"} className="customButton">
-//             Crear Cuenta
-//           </Link>
-//         </div>
-      
-       
-//       </div>
-//     </>
-//   );
-// }
