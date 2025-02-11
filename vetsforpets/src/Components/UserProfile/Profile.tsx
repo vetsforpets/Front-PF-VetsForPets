@@ -9,7 +9,7 @@ interface UserProfileProps {
   profileImage?: string; // Opcional para permitir imágenes personalizadas
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({
+const Profile: React.FC<UserProfileProps> = ({
   name,
   email,
   phone,
@@ -58,4 +58,4 @@ const UserDetail: React.FC<{ label: string; value: string }> = ({ label, value }
   </div>
 );
 
-export default UserProfile;
+export default Profile;

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import PetDetails from "../pet/petDetails";
 import PetPreview from "../pet/PetPreview";
-import UserProfile from "./Profile";
+import Profile from "./Profile";
 
 export default function ProfileView() {
   const [pets] = useState([
@@ -18,7 +18,7 @@ export default function ProfileView() {
       <div className="max-w-6xl mx-auto space-y-4">
        
       {/* //!Datos del ususario */}
-      <UserProfile
+      <Profile
       name="Juan Perez"
       email="juanperez@example.com"
       phone="+54 123 456 789"
