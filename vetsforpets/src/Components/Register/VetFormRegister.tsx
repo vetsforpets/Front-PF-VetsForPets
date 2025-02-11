@@ -11,10 +11,6 @@ import { toast } from 'sonner';
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-
-
-// import { toast } from "react-toastify";
-
 function VetFormRegister() {
   const router = useRouter()
 
