@@ -39,5 +39,6 @@ export function getVetById(vetId: string): IVetCredentials | null {
         return vet || null;
     }
 
+    
     return null;
 }
