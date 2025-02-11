@@ -249,3 +249,177 @@ const PetDetails = () => {
 
 export default PetDetails;
 
+//!DISABLED//
+// "use client";
+// import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
+// interface PetFormInputs {
+//   name: string;
+//   birthDate: number;
+//   animalType: string;
+//   breed: string;
+//   sex: string;
+//   notes: string;
+//   imgProfile: string;
+//   weight: number;
+//   isSterilized: boolean;
+//   clinicalNotes: string;
+// }
+
+// export default function PetRegisterForm() {
+//   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
+//     defaultValues: {
+//       name: "",
+//       birthDate: 0,
+//       animalType: "",
+//       breed: "",
+//       sex: "",
+//       notes: "",
+//       imgProfile: "",
+//       weight: 0,
+//       isSterilized: false,
+//       clinicalNotes: "",
+//     },
+//     mode: "onChange",
+//   });
+
+//   // Estado para controlar si el formulario ha sido enviado
+//   const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
+
+//   const onSubmit: SubmitHandler<PetFormInputs> = (data) => {
+//     console.log("Pet data submitted: ", data);
+//     setIsFormSubmitted(true);  // Cambiar estado a true cuando se envíe el formulario
+//     reset();  // Resetear el formulario (opcional)
+//   };
+
+//   return (
+//     <form
+//       onSubmit={handleSubmit(onSubmit)}
+//       className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
+//     >
+//       <h1 className="text-3xl text-customBrown">Registro de la Mascota</h1>
+//       <p className="mt-4 mb-3">
+//         Por favor completa los datos de tu mascota para el registro.
+//       </p>
+
+//       {/* Nombre */}
+//       <Controller
+//         name="name"
+//         control={control}
+//         rules={{ required: "El nombre de la mascota es obligatorio" }}
+//         render={({ field, fieldState: { error } }) => (
+//           <div>
+//             <input
+//               {...field}
+//               className="customInput"
+//               placeholder="Nombre"
+//               aria-label="Nombre"
+//               disabled={isFormSubmitted} // Deshabilitar si el formulario fue enviado
+//             />
+//             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+//           </div>
+//         )}
+//       />
+
+//       {/* Fecha de nacimiento */}
+//       <Controller
+//         name="birthDate"
+//         control={control}
+//         rules={{ required: "La fecha de nacimiento de la mascota es obligatoria" }}
+//         render={({ field, fieldState: { error } }) => (
+//           <div>
+//             <input
+//               {...field}
+//               type="date"
+//               className="customInput"
+//               aria-label="Fecha de Nacimiento"
+//               disabled={isFormSubmitted} // Deshabilitar si el formulario fue enviado
+//             />
+//             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+//           </div>
+//         )}
+//       />
+
+//       {/* Tipo de animal */}
+//       <Controller
+//         name="animalType"
+//         control={control}
+//         rules={{ required: "El tipo de animal es obligatorio" }}
+//         render={({ field, fieldState: { error } }) => (
+//           <div>
+//             <select {...field} className="customInput" aria-label="Tipo de animal" disabled={isFormSubmitted}>
+//               <option value="">Tipo de mascota</option>
+//               <option value="Perro">Perro</option>
+//               <option value="Gato">Gato</option>
+//               <option value="Hamster">Hamster</option>
+//               <option value="Conejo">Conejo</option>
+//               <option value="Aves">Aves</option>
+//               <option value="Otros">Otros</option>
+//             </select>
+//             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+//           </div>
+//         )}
+//       />
+
+//       {/* Raza */}
+//       <Controller
+//         name="breed"
+//         control={control}
+//         rules={{ required: "La raza es obligatoria" }}
+//         render={({ field, fieldState: { error } }) => (
+//           <div>
+//             <input
+//               {...field}
+//               className="customInput"
+//               placeholder="Raza"
+//               aria-label="Raza"
+//               disabled={isFormSubmitted} // Deshabilitar si el formulario fue enviado
+//             />
+//             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+//           </div>
+//         )}
+//       />
+
+//       {/* Sexo */}
+//       <Controller
+//         name="sex"
+//         control={control}
+//         rules={{ required: "El sexo es obligatorio" }}
+//         render={({ field, fieldState: { error } }) => (
+//           <div>
+//             <select {...field} className="customInput" aria-label="Sexo" disabled={isFormSubmitted}>
+//               <option value="">Sexo</option>
+//               <option value="Macho">Macho</option>
+//               <option value="Hembra">Hembra</option>
+//             </select>
+//             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+//           </div>
+//         )}
+//       />
+
+//       {/* Notas */}
+//       <Controller
+//         name="notes"
+//         control={control}
+//         render={({ field }) => (
+//           <div>
+//             <textarea
+//               {...field}
+//               className="customInput"
+//               placeholder="Agregar comentarios clínicos relevantes"
+//               aria-label="Agregar comentarios clínicos relevantes"
+//               rows={6}  // Establece la altura (número de líneas visibles)
+//               cols={50} // Establece el ancho (número de caracteres por línea)
+//               disabled={isFormSubmitted} // Deshabilitar si el formulario fue enviado
+//             />
+//           </div>
+//         )}
+//       />
+
+//       {/* Botón de submit */}
+//       <button type="submit" className="customButton mt-6" disabled={isFormSubmitted}>
+//         Registrar Mascota
+//       </button>
+//     </form>
+//   );
+// }
