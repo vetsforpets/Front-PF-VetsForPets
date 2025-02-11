@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { newPet } from "@/services/servicesPets";
 import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
