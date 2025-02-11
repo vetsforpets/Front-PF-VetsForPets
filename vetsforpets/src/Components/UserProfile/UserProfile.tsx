@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PetCreateForm from "../pet/PetCreateForm";
-import PetDetails from "../pet/PetDetails";
+import PetDetails from "../pet/petDetails";
 import PetPreview from "../pet/PetPreview";
 import Profile from "./Profile";
 

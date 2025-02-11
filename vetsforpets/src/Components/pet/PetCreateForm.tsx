@@ -45,6 +45,7 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
     try {
       console.log(petData);
       await newPet(petData);
+      alert(`mascota creada con exito`);
     } catch (error) {
       console.error("Error al crear mascota:", error);
       alert(`Error al crear mascota: ${error}`);
