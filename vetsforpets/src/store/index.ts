@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import { IUserStored, IUserState } from "./interfaces";
-import { jwtDecode } from "jwt-decode";
 
 // USERS
 
@@ -11,13 +10,8 @@ export const useUserStore = create<IUserState>()(
       (set) => ({
         userData: null,
 
-        setUserData: (token: string) => {
-          try {
-            const decoded = jwtDecode<IUserStored>(token);
-            set({ userData: decoded });
-          } catch (error) {
-            console.error("Error al decodificar el token:", error);
-          }
+        setUserData: (data: IUserStored) => {
+          set({ userData: data });
         },
 
         clearUserData: () => {

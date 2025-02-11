@@ -6,6 +6,7 @@ import { loginUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import { CredentialResponse } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 interface LoginFormInputs {
   email: string;
@@ -13,7 +14,7 @@ interface LoginFormInputs {
 }
 
 export default function LoginForm() {
-  const { setUserData } = useUserStore();
+  const { setUserData, userData } = useUserStore();
   const {
     register,
     handleSubmit,
@@ -33,12 +34,14 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
-      const token = await loginUser(userCredentials);
+      const data = await loginUser(userCredentials);
 
-      if (token) {
-        setUserData(token);
+      if (data.token) {
+        const decodedToken = jwtDecode<{ id: string }>(data.token);
+        setUserData({ token: data.token, id: decodedToken.id });
+        console.log(userData);
         reset();
-        router.push("/");
+        // router.push("/");
       } else {
         console.error("No se recibió un token válido");
       }
