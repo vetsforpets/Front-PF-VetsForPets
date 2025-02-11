@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { RegisterVet } from '@/services/servicesUser';
+import { RegisterVet } from '@/services/servicesVet';
 
 // import { toast } from "react-toastify";
 

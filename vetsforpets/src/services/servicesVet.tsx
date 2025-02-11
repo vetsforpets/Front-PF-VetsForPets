@@ -1,3 +1,4 @@
+import { IVetFormDataPrev, IVetResponseData } from "@/interfaces/registerTypes";
 import { IVetCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -42,3 +43,34 @@ export const getVetById = async (vetId: string | null): Promise<IVetCredentials 
         return null;
     }
 };
+
+
+
+export async function RegisterVet(
+    vetRegisterData: IVetFormDataPrev
+  ): Promise<IVetResponseData> {
+    try {
+      const response = await fetch(`${apiURL}/auth/vetsignup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vetRegisterData),
+      });
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      if (!response.ok) {
+        throw new Error("Error al enviar formulario de registro de veterinaria");
+      }
+  
+      const data: IVetResponseData = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("Ocurrió un error desconocido");
+    }
+  }
+  
