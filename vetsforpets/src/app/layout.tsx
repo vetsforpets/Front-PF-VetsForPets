@@ -5,6 +5,8 @@ import { Header } from "@/Components/Header/Header";
 import Footer from "@/Components/Footer/Footer";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+import { Toaster } from "sonner";
+
 const kiwiMaru = Kiwi_Maru({
   variable: "--font-kiwi-maru",
   subsets: ["latin"],
@@ -36,6 +38,7 @@ export default function RootLayout({
         <body
           className={`flex flex-col min-h-screen ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
         >
+          <Toaster position="top-center"/>
           <Header />
           <div className="flex flex-col flex-grow">{children}</div>
           <Footer />
