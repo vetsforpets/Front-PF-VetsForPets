@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { newPet } from "@/services/servicesPets";
 import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -19,6 +20,7 @@ interface PetFormInputs {
 
 const PetDetails = () => {
   const { userData } = useUserStore();
+  const [isEditing, setIsEditing] = useState(false);
 
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
@@ -27,7 +29,7 @@ const PetDetails = () => {
       birthdate: "2023-10-26",
       animalType: "Perro",
       breed: "Ovejero Alemán",
-      sex: "Macho",
+      sex: "Male",
       notes: "Es muy juguetón y le gusta correr.",
       isSterilized: "Sí",
       profileImg:
@@ -40,12 +42,13 @@ const PetDetails = () => {
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
       console.log(petData);
-      await newPet(petData);
+      // await newPet(petData);
     } catch (error) {
       console.error("Error al crear mascota:", error);
       alert(`Error al crear mascota: ${error}`);
     }
     reset();
+    setIsEditing(false);
   };
 
   return (
@@ -61,108 +64,64 @@ const PetDetails = () => {
           <Controller
             name="name"
             control={control}
-            rules={{ required: "El nombre de la mascota es obligatorio" }}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <input
-                  {...field}
-                  id="name"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  placeholder="Nombre"
-                  aria-label="Nombre de la Mascota"
-                />
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <input
+                {...field}
+                id="name"
+                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                placeholder="Nombre"
+                disabled={!isEditing}
+              />
             )}
           />
+
           <Controller
             name="age"
             control={control}
-            rules={{
-              required: "La edad de la mascota es obligatoria",
-              min: { value: 0, message: "La edad no puede ser negativa" },
-            }}
-            render={({
-              field: { onChange, value, ...field },
-              fieldState: { error },
-            }) => (
-              <div>
-                <input
-                  {...field}
-                  id="age"
-                  type="number"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  placeholder="Edad"
-                  aria-label="Edad de la Mascota"
-                  value={value !== undefined ? value : ""} // Evita el error de undefined
-                  onChange={(e) => {
-                    const newValue =
-                      e.target.value === ""
-                        ? undefined
-                        : Number(e.target.value);
-                    onChange(newValue);
-                  }}
-                />
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <input
+                {...field}
+                id="age"
+                type="number"
+                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                placeholder="Edad"
+                disabled={!isEditing}
+              />
             )}
           />
 
           <Controller
             name="animalType"
             control={control}
-            rules={{ required: "El tipo de animal es obligatorio" }}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <select
-                  {...field}
-                  id="animalType"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  aria-label="Tipo de animal"
-                >
-                  <option value="" disabled hidden>
-                    Especie
-                  </option>
-                  <option value="Perro">Perro</option>
-                  <option value="Gato">Gato</option>
-                  <option value="Hamster">Hamster</option>
-                  <option value="Conejo">Conejo</option>
-                  <option value="Aves">Aves</option>
-                  <option value="Otros">Otros</option>
-                </select>
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <select
+                {...field}
+                id="animalType"
+                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                disabled={!isEditing}
+              >
+                <option value="">Especie</option>
+                <option value="Perro">Perro</option>
+                <option value="Gato">Gato</option>
+                <option value="Hamster">Hamster</option>
+                <option value="Conejo">Conejo</option>
+                <option value="Aves">Aves</option>
+                <option value="Otros">Otros</option>
+              </select>
             )}
           />
 
           <Controller
             name="birthdate"
             control={control}
-            rules={{ required: "La fecha de nacimiento es obligatoria" }}
-            render={({
-              field: { onChange, value, ...field },
-              fieldState: { error },
-            }) => (
-              <div>
-                <input
-                  {...field}
-                  type="date" // Asegura que el input devuelva una fecha válida en formato YYYY-MM-DD
-                  id="birthdate"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  aria-label="Fecha de nacimiento"
-                  value={value ? value.split("T")[0] : ""} // Asegura que se vea en el formato correcto
-                  onChange={(e) => onChange(e.target.value)} // Normaliza la salida
-                />
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <input
+                {...field}
+                type="date"
+                id="birthdate"
+                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                disabled={!isEditing}
+              />
             )}
           />
 
@@ -174,8 +133,9 @@ const PetDetails = () => {
                 {...field}
                 id="breed"
                 type="text"
-                placeholder="Raza"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                placeholder="Raza"
+                disabled={!isEditing}
               />
             )}
           />
@@ -183,55 +143,33 @@ const PetDetails = () => {
           <Controller
             name="sex"
             control={control}
-            rules={{ required: "El sexo es obligatorio" }}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <select
-                  {...field}
-                  id="sex"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  aria-label="Sexo"
-                >
-                  <option value="" disabled hidden>
-                    Sexo
-                  </option>
-                  <option value="Male">Macho</option>
-                  <option value="Female">Hembra</option>
-                </select>
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <select
+                {...field}
+                id="sex"
+                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                disabled={!isEditing}
+              >
+                <option value="">Sexo</option>
+                <option value="Male">Macho</option>
+                <option value="Female">Hembra</option>
+              </select>
             )}
           />
 
           <Controller
             name="isSterilized"
             control={control}
-            rules={{ required: "Debe seleccionar si está esterilizado o no" }}
-            render={({
-              field: { onChange, value, ...field },
-              fieldState: { error },
-            }) => (
-              <div>
-                <select
-                  {...field}
-                  id="isSterilized"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  aria-label="Esterilización"
-                  value={value !== undefined ? String(value) : ""}
-                  onChange={(e) => onChange(e.target.value === "true")}
-                >
-                  <option value="" disabled hidden>
-                    Esterilizado
-                  </option>
-                  <option value="true">Esterilizado: Sí</option>
-                  <option value="false">Esterilizado: No</option>
-                </select>
-                {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
-                )}
-              </div>
+            render={({ field }) => (
+              <select
+                {...field}
+                id="isSterilized"
+                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                disabled={!isEditing}
+              >
+                <option value="true">Esterilizado: Sí</option>
+                <option value="false">Esterilizado: No</option>
+              </select>
             )}
           />
 
@@ -244,19 +182,30 @@ const PetDetails = () => {
                 id="notes"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 placeholder="Comentarios adicionales"
-                aria-label="Comentarios adicionales"
                 rows={4}
+                disabled={!isEditing}
               />
             )}
           />
         </div>
 
-        <button
-          type="submit"
-          className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
-        >
-          Crear Mascota
-        </button>
+        <div className="mt-6 flex justify-between">
+          <button
+            type="button"
+            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            onClick={() => setIsEditing((prev) => !prev)}
+          >
+            {isEditing ? "Cancelar" : "Editar"}
+          </button>
+          {isEditing && (
+            <button
+              type="submit"
+              className="mt-6 self-end bg-customGreen text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            >
+              Guardar Cambios
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );
