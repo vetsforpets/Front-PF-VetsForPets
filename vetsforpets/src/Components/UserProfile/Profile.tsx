@@ -1,3 +1,4 @@
+"use client";
 import { fetchUserData } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
@@ -32,12 +33,14 @@ const Profile = () => {
   const { userData } = useUserStore();
   const [users, setUsers] = useState<IUserData[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editableUser, setEditableUser] = useState<IUserData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       if (userData?.id) {
         try {
           const data = await fetchUserData();
+          console.log(data); // Verifica los datos que se obtienen
           setUsers(data);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
@@ -50,49 +53,114 @@ const Profile = () => {
   }, [userData?.id]);
 
   const user = users.find((u) => u.id === userData?.id);
-  console.log(userData);
-  console.log(user);
+  console.log(userData); // Verifica el valor de userData
+  console.log(user); // Verifica el usuario encontrado
+
+  console.log("Ruta de la imagen:", user?.imgProfile);
+
+  if (!user) return <p>Cargando datos del usuario...</p>;
+
+  const handleEdit = () => {
+    setIsEditing(!isEditing);
+    if (!isEditing) {
+      setEditableUser({ ...user });
+    }
+  };
+
+  const handleSave = () => {
+    // Aquí guardar los cambios en tu base de datos o backend
+    console.log("Guardando cambios", editableUser);
+    setIsEditing(false);
+  };
+
+  const handleChange = (field: keyof IUserData, value: string) => {
+    if (editableUser) {
+      setEditableUser({ ...editableUser, [field]: value });
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
+      
         <img
-          src={user?.imgProfile}
+          // src={user?.imgProfile || '/images/icon.png'}
+          src="./Generic avatar.png"
           alt="Perfil"
-          className="w-40 h-40 rounded-full object-cover shadow-md"
+          className=" w-40 h-40 rounded-full object-cover shadow-md"
         />
-
+      
         <button
           className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={handleEdit}
         >
           <img src="/images/icon.png" alt="editar" className="w-10 h-7 m-2" />
         </button>
 
-        <h1 className="mt-4 text-3xl font-bold text-DarkGreen px-4 py-2 rounded-lg">
-          {user?.name}
+        <h1 className="mt-4 text-3xl font-bold text-DarkGreen px-4 py-2 rounded-lg flex items-center justify-center">
+          {user?.name} {user.lastName}
         </h1>
       </div>
 
-      {/* //Detalles del usuario */}
-      <div className="m-6 flex flex-col">
-        <input type="text" />
-        {/* <div className="space-y-2">
-          <UserDetail label="Correo Electrónico:" value={email} />
-          <UserDetail label="Teléfono:" value={phone} />
-          <UserDetail label="Dirección:" value={address} />
-          <UserDetail label="Ciudad:" value={city} />
-        </div> */}
+      <div className="m-6 flex flex-col space-y-4">
+        {isEditing ? (
+          <>
+            {/* Campo para editar la edad */}
+            <div className="mt-4">
+              <label className="text-customBrown font-semibold py-1 pl-4 block">Edad:</label>
+              <input
+                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left text-red-800 py-3 pl-4 min-w-96"
+                type="number"
+                value={editableUser?.age || ''}
+                onChange={(e) => handleChange('age', e.target.value)}
+              />
+            </div>
+
+            {/* Campo para editar el teléfono */}
+            <div>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">Teléfono:</label>
+              <input
+                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                type="text"
+                value={editableUser?.phoneNumber || ''}
+                onChange={(e) => handleChange('phoneNumber', e.target.value)}
+              />
+            </div>
+
+            {/* Campo solo lectura para mostrar si el usuario es premium */}
+            <div>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">Usuario Premium:</label>
+              <input
+                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                type="text"
+                value={editableUser?.isPremium ? "Sí" : "No"}
+                readOnly
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <UserDetail label="Edad:" value={user.age.toString()} />
+            <UserDetail label="Correo Electrónico:" value={user.email} />
+            <UserDetail label="Teléfono:" value={user.phoneNumber} />
+            <UserDetail label="Fecha de Registro:" value={new Date(user.createdAt).toLocaleDateString()} />
+            <UserDetail label="Usuario Premium:" value={user.isPremium ? "Sí" : "No"} />
+          </>
+        )}
+        {isEditing && (
+          <button
+            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            onClick={handleSave}
+          >
+            Guardar Cambios
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-// Subcomponente para simplificar los detalles del usuario
-const UserDetail: React.FC<{ label: string; value: string }> = ({
-  label,
-  value,
-}) => (
+const UserDetail: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <div>
     <h2 className="text-customBrown font-semibold py-1 pl-4">{label}</h2>
     <p className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96">
@@ -102,3 +170,5 @@ const UserDetail: React.FC<{ label: string; value: string }> = ({
 );
 
 export default Profile;
+
+
