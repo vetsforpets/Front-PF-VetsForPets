@@ -16,8 +16,12 @@ interface PetFormInputs {
   clinicalNotes: string;
   previousConditions: string;
 }
+interface petDetailProps {
+  setFormPet?: React.Dispatch<React.SetStateAction<boolean>>;
+  formPet?: boolean;
+}
 
-const PetDetails = () => {
+const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
@@ -36,6 +40,9 @@ const PetDetails = () => {
   });
 
   const onSubmit: SubmitHandler<PetFormInputs> = (data) => {
+    if (!!setFormPet) {
+      setFormPet(!formPet)
+    }
     console.log("Pet data submitted: ", data);
     reset(); 
   };
@@ -43,6 +50,13 @@ const PetDetails = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg max-w-lg sm:max-w-lg w-full mx-auto">
+        {formPet && <button onClick={()=>{
+        if (!!setFormPet) {
+          setFormPet(!formPet)
+        }
+      }}>
+        <img className="h-4 w-4" src="images/cross.png" alt="" />
+      </button>}
         <div className="space-y-4">
           <img
             src="/Dog.svg"
@@ -160,7 +174,7 @@ const PetDetails = () => {
 
  
 
-          <Controller
+          {/* <Controller
             name="weight"
             control={control}
             rules={{ required: "El peso es obligatorio" }}
@@ -177,7 +191,7 @@ const PetDetails = () => {
                 {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
               </div>
             )}
-          />
+          /> */}
 
        
 
@@ -239,7 +253,7 @@ const PetDetails = () => {
       
 
  
-      <button className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition">
+      <button type="submit" className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition">
           Crear Mascota
         </button>
         </div>

@@ -39,10 +39,6 @@ const Profile: React.FC<UserProfileProps> = ({
           <UserDetail label="Dirección:" value={address} />
           <UserDetail label="Ciudad:" value={city} />
         </div>
-
-        <button className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition">
-          Agregar Mascota
-        </button>
       </div>
     </div>
   );
