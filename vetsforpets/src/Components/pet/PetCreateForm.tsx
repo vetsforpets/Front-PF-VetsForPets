@@ -3,6 +3,7 @@
 import { newPet } from "@/services/servicesPets";
 import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 
 interface PetFormInputs {
   name: string;
@@ -45,10 +46,28 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
     try {
       console.log(petData);
       await newPet(petData);
-      alert(`mascota creada con exito`);
+      toast.success("Mascota creada con éxito", {
+        duration: 3000,
+        style: {
+          color: "#155724",
+          background: "#d4edda",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #c3e6cb",
+        },
+      });
     } catch (error) {
       console.error("Error al crear mascota:", error);
-      alert(`Error al crear mascota: ${error}`);
+      toast.error("Error al crear la mascota", {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
     }
     reset();
   };
