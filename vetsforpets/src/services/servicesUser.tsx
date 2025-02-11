@@ -1,13 +1,19 @@
-import { IUserFormData, IUserResponseData, IVetFormData, IVetFormDataPrev, IVetResponseData } from "@/interfaces/registerTypes";
-import { ILoginResponse, IUserCredentials } from "./interfaces";
+import {
+  IUserFormData,
+  IUserResponseData,
+  IVetFormData,
+  IVetFormDataPrev,
+  IVetResponseData,
+} from "@/interfaces/registerTypes";
+import { IUserCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function loginUser(
   userCredentials: IUserCredentials
-): Promise<ILoginResponse> {
+): Promise<string> {
   try {
-    const response = await fetch(`${apiURL}/users/login`, {
+    const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +25,7 @@ export async function loginUser(
       throw new Error("Error al enviar formulario de inicio de sesión");
     }
 
-    const data: ILoginResponse = await response.json();
+    const data: string = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -28,8 +34,6 @@ export async function loginUser(
     throw new Error("Ocurrió un error desconocido");
   }
 }
-
-
 
 export async function RegisterUser(
   userRegisterData: IUserFormData
@@ -57,8 +61,7 @@ export async function RegisterUser(
   }
 }
 
-
-export async function RegisterVet (
+export async function RegisterVet(
   vetRegisterData: IVetFormDataPrev
 ): Promise<IVetResponseData> {
   try {
@@ -69,7 +72,9 @@ export async function RegisterVet (
       },
       body: JSON.stringify(vetRegisterData),
     });
-
+    console.log('====================================');
+    console.log(response);
+    console.log('====================================');
     if (!response.ok) {
       throw new Error("Error al enviar formulario de registro de veterinaria");
     }

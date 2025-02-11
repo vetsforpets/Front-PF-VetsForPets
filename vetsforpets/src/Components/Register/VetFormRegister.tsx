@@ -26,7 +26,7 @@ function VetFormRegister() {
       email: "",
       is24Hours: false,
       phoneNumber: "",
-      location: ""
+      location: "anything"
     },
     mode: "onChange"
   });
@@ -43,7 +43,7 @@ function VetFormRegister() {
     await RegisterVet(submmitData)
     // await registerUserfetch(submitData)    
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
-    router.push("/sign-in")
+    router.push("/login")
   };
 
   useEffect(() => {
@@ -68,7 +68,7 @@ function VetFormRegister() {
         render={({ field, fieldState: { error } }) => (
           <div className='flex gap-4 items-center justify-center'>
             <label className='text-sm ml-2 w-40'>
-              Imgen de perfil
+              Imagen de perfil
             </label>
             <input {...field} type="file" className="customInput" />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}

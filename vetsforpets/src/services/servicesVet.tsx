@@ -16,9 +16,6 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
         }
 
         const data: IVetCredentials[] = await response.json();
-
-        localStorage.setItem('vetData', JSON.stringify(data));
-
         return data;
     } catch (error) {
         if (error instanceof Error) {
