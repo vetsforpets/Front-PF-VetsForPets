@@ -6,14 +6,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
- vista-usuario
 import { RegisterVet } from '@/services/servicesVet';
 import { toast } from 'sonner';
 
-import { RegisterVet } from '@/services/servicesUser';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
- dev
+
 
 // import { toast } from "react-toastify";
 
