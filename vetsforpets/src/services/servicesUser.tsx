@@ -11,7 +11,7 @@ const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function loginUser(
   userCredentials: IUserCredentials
-): Promise<string> {
+): Promise<{ success: string; token: string }> {
   try {
     const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",
@@ -25,7 +25,7 @@ export async function loginUser(
       throw new Error("Error al enviar formulario de inicio de sesión");
     }
 
-    const data: string = await response.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     if (error instanceof Error) {
@@ -72,9 +72,9 @@ export async function RegisterVet(
       },
       body: JSON.stringify(vetRegisterData),
     });
-    console.log('====================================');
+    console.log("====================================");
     console.log(response);
-    console.log('====================================');
+    console.log("====================================");
     if (!response.ok) {
       throw new Error("Error al enviar formulario de registro de veterinaria");
     }

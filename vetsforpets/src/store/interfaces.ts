@@ -1,18 +1,10 @@
 export interface IUserStored {
   token: string;
-  id: number;
-  name: string;
-  email: string;
-  address: string;
-  phone: string;
-  role?: string;
-  credential?: {
-    id: number;
-  };
+  id: string;
 }
 
 export interface IUserState {
   userData: IUserStored | null;
-  setUserData: (token: string) => void;
+  setUserData: (data: IUserStored) => void;
   clearUserData: () => void;
 }
