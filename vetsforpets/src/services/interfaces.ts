@@ -92,3 +92,17 @@ export interface IPetRegisterData {
   profileImg: string;
   userId: string;
 }
+
+export interface IPetEditData {
+  id: string;
+  name: string;
+  age: number;
+  animalType: string;
+  birthdate: string;
+  breed: string;
+  sex: string;
+  notes: string;
+  isSterilized: string;
+  profileImg: string;
+  userId: string;
+}
