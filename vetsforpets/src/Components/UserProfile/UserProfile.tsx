@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import PetDetails from "../pet/petDetails";
+import PetCreateForm from "../pet/PetCreateForm";
+import PetDetails from "../pet/PetDetails";
 import PetPreview from "../pet/PetPreview";
 import Profile from "./Profile";
 
@@ -28,7 +29,7 @@ export default function ProfileView() {
             </button>
           )}
           {addingPet && (
-            <PetDetails setAddingPet={setAddingPet} addingPet={addingPet} />
+            <PetCreateForm setAddingPet={setAddingPet} addingPet={addingPet} />
           )}
         </div>
 
@@ -47,7 +48,7 @@ export default function ProfileView() {
           </div>
 
           {/* //Detalle de la mascota */}
-          <PetDetails setAddingPet={setAddingPet} addingPet={addingPet} />
+          <PetDetails />
         </div>
       </div>
     </div>

@@ -79,3 +79,16 @@ interface IAppointment {
   status: string;
   user: string;
 }
+
+export interface IPetRegisterData {
+  name: string;
+  age: number;
+  animalType: string;
+  birthdate: string;
+  breed: string;
+  sex: string;
+  notes: string;
+  isSterilized: string;
+  profileImg: string;
+  userId: string;
+}
