@@ -40,14 +40,7 @@ export default function ProfileView() {
       <div className="max-w-6xl mx-auto space-y-4">
 
         {/* //!Datos del ususario */}
-        <Profile
-          name="Juan Perez"
-          email="juanperez@example.com"
-          phone="+54 123 456 789"
-          address="Calle Falsa 123, Ciudad"
-          city="Buenos Aires"
-          profileImage="/Dog.svg" // Puedes cambiarlo por cualquier imagen
-        />
+        <Profile/>
   <div className="flex justify-center">
         {!formPet && <button onClick={onClickButtonCreatePet} className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition">
           Agregar Mascota
