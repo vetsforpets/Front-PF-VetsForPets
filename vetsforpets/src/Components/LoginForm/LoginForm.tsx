@@ -41,7 +41,7 @@ export default function LoginForm() {
         setUserData({ token: data.token, id: decodedToken.id });
         console.log(userData);
         reset();
-        // router.push("/");
+        router.push("/");
       } else {
         console.error("No se recibió un token válido");
       }
