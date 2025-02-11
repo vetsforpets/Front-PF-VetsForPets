@@ -16,6 +16,7 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
         }
 
         const data: IVetCredentials[] = await response.json();
+        console.log("Datos de veterinarias:", data); 
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -25,17 +26,19 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
     }
 }
 
+export const getVetById = async (vetId: string | null): Promise<IVetCredentials | null> => {
+    try {
+        const data = await fetchVetData();
 
-export function getVetById(vetId: string): IVetCredentials | null {
-    const storedData = localStorage.getItem('vetData');
-    
-    if (storedData) {
-        const vetData: IVetCredentials[] = JSON.parse(storedData);
+        if (data) {
+            const vet = data.find((vet) => vet.id === vetId);
+            console.log("Veterinaria encontrada:", vet); 
+            return vet || null;
+        }
 
-        const vet = vetData.find((vet) => vet.id === vetId);
-        return vet || null;
+        return null;
+    } catch (error) {
+        console.error("Error al buscar veterinaria por ID:", error);
+        return null;
     }
-
-    
-    return null;
-}
+};
