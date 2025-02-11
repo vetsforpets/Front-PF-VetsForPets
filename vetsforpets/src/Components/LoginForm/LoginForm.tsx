@@ -7,8 +7,12 @@ import { useUserStore } from "@/store";
 import { CredentialResponse } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+  vista-usuario
+import { toast } from "sonner";
+
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+  dev
 
 interface LoginFormInputs {
   email: string;
@@ -29,6 +33,16 @@ export default function LoginForm() {
   
   const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
     console.log("Token de Google:", credentialResponse.credential);
+    toast.success("Usuario logueado con éxito", {
+      duration: 3000,
+      style: {
+        color: "#155724",
+        background: "#d4edda",
+        borderRadius: "8px",
+        padding: "16px",
+        border: "1px solid #c3e6cb",
+    },
+  })
     router.push("/");
   };
 
@@ -45,12 +59,33 @@ export default function LoginForm() {
         setUserData({ token: data.token, id: decodedToken.id });
         console.log(userData);
         reset();
+        toast.success("Usuario logueado con éxito", {
+          duration: 3000,
+          style: {
+            color: "#155724",
+            background: "#d4edda",
+            borderRadius: "8px",
+            padding: "16px",
+            border: "1px solid #c3e6cb",
+        },
+      })
+
         router.push("/");
       } else {
         console.error("No se recibió un token válido");
       }
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
+      toast.error("Error al iniciar sesión, usuario o contraseña incorrecto", {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
     }
   };
  

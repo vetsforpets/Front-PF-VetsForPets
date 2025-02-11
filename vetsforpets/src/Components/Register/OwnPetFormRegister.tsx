@@ -7,6 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { RegisterUser } from '@/services/servicesUser';
+import { toast } from 'sonner';
 
 // import { toast } from "react-toastify";
 
@@ -45,11 +46,31 @@ function OwnPetFormRegister() {
     console.log('====================================');
     await RegisterUser(data)
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
+    toast.success("Usuario registrado con éxito", {
+      duration: 3000,
+      style: {
+        color: "#155724",
+        background: "#d4edda",
+        borderRadius: "8px",
+        padding: "16px",
+        border: "1px solid #c3e6cb",
+    },
+  })
     router.push("/login")
   };
   useEffect(()=>{
     if(user){
       // toast.warning("Protected route")
+      toast.error("Ruta Protegida", {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
       redirect("/")
     }
   }, [])

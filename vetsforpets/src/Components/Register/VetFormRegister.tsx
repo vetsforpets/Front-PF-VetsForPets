@@ -6,9 +6,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+ vista-usuario
+import { RegisterVet } from '@/services/servicesVet';
+import { toast } from 'sonner';
+
 import { RegisterVet } from '@/services/servicesUser';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+ dev
 
 // import { toast } from "react-toastify";
 
@@ -48,6 +53,17 @@ function VetFormRegister() {
     await RegisterVet(submmitData)
     // await registerUserfetch(submitData)    
     // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
+    toast.success("Usuario registrado con éxito", {
+      duration: 3000,
+      style: {
+        color: "#155724",
+        background: "#d4edda",
+        borderRadius: "8px",
+        padding: "16px",
+        border: "1px solid #c3e6cb",
+    },
+  })
+
     router.push("/login")
   };
 
