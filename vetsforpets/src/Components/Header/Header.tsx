@@ -2,10 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store";
+import { LogoutButton } from "../LogoutButton/LogoutButton";
 
 export function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+
+
+  const userData = useUserStore((state) => state.userData);
+  const isAuthenticated = !!userData?.id;
 
   const handleNavigation = (path: string): void => {
     router.push(path);
@@ -14,86 +20,62 @@ export function Header() {
 
   return (
     <div className="flex justify-between items-center m-7 p-4 rounded-full font-tenor shadowFull bg-[#FFFAD7] relative">
-      {/* Logo */}
       <div className="flex items-center">
-      <button
-          onClick={() => handleNavigation("/")}
-          className="flex flex-col items-center"
-        >
-        <img src="/images/logo.png" className="w-20" alt="Logo" />
+        <button onClick={() => handleNavigation("/")} className="flex flex-col items-center">
+          <img src="/images/logo.png" className="w-20" alt="Logo" />
         </button>
       </div>
       <div>
-        <button
-          onClick={() => handleNavigation("/vets")}
-          className="customButton"
-          >
+        <button onClick={() => handleNavigation("/vets")} className="customButton">
           Veterinarias
         </button>
       </div>
       <div>
-        <button
-          onClick={() => handleNavigation("/register")}
-          className="flex flex-col items-center"
-        >
-        <img
-          src="/images/emergency.png"
-          className="w-10 bg-yellow-200 rounded-full"
-          alt="sirena"
-        />
-        <p className="font-kiwi">URGENCIA</p>
+        <button onClick={() => handleNavigation("/register")} className="flex flex-col items-center">
+          <img src="/images/emergency.png" className="w-10 bg-yellow-200 rounded-full" alt="sirena" />
+          <p className="font-kiwi">URGENCIA</p>
         </button>
       </div>
       <div className="flex gap-5">
-        <button
-          onClick={() => handleNavigation("/login")}
-          className="customButton"
-        >
+        <button onClick={() => handleNavigation("/login")} className="customButton">
           Iniciar Sesión
         </button>
       </div>
 
-      {/* Botón del menú hamburguesa (con animación) */}
       <button onClick={() => setIsOpen(!isOpen)} className="p-2 z-10">
         <div className="w-6 h-6 flex flex-col justify-between items-center space-y-1 hover:scale-105 transform transition-all duration-300">
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""}`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "opacity-0" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "opacity-0" : ""}`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
           ></div>
         </div>
       </button>
 
       {isOpen && (
-        <div className="absolute top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-5 w-[240px] h-[240px]">
-          <button
-            onClick={() => handleNavigation("/dashboard")}
-            className="customButtonDos"
-          >
-            Perfil Usuario
-          </button>
-          <button
-            onClick={() => handleNavigation("/dashboard-vet")}
-            className="customButtonDos"
-          >
-            Perfil Veterinaria
-          </button>
-          <button
-            onClick={() => handleNavigation("/register")}
-            className="customButtonDos"
-          >
+        <div className="absolute top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-5 w-[240px] flex-grow">
+          {isAuthenticated ? (
+            <>
+              <button onClick={() => handleNavigation("/dashboard")} className="customButtonDos">
+                Perfil Usuario
+              </button>
+              <button onClick={() => handleNavigation("/dashboard-vet")} className="customButtonDos">
+                Perfil Veterinaria
+              </button>
+            </>
+          ) : (
+            <button onClick={() => handleNavigation("/login")} className="customButtonDos">
+              Iniciar Sesión
+            </button>
+          )}
+          <button onClick={() => handleNavigation("/register")} className="customButtonDos">
             Crear Cuenta
           </button>
+          <LogoutButton />
         </div>
       )}
     </div>
