@@ -8,11 +8,18 @@ export interface IUserRegisterData {
 }
 
 export interface IUserData {
-  id: number;
+  id: string;
   name: string;
+  lastName: string;
+  age: number;
   email: string;
-  address: string;
-  phone: string;
+  password: string;
+  phoneNumber: string;
+  createdAt: string;
+  imgProfile: string;
+  isPremium: boolean;
+  appointments: IAppointment[];
+  isVet: boolean;
 }
 
 export interface IUserCredentials {
@@ -31,36 +38,44 @@ export interface IVetCredentials {
   schedule: dayOpening;
   is24Hours: boolean;
   imgProfile: string;
-
 }
 
 export interface dayOpening {
   monday: {
     open: string;
     close: string;
-  },
+  };
   tuesday: {
     open: string;
     close: string;
-  },
+  };
   wednesday: {
     open: string;
     close: string;
-  },
+  };
   thursday: {
     open: string;
     close: string;
-  },
+  };
   friday: {
     open: string;
     close: string;
-  },
+  };
   saturday: {
     open: string;
     close: string;
-  },
+  };
   Sunday: {
     open: string;
     close: string;
-  },
+  };
+}
+
+interface IAppointment {
+  id: string;
+  date: string; // Puede ser `Date` si lo parseas
+  time: string;
+  description: string;
+  status: string;
+  user: string;
 }

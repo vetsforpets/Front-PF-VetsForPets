@@ -5,9 +5,47 @@ import {
   IVetFormDataPrev,
   IVetResponseData,
 } from "@/interfaces/registerTypes";
-import { IUserCredentials } from "./interfaces";
+import { IUserCredentials, IUserData } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
+export const fetchUserData = async () => {
+  try {
+    const response = await fetch(`${apiURL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al obtener los datos del Usuario");
+    }
+
+    const data: IUserData[] = await response.json();
+    console.log("Datos recibidos del backend:", data);
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error:", error.message);
+      throw new Error(error.message);
+    }
+    throw new Error("Ocurrió un error desconocido al obtener los datos");
+  }
+};
+
+// export function getUserById(userId: string): IUserData | null {
+//   const storedData = localStorage.getItem("userData");
+
+//   if (storedData) {
+//     const userData: IUserData[] = JSON.parse(storedData);
+
+//     const user = userData.find((user) => user.id === userId);
+//     return user || null;
+//   }
+
+//   return null;
+// }
 
 export async function loginUser(
   userCredentials: IUserCredentials
