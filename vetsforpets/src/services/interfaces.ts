@@ -21,6 +21,7 @@ export interface IUserCredentials {
 }
 
 export interface IVetCredentials {
+  id: string;
   name: string;
   email: string;
   phoneNumber: string;
