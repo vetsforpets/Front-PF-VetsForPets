@@ -19,4 +19,5 @@ export function LogoutButton() {
             Cerrar Sesión
         </button>
     );
+
 }
