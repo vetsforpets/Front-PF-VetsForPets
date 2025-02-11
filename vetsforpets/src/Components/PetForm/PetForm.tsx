@@ -1,34 +1,37 @@
 "use client";
+import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 interface PetFormInputs {
   name: string;
-  birthDate: string; 
+  age: number;
+  birthdate: string;
   animalType: string;
   breed: string;
   sex: string;
   notes: string;
   imgProfile: string;
-  weight: string; 
-  isSterilized: string; 
-  clinicalNotes: string;
-  previousConditions: string;
+  isSterilized: string;
+  profileImg: string;
+  userId: string;
 }
 
 export default function PetRegisterForm() {
+  const { userData } = useUserStore();
+
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
-      birthDate: "",
+      age: 0,
+      birthdate: "",
       animalType: "",
       breed: "",
       sex: "",
       notes: "",
       imgProfile: "",
-      weight: "",
       isSterilized: "",
-      clinicalNotes: "",
-      previousConditions: "",
+      profileImg: "",
+      userId: userData?.id,
     },
     mode: "onChange",
   });
@@ -62,7 +65,9 @@ export default function PetRegisterForm() {
                 placeholder="Escribe el nombre de tu mascota"
                 aria-label="Nombre de la Mascota"
               />
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -72,7 +77,9 @@ export default function PetRegisterForm() {
         <Controller
           name="birthDate"
           control={control}
-          rules={{ required: "La fecha de nacimiento de la mascota es obligatoria" }}
+          rules={{
+            required: "La fecha de nacimiento de la mascota es obligatoria",
+          }}
           render={({ field, fieldState: { error } }) => (
             <div>
               <input
@@ -82,7 +89,9 @@ export default function PetRegisterForm() {
                 className="customInput"
                 aria-label="Fecha de Nacimiento"
               />
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -95,7 +104,12 @@ export default function PetRegisterForm() {
           rules={{ required: "El tipo de animal es obligatorio" }}
           render={({ field, fieldState: { error } }) => (
             <div>
-              <select {...field} id="animalType" className="customInput" aria-label="Tipo de animal">
+              <select
+                {...field}
+                id="animalType"
+                className="customInput"
+                aria-label="Tipo de animal"
+              >
                 <option value="">Tipo de mascota</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -104,7 +118,9 @@ export default function PetRegisterForm() {
                 <option value="Aves">Aves</option>
                 <option value="Otros">Otros</option>
               </select>
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -124,7 +140,9 @@ export default function PetRegisterForm() {
                 placeholder="Escribe la raza"
                 aria-label="Raza"
               />
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -137,12 +155,19 @@ export default function PetRegisterForm() {
           rules={{ required: "El sexo es obligatorio" }}
           render={({ field, fieldState: { error } }) => (
             <div>
-              <select {...field} id="sex" className="customInput" aria-label="Sexo">
+              <select
+                {...field}
+                id="sex"
+                className="customInput"
+                aria-label="Sexo"
+              >
                 <option value="">Sexo</option>
                 <option value="Macho">Macho</option>
                 <option value="Hembra">Hembra</option>
               </select>
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -163,7 +188,9 @@ export default function PetRegisterForm() {
                 placeholder="Escribe el peso (kg)"
                 aria-label="Peso"
               />
-              {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+              {error && (
+                <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              )}
             </div>
           )}
         />
@@ -175,7 +202,12 @@ export default function PetRegisterForm() {
           control={control}
           render={({ field }) => (
             <div>
-              <select {...field} id="isSterilized" className="customInput" aria-label="Esterilización">
+              <select
+                {...field}
+                id="isSterilized"
+                className="customInput"
+                aria-label="Esterilización"
+              >
                 <option value="">Selecciona</option>
                 <option value="Esterilizado">Esterilizado</option>
                 <option value="No esterilizado">No esterilizado</option>
@@ -390,9 +422,6 @@ export default function PetRegisterForm() {
 //   );
 // }
 
-
-
-
 // "use client";
 // import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
@@ -552,8 +581,6 @@ export default function PetRegisterForm() {
 //     </form>
 //   );
 // }
-
-
 
 // "use client";
 // import { useForm, Controller, SubmitHandler } from "react-hook-form";
@@ -757,7 +784,6 @@ export default function PetRegisterForm() {
 //   );
 // }
 
-
 // "use client";
 // import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
@@ -935,7 +961,7 @@ export default function PetRegisterForm() {
 //       <select
 //         {...field}
 //         className="customInput"
-//         value={field.value ? "true" : "false"} 
+//         value={field.value ? "true" : "false"}
 //       >
 //         <option value="true">Sí</option>
 //         <option value="false">No</option>
@@ -943,8 +969,6 @@ export default function PetRegisterForm() {
 //     </div>
 //   )}
 // />
-
- 
 
 //       <Controller
 //         name="clinicalNotes"

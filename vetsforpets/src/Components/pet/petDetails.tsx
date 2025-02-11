@@ -1,69 +1,73 @@
 // components/PetDetails.js
 "use client";
-import React from "react";
+import { useUserStore } from "@/store";
+import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 interface PetFormInputs {
   name: string;
-  birthDate: string;
+  age: number;
+  birthdate: string;
   animalType: string;
   breed: string;
   sex: string;
   notes: string;
   imgProfile: string;
-  weight: string;
   isSterilized: string;
-  clinicalNotes: string;
-  previousConditions: string;
+  profileImg: string;
+  userId: string;
 }
 interface petDetailProps {
-  setFormPet?: React.Dispatch<React.SetStateAction<boolean>>;
-  formPet?: boolean;
+  setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
+  addingPet: boolean;
 }
 
-const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
+const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
+  const { userData } = useUserStore();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
-      birthDate: "",
+      age: 0,
+      birthdate: "",
       animalType: "",
       breed: "",
       sex: "",
       notes: "",
       imgProfile: "",
-      weight: "",
       isSterilized: "",
-      clinicalNotes: "",
-      previousConditions: "",
+      profileImg: "",
+      userId: userData?.id,
     },
-    mode: "onChange", 
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<PetFormInputs> = (data) => {
-    if (!!setFormPet) {
-      setFormPet(!formPet)
-    }
     console.log("Pet data submitted: ", data);
-    reset(); 
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg max-w-lg sm:max-w-lg w-full mx-auto">
-        {formPet && <button onClick={()=>{
-        if (!!setFormPet) {
-          setFormPet(!formPet)
-        }
-      }}>
-        <img className="h-4 w-4" src="images/cross.png" alt="" />
-      </button>}
+        {addingPet && (
+          <button
+            onClick={() => {
+              if (!!setAddingPet) {
+                setAddingPet(!addingPet);
+              }
+            }}
+          >
+            <img className="h-4 w-4" src="images/cross.png" alt="" />
+          </button>
+        )}
         <div className="space-y-4">
           <img
             src="/Dog.svg"
             alt="user"
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
           />
-
 
           <Controller
             name="name"
@@ -78,11 +82,12 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
                   placeholder="Nombre"
                   aria-label="Nombre de la Mascota"
                 />
-                {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
               </div>
             )}
           />
-
 
           <Controller
             name="animalType"
@@ -106,12 +111,12 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
                   <option value="Aves">Aves</option>
                   <option value="Otros">Otros</option>
                 </select>
-                {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
               </div>
             )}
           />
-
-     
 
           <Controller
             name="breed"
@@ -127,8 +132,6 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
             )}
           />
 
-    
-    
           <Controller
             name="sex"
             control={control}
@@ -147,11 +150,12 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
                   <option value="Macho">Macho</option>
                   <option value="Hembra">Hembra</option>
                 </select>
-                {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
               </div>
             )}
           />
-
 
           {/* Fecha de Nacimiento */}
           {/* <Controller
@@ -171,29 +175,6 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
               </div>
             )}
           /> */}
-
- 
-
-          {/* <Controller
-            name="weight"
-            control={control}
-            rules={{ required: "El peso es obligatorio" }}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <input
-                  {...field}
-                  id="weight"
-                  type="text"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  placeholder="Peso (kg)"
-                  aria-label="Peso"
-                />
-                {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-              </div>
-            )}
-          /> */}
-
-       
 
           <Controller
             name="isSterilized"
@@ -216,25 +197,6 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
             )}
           />
 
-     
-
-          <Controller
-            name="previousConditions"
-            control={control}
-            render={({ field }) => (
-              <textarea
-                {...field}
-                id="previousConditions"
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                placeholder="Condiciones previas"
-                aria-label="Condiciones previas"
-                rows={4}
-              />
-            )}
-          />
-
-   
-
           <Controller
             name="notes"
             control={control}
@@ -250,16 +212,47 @@ const PetDetails: React.FC<petDetailProps> = ({setFormPet, formPet}) => {
             )}
           />
         </div>
-      
 
- 
-      <button type="submit" className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition">
-          Crear Mascota
-        </button>
-        </div>
+        {/* CREACION DE MASCOTA */}
+        {addingPet && !isEditing && (
+          <button
+            type="submit"
+            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+          >
+            Crear Mascota
+          </button>
+        )}
+
+        {/* EDICION DE DATOS */}
+        {isEditing && (
+          <div className="flex justify-evenly">
+            <button
+              type="submit"
+              className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsEditing(!isEditing)}
+              className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            >
+              Cancelar
+            </button>
+          </div>
+        )}
+
+        {!isEditing && !addingPet && (
+          <button
+            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            onClick={() => setIsEditing(!isEditing)}
+          >
+            Editar datos
+          </button>
+        )}
+      </div>
     </form>
   );
 };
 
 export default PetDetails;
-
