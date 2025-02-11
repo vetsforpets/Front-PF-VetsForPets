@@ -1,3 +1,40 @@
+export interface IUserResponseDataDashboard {
+    id: string,
+    name: string
+    lastName: string,
+    age: 0,
+    email: string,
+    password: string,
+    phoneNumbe: string,
+    createdAt: Date,
+    imgProfile: string,
+    isPremium: boolean,
+    appointments: [
+      {
+        id: string,
+        date: Date,
+        time: string,
+        description: string,
+        status: string,
+        user: string
+      }
+    ],
+    isVet: true
+} 
+
+export interface IPetResponseData {
+    id: string,
+    name: string,
+    age: number,
+    animalType: string,
+    birthdate: string,
+    breed: string,
+    sex: string,
+    isSterilized: boolean,
+    notes: string,
+    profileImg: string
+  
+}
 
   export interface IUserFormData {
     name: string,
@@ -9,6 +46,10 @@
     phoneNumber: string,
     imgProfile: string,
   } 
+  
+
+
+
   export interface IUserResponseData {
           id: string,
           nombre: string,

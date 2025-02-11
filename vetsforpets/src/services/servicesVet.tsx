@@ -1,3 +1,4 @@
+import { IVetFormDataPrev, IVetResponseData } from "@/interfaces/registerTypes";
 import { IVetCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -16,6 +17,7 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
         }
 
         const data: IVetCredentials[] = await response.json();
+        console.log("Datos de veterinarias:", data); 
         return data;
     } catch (error) {
         if (error instanceof Error) {
@@ -25,17 +27,50 @@ export async function fetchVetData(): Promise<IVetCredentials[] | null> {
     }
 }
 
+export const getVetById = async (vetId: string | null): Promise<IVetCredentials | null> => {
+    try {
+        const data = await fetchVetData();
 
-export function getVetById(vetId: string): IVetCredentials | null {
-    const storedData = localStorage.getItem('vetData');
-    
-    if (storedData) {
-        const vetData: IVetCredentials[] = JSON.parse(storedData);
+        if (data) {
+            const vet = data.find((vet) => vet.id === vetId);
+            console.log("Veterinaria encontrada:", vet); 
+            return vet || null;
+        }
 
-        const vet = vetData.find((vet) => vet.id === vetId);
-        return vet || null;
+        return null;
+    } catch (error) {
+        console.error("Error al buscar veterinaria por ID:", error);
+        return null;
     }
+};
 
-    
-    return null;
-}
+
+
+export async function RegisterVet(
+    vetRegisterData: IVetFormDataPrev
+  ): Promise<IVetResponseData> {
+    try {
+      const response = await fetch(`${apiURL}/auth/vetsignup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(vetRegisterData),
+      });
+      console.log("====================================");
+      console.log(response);
+      console.log("====================================");
+      if (!response.ok) {
+        throw new Error("Error al enviar formulario de registro de veterinaria");
+      }
+  
+      const data: IVetResponseData = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("Ocurrió un error desconocido");
+    }
+  }
+  

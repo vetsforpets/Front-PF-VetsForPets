@@ -1,52 +1,71 @@
-// components/PetDetails.js
 "use client";
+
+import { newPet } from "@/services/servicesPets";
 import { useUserStore } from "@/store";
-import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 interface PetFormInputs {
   name: string;
   age: number;
-  birthdate: string;
   animalType: string;
+  birthdate: string;
   breed: string;
   sex: string;
-  notes: string;
-  imgProfile: string;
   isSterilized: string;
   profileImg: string;
+  notes: string;
   userId: string;
 }
+interface petDetailProps {
+  setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
+  addingPet: boolean;
+}
 
-const PetDetails = () => {
+const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
   const { userData } = useUserStore();
-  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
-      age: 0,
+      age: undefined,
       birthdate: "",
       animalType: "",
       breed: "",
       sex: "",
       notes: "",
-      imgProfile: "",
       isSterilized: "",
-      profileImg: "",
+      profileImg:
+        "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
       userId: userData?.id,
     },
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<PetFormInputs> = (data) => {
-    console.log("Pet data submitted: ", data);
+  const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
+    try {
+      console.log(petData);
+      await newPet(petData);
+    } catch (error) {
+      console.error("Error al crear mascota:", error);
+      alert(`Error al crear mascota: ${error}`);
+    }
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg max-w-lg sm:max-w-lg w-full mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+      <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg w-1/3 mx-auto">
+        {addingPet && (
+          <button
+            onClick={() => {
+              if (!!setAddingPet) {
+                setAddingPet(!addingPet);
+              }
+            }}
+          >
+            <img className="h-4 w-4" src="images/cross.png" alt="" />
+          </button>
+        )}
         <div className="space-y-4">
           <img
             src="/Dog.svg"
@@ -66,6 +85,40 @@ const PetDetails = () => {
                   className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
                   placeholder="Nombre"
                   aria-label="Nombre de la Mascota"
+                />
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
+              </div>
+            )}
+          />
+          <Controller
+            name="age"
+            control={control}
+            rules={{
+              required: "La edad de la mascota es obligatoria",
+              min: { value: 0, message: "La edad no puede ser negativa" },
+            }}
+            render={({
+              field: { onChange, value, ...field },
+              fieldState: { error },
+            }) => (
+              <div>
+                <input
+                  {...field}
+                  id="age"
+                  type="number"
+                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  placeholder="Edad"
+                  aria-label="Edad de la Mascota"
+                  value={value !== undefined ? value : ""} // Evita el error de undefined
+                  onChange={(e) => {
+                    const newValue =
+                      e.target.value === ""
+                        ? undefined
+                        : Number(e.target.value);
+                    onChange(newValue);
+                  }}
                 />
                 {error && (
                   <p className="text-red-500 text-xs mt-1">{error.message}</p>
@@ -104,6 +157,31 @@ const PetDetails = () => {
           />
 
           <Controller
+            name="birthdate"
+            control={control}
+            rules={{ required: "La fecha de nacimiento es obligatoria" }}
+            render={({
+              field: { onChange, value, ...field },
+              fieldState: { error },
+            }) => (
+              <div>
+                <input
+                  {...field}
+                  type="date" // Asegura que el input devuelva una fecha válida en formato YYYY-MM-DD
+                  id="birthdate"
+                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  aria-label="Fecha de nacimiento"
+                  value={value ? value.split("T")[0] : ""} // Asegura que se vea en el formato correcto
+                  onChange={(e) => onChange(e.target.value)} // Normaliza la salida
+                />
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
+              </div>
+            )}
+          />
+
+          <Controller
             name="breed"
             control={control}
             render={({ field }) => (
@@ -132,8 +210,8 @@ const PetDetails = () => {
                   <option value="" disabled hidden>
                     Sexo
                   </option>
-                  <option value="Macho">Macho</option>
-                  <option value="Hembra">Hembra</option>
+                  <option value="Male">Macho</option>
+                  <option value="Female">Hembra</option>
                 </select>
                 {error && (
                   <p className="text-red-500 text-xs mt-1">{error.message}</p>
@@ -142,42 +220,32 @@ const PetDetails = () => {
             )}
           />
 
-          {/* Fecha de Nacimiento */}
-          {/* <Controller
-            name="birthDate"
-            control={control}
-            rules={{ required: "La fecha de nacimiento de la mascota es obligatoria" }}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <input
-                  {...field}
-                  id="birthDate"
-                  type="date"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
-                  aria-label="Fecha de Nacimiento"
-                />
-                {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-              </div>
-            )}
-          /> */}
-
           <Controller
             name="isSterilized"
             control={control}
-            render={({ field }) => (
+            rules={{ required: "Debe seleccionar si está esterilizado o no" }}
+            render={({
+              field: { onChange, value, ...field },
+              fieldState: { error },
+            }) => (
               <div>
                 <select
                   {...field}
                   id="isSterilized"
                   className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                   aria-label="Esterilización"
+                  value={value !== undefined ? String(value) : ""}
+                  onChange={(e) => onChange(e.target.value === "true")}
                 >
                   <option value="" disabled hidden>
                     Esterilizado
                   </option>
-                  <option value="Esterilizado">Esterilizado: Sí</option>
-                  <option value="No esterilizado">Esterilizado: No</option>
+                  <option value="true">Esterilizado: Sí</option>
+                  <option value="false">Esterilizado: No</option>
                 </select>
+                {error && (
+                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                )}
               </div>
             )}
           />
@@ -198,33 +266,12 @@ const PetDetails = () => {
           />
         </div>
 
-        {/* EDICION DE DATOS */}
-        {isEditing && (
-          <div className="flex justify-evenly">
-            <button
-              type="submit"
-              className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
-            >
-              Guardar Cambios
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsEditing(!isEditing)}
-              className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
-            >
-              Cancelar
-            </button>
-          </div>
-        )}
-
-        {!isEditing && (
-          <button
-            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
-            onClick={() => setIsEditing(!isEditing)}
-          >
-            Editar datos
-          </button>
-        )}
+        <button
+          type="submit"
+          className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+        >
+          Crear Mascota
+        </button>
       </div>
     </form>
   );
