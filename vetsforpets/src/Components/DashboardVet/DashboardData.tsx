@@ -6,13 +6,15 @@ import DashboardUI from "./DashboardUI";
 import { IVetCredentials } from "@/services/interfaces";
 import { getVetById } from "@/services/servicesVet";  
 import { useUserStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 const DashboardData = () => {
     const [veterinaria, setVeterinaria] = useState<IVetCredentials | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const userData = useUserStore((state) => state.userData);
-
+    const router = useRouter()
+    
     useEffect(() => {
         // if (!userData || !userData.id) {
         //     setError("No se encontró la ID de veterinaria");
@@ -42,14 +44,27 @@ const DashboardData = () => {
             };
     
             getVetData();
-
+  
         }
-    }, [userData]); // Dependencia corregida
+    }, [userData]); 
+
+  useEffect(()=>{
+    if(!userData?.id){
+      router.push("/")
+    }
+  },[userData])
+  
+    if(userData?.id === undefined){
+      return <div>Cargando....</div>
+     } else {
+    
+
 
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
+}
 };
 
 export default DashboardData;
