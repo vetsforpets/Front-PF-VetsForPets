@@ -82,32 +82,32 @@ export interface IPetResponseData {
   } 
   export interface dayOpenings {
     monday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     tuesday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     wednesday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     thursday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     friday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     saturday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
     Sunday:{
-      apertura: string;
-      cierre: string;
+      open: string;
+      close: string;
     },
   }
 

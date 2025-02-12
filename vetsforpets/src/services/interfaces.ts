@@ -31,16 +31,18 @@ export interface IVetCredentials {
   id: string;
   name: string;
   email: string;
+  password: string;
   phoneNumber: string;
-  createdAtPetShop: string;
-  veterinarian: string;
-  licenseNumber: number;
-  schedule: dayOpening;
   is24Hours: boolean;
   imgProfile: string;
+  location: string;
+  createdAt: string;
+  veterinarian: string;
+  licenseNumber: number;
+  businessHours: dayOppening;
 }
 
-export interface dayOpening {
+export interface dayOppening {
   monday: {
     open: string;
     close: string;
@@ -71,7 +73,7 @@ export interface dayOpening {
   };
 }
 
-interface IAppointment {
+export interface IAppointment {
   id: string;
   date: string; // Puede ser `Date` si lo parseas
   time: string;

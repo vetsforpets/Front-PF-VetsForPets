@@ -1,6 +1,7 @@
 import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
 import vetexample from "@/../public/images/vetexample.jpeg"
+import { DashboardAppointments } from "./DashboardAppointments";
 
 interface DashboardUIProps {
     veterinaria: IVetCredentials;
@@ -36,7 +37,7 @@ const VetProfile = ({ veterinaria }: DashboardUIProps) => {
                 <div className="m-6 flex flex-col space-y-2">
                     <VetDetail label="Veterinario a cargo:" value={veterinaria.veterinarian}/>
                     <VetDetail label="Número de matrícula:" value={veterinaria.licenseNumber ? veterinaria.licenseNumber.toString() : "No disponible"} />
-                    <VetDetail label="Horarios:" value={veterinaria.schedule ? JSON.stringify(veterinaria.schedule) : "No disponible"} />
+                    <VetDetail label="Horarios:" value={veterinaria.businessHours ? JSON.stringify(veterinaria.businessHours) : "No disponible"} />
                     <VetDetail label="Email:" value={veterinaria.email} />
                     <VetDetail label="Teléfono:" value={veterinaria.phoneNumber} />
                 </div>
@@ -53,5 +54,7 @@ const VetDetail = ({ label, value }: VetDetailProps) => (
         </p>
     </div>
 );
+
+<DashboardAppointments/>
 
 export default VetProfile;
