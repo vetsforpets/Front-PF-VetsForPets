@@ -101,7 +101,7 @@ export function UpperBody() {
             layout="intrinsic"
             className="mx-auto font-tenor-sans"
           />
-          <p className="text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
+          <p className="font-kiwi text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
             Descripción de la imagen 2 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat porro natus
             sapiente pariatur adipisci hic sunt ipsum iure libero exercitationem aperiam inventore distinctio eveniet sit
             officiis repellat neque, numquam commodi.
@@ -110,7 +110,7 @@ export function UpperBody() {
       </div>
 
       <div>
-        <h2 className="text-center text-6xl font-tenor mt-9">Veterinarias destacadas</h2>
+        <h2 className="text-center text-6xl font-tenor m-9">Veterinarias destacadas</h2>
         <div className="flex justify-center items-center">
 
 
