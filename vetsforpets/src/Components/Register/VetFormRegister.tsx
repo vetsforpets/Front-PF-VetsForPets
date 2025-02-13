@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { IVetFormData } from '@/interfaces/registerTypes';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { RegisterVet } from '@/services/servicesVet';
 import { toast } from 'sonner';
@@ -31,22 +30,17 @@ function VetFormRegister() {
     },
     mode: "onChange"
   });
-  const password = watch("password");
-  console.log (password)
+
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
-
     if(data.dayOpenings === "is24Hours") {
       data.is24Hours === true 
     } 
     const {veterinarian, license, dayOpenings, createdAtPetShop, ...submmitData } = data
-    console.log("data ", submmitData);
     await RegisterVet(submmitData)
-    // await registerUserfetch(submitData)    
-    // toast.success(`Welcome ${data.name} to Vinktech, successfully registered`)
     toast.success("Usuario registrado con éxito", {
       duration: 3000,
       style: {
@@ -55,22 +49,16 @@ function VetFormRegister() {
         borderRadius: "8px",
         padding: "16px",
         border: "1px solid #c3e6cb",
-    },
-  })
-
+      },
+    })
     router.push("/login")
   };
 
-  useEffect(() => {
-
-  }, [])
-
   return (
     <form
-      className="border-none rounded-lg  sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
+      className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-
       <h1 className="text-3xl text-customBrown">Registro veterinaria</h1>
       <p className="mt-4 mb-3">¿Ya tienes cuenta? <Link href="/login" className=" text-customBrown hover:text-customHardBrown" > inicia sesión </Link></p>
 
@@ -100,9 +88,8 @@ function VetFormRegister() {
           maxLength: { value: 50, message: "El nombre no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div >
-            {/* <label className='mt-1' >Nombre veterinaria</label> */}
-            <input {...field} type='text' placeholder='Nombre veterinaria' className="customInput" />
+          <div>
+            <input {...field} type='text' placeholder='Nombre Veterinaria' className="customInput" />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -117,9 +104,8 @@ function VetFormRegister() {
           maxLength: { value: 50, message: "El nombre no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div >
-            {/* <label className='mt-1' >Nombre veterinaria</label> */}
-            <input {...field} type='text' className="customInput" placeholder='Nombre veterinario acargo' />
+          <div>
+            <input {...field} type='text' className="customInput" placeholder='Nombre Veterinario a cargo' />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
@@ -130,34 +116,36 @@ function VetFormRegister() {
         control={control}
         rules={{
           required: { value: true, message: "Licencia obligatorio." },
-          minLength: { value: 8, message: "la licencia debe tener al menos 8 caracteres." },
-          maxLength: { value: 50, message: "la licencia debe no puede superar los 50 caracteres." },
+          minLength: { value: 8, message: "La Licencia debe tener al menos 8 caracteres." },
+          maxLength: { value: 50, message: "La Licencia debe no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div >
-            {/* <label className='mt-1' >Nombre veterinaria</label> */}
-            <input {...field} type='text' className="customInput" placeholder='# Licencia veterinario a cargo' />
+          <div>
+            <input {...field} type='text' className="customInput" placeholder='# Licencia del veterinario a cargo' />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
-    
-      <Controller
-        name="createdAtPetShop"
-        control={control}
-        rules={{
-          required: { value: true, message: "Fecha de creación requerida" },
-        }}
-        render={({ field, fieldState: { error } }) => (
-          <div className='flex gap-4 items-center justify-center'>
-            <label className='mt-1 w-56 text-sm ml-2'>
-              Fecha creación
-            </label>
-            <input {...field} type='date' className="customInput" />
-            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-          </div>
-        )}
+
+<Controller
+  name="createdAtPetShop"
+  control={control}
+  rules={{
+    required: { value: true, message: "Fecha de creación requerida" },
+  }}
+  render={({ field, fieldState: { error } }) => (
+    <div className="flex flex-col">
+      <input
+        {...field}
+        type="date"
+        className="customInput"
+        placeholder="Fecha de creación:"
       />
+      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+    </div>
+  )}
+/>
+
 
       <Controller
         name="email"
@@ -170,17 +158,14 @@ function VetFormRegister() {
           },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div >
-            {/* <label className='mt-1'>
-              Email
-            </label> */}
+          <div>
             <input {...field} type="email" className="customInput" placeholder='email' />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
-<Controller
+      <Controller
         name="phoneNumber"
         control={control}
         rules={{
@@ -189,146 +174,75 @@ function VetFormRegister() {
           maxLength: { value: 15, message: "El numero debe no puede superar los 15 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div >
-            {/* <label className='mt-1' >Nombre veterinaria</label> */}
+          <div>
             <input {...field} type='tel' className="customInput" placeholder='Teléfono' />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
-<div className='flex gap-4 items-center justify-between'>
-  <Controller
-    name="password"
-    control={control}
-    rules={{
-      required: { value: true, message: "Password is required." },
-      minLength: { value: 8, message: "Password must have at least 8 characters." },
-      pattern: {
-        value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
-        message: "Password must include uppercase, lowercase, number, and special character.",
-      },
-    }}
-    render={({ field, fieldState: { error } }) => (
-      <div className="relative">
-        <input
-          {...field}
-          type={showPassword ? "text" : "password"}  // Cambia entre 'text' y 'password' con el estado
-          className="customInput"
-          placeholder="Contraseña"
-        />
-        {/* Icono de visibilidad */}
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)} // Alterna la visibilidad de la contraseña
-          className="absolute right-3 top-1/2 transform -translate-y-1/2"
-        >
-          {showPassword ? <FaEyeSlash /> : <FaEye />}  {/* Muestra el icono según el estado */}
-        </button>
-        {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-      </div>
-    )}
-  />
-<Controller
-  name="confirmPassword"
-  control={control}
-  rules={{
-    required: { value: true, message: "Confirm Password is required." },
-    validate: (value) => value === watch("password") || "Las contraseñas no coinciden."
-  }}
-  render={({ field, fieldState: { error } }) => (
-    <div className="relative">
-      <input
-        {...field}
-        type={showPassword ? "text" : "password"} 
-        className="customInput w-full"
-        placeholder="Repetir contraseña"
-      />
-      {/* Botón para alternar visibilidad */}
-      <button
-        type="button"
-        onClick={() => setShowPassword(!showPassword)} 
-        className="absolute right-3 top-1/2 transform -translate-y-1/2"
-      >
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </button>
-      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-    </div>
-  )}
-/>
-
-</div>
-
       <Controller
-        name="dayOpenings"
+        name="password"
         control={control}
         rules={{
-          required: { value: true, message: "Campo obligatorio" },
+          required: { value: true, message: "La contraseña es obligatoria." },
+          minLength: { value: 8, message: "Debe tener al menos 8 caracteres." },
+          pattern: {
+            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+            message: "Debe incluir mayúscula, minúscula, número y carácter especial.",
+          },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div>
-
-            <div className=" gap-10text-sm flex gap-20 items-center justify-center focus:ring-0 text-customDarkGreen border border-gray-300 rounded-lg bg-gray-50 focus:border-customBrown dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-customBrown mt-2 py-5">
-              <div>
-
-                <label className='text-sm'>
-                  Horario de atención:
-                </label>
-              </div>
-              <div>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="is24Hours"
-                    checked={field.value === "is24Hours"}
-                    onChange={field.onChange}
-                    className="w-4 h-4"
-                  />
-                  <span>24 horas</span>
-                </label>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="7 a 15"
-                    checked={field.value === "7 a 15"}
-                    onChange={field.onChange}
-                    className="w-4 h-4"
-                  />
-                  <span>de 7:00 a 15:00 </span>
-                </label>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="8 a 16"
-                    checked={field.value === "8 a 16"}
-                    onChange={field.onChange}
-                    className="w-4 h-4"
-                  />
-                  <span>de 8:00 a 16:00 </span>
-                </label>
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    value="9 a 17"
-                    checked={field.value === "9 a 17"}
-                    onChange={field.onChange}
-                    className="w-4 h-4"
-                  />
-                  <span>de 9:00 a 17:00 </span>
-                </label>
-              </div>
-            </div>
+          <div className="relative w-full">
+            <input
+              {...field}
+              type={showPassword ? "text" : "password"}
+              className="customInput w-full pr-10"
+              placeholder="Contraseña"
+              autoComplete="new-password"
+            />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+            >
+              {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </span>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
 
+      <Controller
+        name="confirmPassword"
+        control={control}
+        rules={{
+          required: { value: true, message: "Debes confirmar tu contraseña." },
+          validate: (value) => {
+            const passwordValue = watch("password");
+            return value === passwordValue || "Las contraseñas no coinciden.";
+          },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div className="relative w-full">
+            <input
+              {...field}
+              type={showConfirmPassword ? "text" : "password"}
+              className="customInput w-full pr-10"
+              placeholder="Confirmar Contraseña"
+              autoComplete="new-password"
+            />
+            <span
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+            >
+              {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+            </span>
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
 
-      <button type="submit" className="customButton mt-6">
+<button type="submit" className="customButton mt-6">
         Registrarse
       </button>
     </form>
