@@ -78,19 +78,21 @@ export interface IPetResponseData {
     imgProfile: string,
     is24Hours: boolean,
     location: string
-    licenseNumber?: number,
+    licenseNumber?: string,
     foundation?: string,
     businessHours?: {}
   } 
   export interface IVetFormDataPrev {
     name: string,
+    veterinarian?: string,
+    email: string,
     password?: string, 
     confirmPassword?: string,
-    email: string,
-    is24Hours: Boolean,
     phoneNumber: string,
     imgProfile: string,
+    is24Hours: boolean,
     location: string
+    licenseNumber?: string | number,
   } 
   export interface dayOpenings {
     monday:{
