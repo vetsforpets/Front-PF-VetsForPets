@@ -50,6 +50,7 @@ export async function RegisterVet(
     vetRegisterData: IVetFormDataPrev
   ): Promise<IVetResponseData> {
     try {
+      if(typeof(vetRegisterData.licenseNumber) == "string") vetRegisterData.licenseNumber = parseInt(vetRegisterData.licenseNumber)
       const response = await fetch(`${apiURL}/auth/vetsignup`, {
         method: "POST",
         headers: {

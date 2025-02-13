@@ -16,17 +16,17 @@ function VetFormRegister() {
   const { handleSubmit, control, watch } = useForm<IVetFormData>({
     defaultValues: {
       name: "",
-      imgProfile: "",
-      createdAtPetShop: "",
       veterinarian: "",
-      license: "",
+      email: "",
       password: "",
       confirmPassword: "",
-      dayOpenings: "",
-      email: "",
-      is24Hours: false,
       phoneNumber: "",
-      location: "anything"
+      imgProfile: "",
+      is24Hours: false,
+      location: "anything",
+      licenseNumber: "",
+      foundation: "",
+      businessHours: "pendiente",
     },
     mode: "onChange"
   });
@@ -36,10 +36,10 @@ function VetFormRegister() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
-    if(data.dayOpenings === "is24Hours") {
-      data.is24Hours === true 
-    } 
-    const {veterinarian, license, dayOpenings, createdAtPetShop, ...submmitData } = data
+    if (data.businessHours === "is24Hours") {
+      data.is24Hours === true
+    }
+    const { businessHours, foundation, ...submmitData } = data
     await RegisterVet(submmitData)
     toast.success("Usuario registrado con éxito", {
       duration: 3000,
@@ -112,7 +112,7 @@ function VetFormRegister() {
       />
 
       <Controller
-        name="license"
+        name="licenseNumber"
         control={control}
         rules={{
           required: { value: true, message: "Licencia obligatorio." },
@@ -120,31 +120,35 @@ function VetFormRegister() {
           maxLength: { value: 50, message: "La Licencia debe no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div>
-            <input {...field} type='text' className="customInput" placeholder='# Licencia del veterinario a cargo' />
+          <div className="flex flex-col">
+            <input
+              {...field}
+              type="number"
+              className="customInput"
+              placeholder="# Licencia del veterinario a cargo"
+            />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
-
-<Controller
-  name="createdAtPetShop"
-  control={control}
-  rules={{
-    required: { value: true, message: "Fecha de creación requerida" },
-  }}
-  render={({ field, fieldState: { error } }) => (
-    <div className="flex flex-col">
-      <input
-        {...field}
-        type="date"
-        className="customInput"
-        placeholder="Fecha de creación:"
+      <Controller
+        name="foundation"
+        control={control}
+        rules={{
+          required: { value: true, message: "Años de experiencia requeridos" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div className="flex flex-col">
+            <input
+              {...field}
+              type="number"
+              className="customInput"
+              placeholder="Años desde la creación:"
+            />
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
       />
-      {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
-    </div>
-  )}
-/>
 
 
       <Controller
@@ -242,7 +246,7 @@ function VetFormRegister() {
         )}
       />
 
-<button type="submit" className="customButton mt-6">
+      <button type="submit" className="customButton mt-6">
         Registrarse
       </button>
     </form>

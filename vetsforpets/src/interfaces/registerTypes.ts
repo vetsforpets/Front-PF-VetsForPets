@@ -56,29 +56,43 @@ export interface IPetResponseData {
           email: string,
           rol: string
   } 
+  // name: "",
+  //     veterinarian: "",
+  //     email: "",
+  //     password: "",
+  //     confirmPassword: "",
+  //     phoneNumber: "",
+  //     imgProfile: "",
+  //     is24Hours: false,
+  //     location: "anything"
+  //     licenseNumber: "",
+  //     foundation: "",
+  //     businessHours: "",
   export interface IVetFormData {
     name: string,
-    createdAtPetShop?: string,
     veterinarian?: string,
-    license?: string,
+    email: string,
     password?: string, 
     confirmPassword?: string,
-    dayOpenings?: string,
-    email: string,
-    is24Hours: boolean,
     phoneNumber: string,
     imgProfile: string,
+    is24Hours: boolean,
     location: string
+    licenseNumber?: string,
+    foundation?: string,
+    businessHours?: {}
   } 
   export interface IVetFormDataPrev {
     name: string,
+    veterinarian?: string,
+    email: string,
     password?: string, 
     confirmPassword?: string,
-    email: string,
-    is24Hours: Boolean,
     phoneNumber: string,
     imgProfile: string,
+    is24Hours: boolean,
     location: string
+    licenseNumber?: string | number,
   } 
   export interface dayOpenings {
     monday:{
