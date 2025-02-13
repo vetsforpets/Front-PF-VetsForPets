@@ -134,7 +134,7 @@ function OwnPetFormRegister() {
         name="email"
         control={control}
         rules={{
-          required: { value: true, message: "Email oliqgatorio" },
+          required: { value: true, message: "Email obligatorio" },
           pattern: {
             value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
             message: "Formato de email invalido.",
