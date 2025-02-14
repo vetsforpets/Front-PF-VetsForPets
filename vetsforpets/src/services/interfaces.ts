@@ -92,7 +92,6 @@ export interface IPetRegisterData {
   notes: string;
   isSterilized: string;
   profileImg: string;
-  userId: string;
 }
 
 export interface IPetEditData {

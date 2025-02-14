@@ -1,6 +1,7 @@
 "use client";
 
 import { newPet } from "@/services/servicesPets";
+import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -14,7 +15,6 @@ interface PetFormInputs {
   isSterilized: string;
   profileImg: string;
   notes: string;
-  userId: string;
 }
 interface petDetailProps {
   setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +22,8 @@ interface petDetailProps {
 }
 
 const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
+  const { userData } = useUserStore();
+
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
@@ -41,7 +43,7 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
       console.log(petData);
-      await newPet(petData);
+      await newPet(petData, userData?.token);
       toast.success("Mascota creada con éxito", {
         duration: 3000,
         style: {
