@@ -66,9 +66,8 @@ export function UpperBody() {
         className="mx-auto font-tenor-sans"
       />
       <p className="text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
-        Descripción de la imagen 2 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat porro natus
-        sapiente pariatur adipisci hic sunt ipsum iure libero exercitationem aperiam inventore distinctio eveniet sit
-        officiis repellat neque, numquam commodi.
+       La vacunación antirrabica es anual y obligatoria en perros y gatos a partir de los 3 meses de edad y debe cumplirse
+       durante toda su vida. Recomendamos que la revacunación sea antes que se cumpla la fecha de validez de la vacuna anterior y recorda llevar esta constancia en caso de viajar. 
       </p>
     </div>
 
