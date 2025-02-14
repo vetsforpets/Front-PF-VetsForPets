@@ -1,6 +1,7 @@
 export interface IUserStored {
   token: string;
   id: string;
+  isVet: boolean;
 }
 
 export interface IUserState {

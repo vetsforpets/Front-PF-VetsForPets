@@ -1,7 +1,6 @@
 "use client";
 
 import { newPet } from "@/services/servicesPets";
-import { useUserStore } from "@/store";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,8 +22,6 @@ interface petDetailProps {
 }
 
 const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
-  const { userData } = useUserStore();
-
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
     defaultValues: {
       name: "",
@@ -37,7 +34,6 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
       isSterilized: "",
       profileImg:
         "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
-      userId: userData?.id,
     },
     mode: "onChange",
   });
