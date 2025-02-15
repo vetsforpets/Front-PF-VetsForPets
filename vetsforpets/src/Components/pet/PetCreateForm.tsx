@@ -15,7 +15,6 @@ interface PetFormInputs {
   isSterilized: string;
   profileImg: string;
   notes: string;
-  userId: string;
 }
 interface petDetailProps {
   setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,7 +36,6 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
       isSterilized: "",
       profileImg:
         "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
-      userId: userData?.id,
     },
     mode: "onChange",
   });
@@ -45,7 +43,7 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
       console.log(petData);
-      await newPet(petData);
+      await newPet(petData, userData?.token);
       toast.success("Mascota creada con éxito", {
         duration: 3000,
         style: {

@@ -40,7 +40,6 @@ const Profile = () => {
       if (userData?.id && userData?.token) {
         try {
           const data = await fetchUserData(userData.id, userData.token);
-          console.log(data); // Verifica los datos que se obtienen
           setUsers([data]);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
@@ -50,13 +49,9 @@ const Profile = () => {
     };
 
     fetchData();
-  },  [userData?.id, userData?.token]);
+  }, [userData?.id, userData?.token]);
 
   const user = userData && users.find((u) => u.id === userData.id);
-  console.log(userData); // Verifica el valor de userData
-  console.log(user); // Verifica el usuario encontrado
-
-  console.log("Ruta de la imagen:", user?.imgProfile);
 
   if (!user) return <p>Cargando datos del usuario...</p>;
 
@@ -70,16 +65,16 @@ const Profile = () => {
   const handleSave = async () => {
     if (editableUser) {
       try {
-        // Llama al servicio para actualizar los datos del usuario
-        const updatedUser = await updateUser(userData.id, editableUser, userData.token);
-        console.log("Usuario actualizado:", updatedUser);
+        const updatedUser = await updateUser(
+          userData.id,
+          editableUser,
+          userData.token
+        );
 
-        // Actualiza el estado local después de guardar
         setUsers([updatedUser]);
-        setIsEditing(false);  // Cierra el modo de edición
+        setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
-        // Maneja el error de alguna manera si lo necesitas
       }
     }
   };
@@ -96,13 +91,12 @@ const Profile = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
-      
         <img
           src="/Generic avatar.png"
           alt="Perfil"
           className="w-40 h-40 rounded-full object-cover shadow-md"
         />
-      
+
         <button
           className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
           onClick={handleEdit}
@@ -120,62 +114,74 @@ const Profile = () => {
           <>
             {/* Campo para editar el nombre */}
             <div className="mt-4">
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Nombre:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Nombre:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="text"
-                value={editableUser?.name || ''}
-                onChange={(e) => handleChange('name', e.target.value)}
+                value={editableUser?.name || ""}
+                onChange={(e) => handleChange("name", e.target.value)}
               />
             </div>
 
             {/* Campo para editar el apellido */}
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Apellido:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Apellido:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="text"
-                value={editableUser?.lastName || ''}
-                onChange={(e) => handleChange('lastName', e.target.value)}
+                value={editableUser?.lastName || ""}
+                onChange={(e) => handleChange("lastName", e.target.value)}
               />
             </div>
 
             {/* Campo para editar la edad */}
             <div className="mt-4">
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Edad:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Edad:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="number"
-                value={editableUser?.age || ''}
-                onChange={(e) => handleChange('age', e.target.value)}
+                value={editableUser?.age || ""}
+                onChange={(e) => handleChange("age", e.target.value)}
               />
             </div>
 
             {/* Campo para editar el correo electronico */}
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Correo Electrónico:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Correo Electrónico:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="text"
-                value={editableUser?.email || ''}
-                onChange={(e) => handleChange('email', e.target.value)}
+                value={editableUser?.email || ""}
+                onChange={(e) => handleChange("email", e.target.value)}
               />
             </div>
 
             {/* Campo para editar el teléfono */}
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Teléfono:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Teléfono:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="text"
-                value={editableUser?.phoneNumber || ''}
-                onChange={(e) => handleChange('phoneNumber', e.target.value)}
+                value={editableUser?.phoneNumber || ""}
+                onChange={(e) => handleChange("phoneNumber", e.target.value)}
               />
             </div>
 
             {/* Campo solo lectura para mostrar si el usuario es premium */}
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">Usuario Premium:</label>
+              <label className="text-customBrown font-semibold py-1 pl-4 block">
+                Usuario Premium:
+              </label>
               <input
                 className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
                 type="text"
@@ -186,12 +192,17 @@ const Profile = () => {
           </>
         ) : (
           <>
-            
             <UserDetail label="Edad:" value={user.age.toString()} />
             <UserDetail label="Correo Electrónico:" value={user.email} />
             <UserDetail label="Teléfono:" value={user.phoneNumber} />
-            <UserDetail label="Fecha de Registro:" value={new Date(user.createdAt).toLocaleDateString()} />
-            <UserDetail label="Usuario Premium:" value={user.isPremium ? "Sí" : "No"} />
+            <UserDetail
+              label="Fecha de Registro:"
+              value={new Date(user.createdAt).toLocaleDateString()}
+            />
+            <UserDetail
+              label="Usuario Premium:"
+              value={user.isPremium ? "Sí" : "No"}
+            />
           </>
         )}
         {isEditing && (
@@ -207,7 +218,10 @@ const Profile = () => {
   );
 };
 
-const UserDetail: React.FC<{ label: string; value: string }> = ({ label, value }) => (
+const UserDetail: React.FC<{ label: string; value: string }> = ({
+  label,
+  value,
+}) => (
   <div>
     <h2 className="text-customBrown font-semibold py-1 pl-4">{label}</h2>
     <p className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96">
