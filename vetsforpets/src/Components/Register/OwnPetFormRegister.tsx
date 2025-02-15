@@ -160,6 +160,19 @@ function OwnPetFormRegister() {
           </div>
         )}
       />
+<Controller
+        name="age"
+        control={control}
+        rules={{
+          required: { value: true, message: "Edad obligatoria" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div>
+            <input {...field} type="number" className="customInput" placeholder='Edad'/>
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
 
       {/* Password */}
       <Controller
