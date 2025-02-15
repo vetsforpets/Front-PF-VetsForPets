@@ -25,11 +25,10 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
-    defaultValues: pet, // Ahora usa los valores de `pet`
+    defaultValues: pet,
     mode: "onChange",
   });
 
-  // 🔥 UseEffect para actualizar el formulario cuando `pet` cambia
   useEffect(() => {
     if (pet) {
       reset(pet);
@@ -39,7 +38,6 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
       console.log(petData);
-      // await newPet(petData);
     } catch (error) {
       console.error("Error al actualizar mascota:", error);
       alert(`Error al actualizar mascota: ${error}`);
@@ -57,7 +55,6 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
           />
 
-          {/* 🔹 Todos los inputs ahora se llenan con `pet` automáticamente */}
           <Controller
             name="name"
             control={control}
@@ -91,7 +88,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
                 disabled={!isEditing}
               >
                 <option value="">Especie</option>
@@ -138,7 +135,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
                 disabled={!isEditing}
               >
                 <option value="">Sexo</option>
@@ -154,10 +151,10 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
                 disabled={!isEditing}
-                value={field.value ? "true" : "false"} // ✅ Convertir `boolean` a `string`
-                onChange={(e) => field.onChange(e.target.value === "true")} // ✅ Convertir `string` a `boolean`
+                value={field.value ? "true" : "false"}
+                onChange={(e) => field.onChange(e.target.value === "true")}
               >
                 <option value="true">Esterilizado: Sí</option>
                 <option value="false">Esterilizado: No</option>
@@ -171,7 +168,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
             render={({ field }) => (
               <textarea
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 rounded-2xl  bg-customBeige border-none"
                 placeholder="Comentarios adicionales"
                 rows={4}
                 disabled={!isEditing}
