@@ -39,7 +39,7 @@ function VetFormRegister() {
     if (data.businessHours === "is24Hours") {
       data.is24Hours === true
     }
-    const { businessHours, foundation, ...submmitData } = data
+    const { businessHours, ...submmitData } = data
     await RegisterVet(submmitData)
     toast.success("Usuario registrado con éxito", {
       duration: 3000,
@@ -135,15 +135,15 @@ function VetFormRegister() {
         name="foundation"
         control={control}
         rules={{
-          required: { value: true, message: "Años de experiencia requeridos" },
+          required: { value: true, message: "Año de creacion de la veterinaria" },
         }}
         render={({ field, fieldState: { error } }) => (
           <div className="flex flex-col">
             <input
               {...field}
-              type="number"
+              type="string"
               className="customInput"
-              placeholder="Años desde la creación:"
+              placeholder="Año de creación (YYYY):"
             />
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
