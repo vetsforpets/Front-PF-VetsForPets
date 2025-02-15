@@ -16,11 +16,7 @@ const DashboardData = () => {
     const router = useRouter()
     
     useEffect(() => {
-        // if (!userData || !userData.id) {
-        //     setError("No se encontró la ID de veterinaria");
-        //     setLoading(false);
-        //     return;
-        // }
+
         if(userData?.id){
             const getVetData = async () => {
                 console.log("Buscando veterinaria con ID:", userData.id);
@@ -46,18 +42,21 @@ const DashboardData = () => {
     
             getVetData();
   
-        } else {
-            router.push("/")
-        }
+        } 
     }, [userData?.id]); 
 
+    useEffect(()=>{
+        if(!userData?.id){
+            router.push("/")
+        }
+    },[userData?.id])
 
     if(userData?.id === undefined) return <div>Cargando....</div>
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
-};
+}; 
 
 export default DashboardData;
 
