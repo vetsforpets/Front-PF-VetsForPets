@@ -79,7 +79,7 @@ export default function ProfileView() {
             </div>
 
             {/* //Detalle de la mascota */}
-            <PetDetails />
+            {user?.pets?.[0] && <PetDetails pet={user.pets[0]} />}
           </div>
         </div>
       </div>
