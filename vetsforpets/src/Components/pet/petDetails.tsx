@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { useUserStore } from "@/store";
+import { useState, useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { Pet } from "./PetPreview";
 
 interface PetFormInputs {
   name: string;
@@ -11,42 +11,39 @@ interface PetFormInputs {
   birthdate: string;
   breed: string;
   sex: string;
-  isSterilized: string;
+  isSterilized: boolean;
   profileImg: string;
   notes: string;
   userId: string;
 }
 
-const PetDetails = () => {
-  const { userData } = useUserStore();
+interface PetDetailsProps {
+  pet: Pet;
+}
+
+const PetDetails: React.FC<PetDetailsProps> = ({ pet }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
-    defaultValues: {
-      name: "Molly",
-      age: 5,
-      birthdate: "2023-10-26",
-      animalType: "Perro",
-      breed: "Ovejero Alemán",
-      sex: "Male",
-      notes: "Es muy juguetón y le gusta correr.",
-      isSterilized: "Sí",
-      profileImg:
-        "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
-      userId: userData?.id,
-    },
+    defaultValues: pet, // Ahora usa los valores de `pet`
     mode: "onChange",
   });
+
+  // 🔥 UseEffect para actualizar el formulario cuando `pet` cambia
+  useEffect(() => {
+    if (pet) {
+      reset(pet);
+    }
+  }, [pet, reset]);
 
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
       console.log(petData);
       // await newPet(petData);
     } catch (error) {
-      console.error("Error al crear mascota:", error);
-      alert(`Error al crear mascota: ${error}`);
+      console.error("Error al actualizar mascota:", error);
+      alert(`Error al actualizar mascota: ${error}`);
     }
-    reset();
     setIsEditing(false);
   };
 
@@ -55,18 +52,18 @@ const PetDetails = () => {
       <div className="bg-[#deb887] rounded-2xl p-5 px-10 shadow-lg mx-5">
         <div className="space-y-4">
           <img
-            src="/Dog.svg"
-            alt="user"
+            src={pet.profileImg || "/Cat.svg"}
+            alt={pet.name}
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
           />
 
+          {/* 🔹 Todos los inputs ahora se llenan con `pet` automáticamente */}
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
               <input
                 {...field}
-                id="name"
                 className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
                 placeholder="Nombre"
                 disabled={!isEditing}
@@ -80,7 +77,6 @@ const PetDetails = () => {
             render={({ field }) => (
               <input
                 {...field}
-                id="age"
                 type="number"
                 className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
                 placeholder="Edad"
@@ -95,7 +91,6 @@ const PetDetails = () => {
             render={({ field }) => (
               <select
                 {...field}
-                id="animalType"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 disabled={!isEditing}
               >
@@ -117,7 +112,6 @@ const PetDetails = () => {
               <input
                 {...field}
                 type="date"
-                id="birthdate"
                 className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
                 disabled={!isEditing}
               />
@@ -130,7 +124,6 @@ const PetDetails = () => {
             render={({ field }) => (
               <input
                 {...field}
-                id="breed"
                 type="text"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 placeholder="Raza"
@@ -145,7 +138,6 @@ const PetDetails = () => {
             render={({ field }) => (
               <select
                 {...field}
-                id="sex"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 disabled={!isEditing}
               >
@@ -162,9 +154,10 @@ const PetDetails = () => {
             render={({ field }) => (
               <select
                 {...field}
-                id="isSterilized"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 disabled={!isEditing}
+                value={field.value ? "true" : "false"} // ✅ Convertir `boolean` a `string`
+                onChange={(e) => field.onChange(e.target.value === "true")} // ✅ Convertir `string` a `boolean`
               >
                 <option value="true">Esterilizado: Sí</option>
                 <option value="false">Esterilizado: No</option>
@@ -178,7 +171,6 @@ const PetDetails = () => {
             render={({ field }) => (
               <textarea
                 {...field}
-                id="notes"
                 className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
                 placeholder="Comentarios adicionales"
                 rows={4}
