@@ -1,19 +1,20 @@
 "use client";
+
 import { fetchUserData, updateUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
+import CloudinaryUploader from "../Cloudinary/Cloudinary"; // Importa tu componente de subida
+import { toast } from "sonner";
 
-// Definir la interfaz de las citas
 interface IAppointment {
   id: string;
-  date: string; // Puede ser `Date` si lo parseas
+  date: string;
   time: string;
   description: string;
   status: string;
   user: string;
 }
 
-// Definir la interfaz de usuario
 interface IUserData {
   id: string;
   name: string;
@@ -40,6 +41,9 @@ const Profile = () => {
       if (userData?.id && userData?.token) {
         try {
           const data = await fetchUserData(userData.id, userData.token);
+
+          console.log(data);
+
           setUsers([data]);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
@@ -53,6 +57,12 @@ const Profile = () => {
 
   const user = userData && users.find((u) => u.id === userData.id);
 
+  console.log("userData:", userData);
+  console.log("user:", user);
+
+  console.log("Ruta de la imagen:", user?.imgProfile);
+
+
   if (!user) return <p>Cargando datos del usuario...</p>;
 
   const handleEdit = () => {
@@ -65,13 +75,20 @@ const Profile = () => {
   const handleSave = async () => {
     if (editableUser) {
       try {
-        const updatedUser = await updateUser(
-          userData.id,
-          editableUser,
-          userData.token
-        );
 
+        const updatedUser = await updateUser(userData.id, editableUser, userData.token);
+        console.log("Usuario actualizado:", updatedUser);
         setUsers([updatedUser]);
+         toast.success("Perfil editado con éxito", {
+              duration: 3000,
+              style: {
+                color: "#155724",
+                background: "#d4edda",
+                borderRadius: "8px",
+                padding: "16px",
+                border: "1px solid #c3e6cb",
+              },
+            })
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
@@ -81,22 +98,37 @@ const Profile = () => {
 
   const handleChange = (field: keyof IUserData, value: string | number) => {
     if (!editableUser) return;
-
     setEditableUser((prev) => ({
       ...prev!,
       [field]: field === "age" ? Number(value) : value,
     }));
   };
 
+  // Esta función se pasa al CloudinaryUploader para actualizar la imagen
+  const handleImageUpload = (url: string) => {
+    if (editableUser) {
+      setEditableUser({ ...editableUser, imgProfile: url });
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
-        <img
-          src="/Generic avatar.png"
-          alt="Perfil"
-          className="w-40 h-40 rounded-full object-cover shadow-md"
-        />
 
+
+      {isEditing ? (
+  <div className="flex flex-col items-center">
+    
+    <CloudinaryUploader onImageUpload={handleImageUpload} />
+  </div>
+) : (
+  // En modo no edición, mostramos la imagen actual o un avatar genérico
+  <img
+    src={user?.imgProfile || "/Generic avatar.png"}
+    alt="Perfil"
+    className="w-40 h-40 rounded-full object-cover shadow-md"
+  />
+)}
         <button
           className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
           onClick={handleEdit}
@@ -104,7 +136,7 @@ const Profile = () => {
           <img src="/images/icon.png" alt="editar" className="w-10 h-7 m-2" />
         </button>
 
-        <h1 className="mt-4 text-3xl font-bold text-DarkGreen px-4 py-2 rounded-lg flex items-center justify-center">
+        <h1 className="mt-4 text-3xl font-bold px-4 py-2 rounded-lg w-full flex justify-center items-center text-center">
           {user?.name} {user.lastName}
         </h1>
       </div>
@@ -112,7 +144,6 @@ const Profile = () => {
       <div className="m-6 flex flex-col space-y-4">
         {isEditing ? (
           <>
-            {/* Campo para editar el nombre */}
             <div className="mt-4">
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Nombre:
@@ -125,7 +156,6 @@ const Profile = () => {
               />
             </div>
 
-            {/* Campo para editar el apellido */}
             <div>
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Apellido:
@@ -138,7 +168,6 @@ const Profile = () => {
               />
             </div>
 
-            {/* Campo para editar la edad */}
             <div className="mt-4">
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Edad:
@@ -151,7 +180,6 @@ const Profile = () => {
               />
             </div>
 
-            {/* Campo para editar el correo electronico */}
             <div>
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Correo Electrónico:
@@ -164,7 +192,6 @@ const Profile = () => {
               />
             </div>
 
-            {/* Campo para editar el teléfono */}
             <div>
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Teléfono:
@@ -177,7 +204,6 @@ const Profile = () => {
               />
             </div>
 
-            {/* Campo solo lectura para mostrar si el usuario es premium */}
             <div>
               <label className="text-customBrown font-semibold py-1 pl-4 block">
                 Usuario Premium:

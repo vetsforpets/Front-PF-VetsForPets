@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useState } from 'react'
 import { IUserFormData } from '@/interfaces/registerTypes';
@@ -65,7 +65,7 @@ function OwnPetFormRegister() {
       redirect("/")
     }
   }, [user]);
-
+  
   return (
     <form
       className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
