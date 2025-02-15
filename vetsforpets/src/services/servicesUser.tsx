@@ -1,20 +1,21 @@
 import {
   IUserFormData,
   IUserResponseData,
-  IVetFormData,
-  IVetFormDataPrev,
-  IVetResponseData,
+ 
 } from "@/interfaces/registerTypes";
 import { IUserCredentials, IUserData } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchUserData = async () => {
+
+
+export const fetchUserData = async (id: string, token:string) => {
   try {
-    const response = await fetch(`${apiURL}/users`, {
+    const response = await fetch(`${apiURL}/users/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // 🔹 Agrega el token en los headers
       },
     });
 
@@ -22,30 +23,37 @@ export const fetchUserData = async () => {
       throw new Error("Error al obtener los datos del Usuario");
     }
 
-    const data: IUserData[] = await response.json();
+    const data: IUserData = await response.json();
     console.log("Datos recibidos del backend:", data);
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error:", error.message);
-      throw new Error(error.message);
-    }
+    console.error("Error:", error);
     throw new Error("Ocurrió un error desconocido al obtener los datos");
+  }
+}
+
+export const updateUser = async (userId: string, updatedData: Partial<IUserData>, token: string) => {
+  try {
+    const response = await fetch(`${apiURL}/users/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al actualizar los datos del usuario");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Ocurrió un error desconocido al actualizar los datos");
   }
 };
 
-// export function getUserById(userId: string): IUserData | null {
-//   const storedData = localStorage.getItem("userData");
-
-//   if (storedData) {
-//     const userData: IUserData[] = JSON.parse(storedData);
-
-//     const user = userData.find((user) => user.id === userId);
-//     return user || null;
-//   }
-
-//   return null;
-// }
 
 export async function loginUser(
   userCredentials: IUserCredentials

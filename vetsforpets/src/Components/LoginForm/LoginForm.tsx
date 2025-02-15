@@ -28,7 +28,6 @@ export default function LoginForm() {
   } = useForm<LoginFormInputs>();
   const router = useRouter();
 
-  
   const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
     console.log("Token de Google:", credentialResponse.credential);
     toast.success("Usuario logueado con éxito", {
@@ -39,8 +38,8 @@ export default function LoginForm() {
         borderRadius: "8px",
         padding: "16px",
         border: "1px solid #c3e6cb",
-    },
-  })
+      },
+    });
     router.push("/");
   };
 
@@ -53,9 +52,15 @@ export default function LoginForm() {
       const data = await loginUser(userCredentials);
 
       if (data.token) {
-        const decodedToken = jwtDecode<{ id: string }>(data.token);
-        setUserData({ token: data.token, id: decodedToken.id });
-        console.log(userData);
+        const decodedToken = jwtDecode<{ id: string; isVet: boolean }>(
+          data.token
+        );
+        setUserData({
+          token: data.token,
+          id: decodedToken.id,
+          isVet: decodedToken.isVet,
+        });
+        console.log(userData, decodedToken);
         reset();
         toast.success("Usuario logueado con éxito", {
           duration: 3000,
@@ -65,8 +70,8 @@ export default function LoginForm() {
             borderRadius: "8px",
             padding: "16px",
             border: "1px solid #c3e6cb",
-        },
-      })
+          },
+        });
 
         router.push("/");
       } else {
@@ -86,8 +91,8 @@ export default function LoginForm() {
       });
     }
   };
- 
-    return (
+
+  return (
     <div className="w-1/4 mx-auto mt-10 mb-20">
       <img src="./images/logo.png" alt="logo" className="justify-self-center" />
       <h2 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h2>
@@ -129,10 +134,10 @@ export default function LoginForm() {
           {/* Icono de visibilidad */}
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)} 
+            onClick={() => setShowPassword(!showPassword)}
             className="absolute right-3 top-1/2 transform -translate-y-1/2"
           >
-            {showPassword ? <FaEyeSlash /> : <FaEye />} 
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -153,8 +158,6 @@ export default function LoginForm() {
     </div>
   );
 }
-
-
 
 // "use client";
 
