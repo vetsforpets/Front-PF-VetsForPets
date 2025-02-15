@@ -9,7 +9,7 @@ export async function getVetById(token: string, id:string): Promise<IVetCredenti
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `${token}`
+                "Authorization": `Bearer ${token}`
             },
         });
 
