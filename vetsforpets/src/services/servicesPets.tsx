@@ -2,12 +2,13 @@ import { IPetEditData, IPetRegisterData } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function newPet(petRegisterData: IPetRegisterData) {
+export async function newPet(petRegisterData: IPetRegisterData, token?: string) {
   try {
-    const response = await fetch(`${apiURL}/pets/register`, {
+    const response = await fetch(`${apiURL}/pets`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(petRegisterData),
     });
