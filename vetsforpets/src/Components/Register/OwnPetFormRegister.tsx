@@ -9,6 +9,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { RegisterUser } from '@/services/servicesUser';
 import { toast } from 'sonner';
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importar los íconos
+import CloudinaryUploader from '../Cloudinary/Cloudinary';
 
 function OwnPetFormRegister() {
   const router = useRouter()
@@ -76,6 +77,7 @@ function OwnPetFormRegister() {
         ¿Ya tienes cuenta? <Link href="/login" className=" text-customBrown hover:text-customHardBrown">inicia sesión</Link>
       </p>
       
+
       <Controller
         name="imgProfile"
         control={control}
@@ -84,14 +86,19 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div className='flex gap-4 items-center justify-center'>
-            <label className='text-sm ml-2 w-40'>
-              Imagen de perfil
+
+            <label className='flex items-center justify-between'>
+              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+              <CloudinaryUploader onImageUpload={(url) => field.onChange(url)}/>
             </label>
-            <input {...field} type="file" className="customInput" />
+
+            {/* <input {...field} type="file" className="customInput" /> */}
+            
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
+
 
       <Controller
         name="name"
