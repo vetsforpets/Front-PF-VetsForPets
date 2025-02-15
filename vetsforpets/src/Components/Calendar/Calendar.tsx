@@ -3,16 +3,24 @@
 import React, { useState, useEffect } from "react";
 import { InlineWidget } from "react-calendly";
 
+interface Veterinaria {
+    id: number;
+    nombre: string;
+    url: string;
+}
+
 const CalendlySearch = () => {
     const [busqueda, setBusqueda] = useState("");
-    const [veterinarias, setVeterinarias] = useState<any[]>([]);
+    const [veterinarias, setVeterinarias] = useState<Veterinaria[]>([]);
     const [veterinariaSeleccionada, setVeterinariaSeleccionada] = useState<string | null>(null);
     const [focus, setFocus] = useState(false);
 
     useEffect(() => {
         const data = [
-            { id: 1, nombre: "Veterinaria Alfredo", url: "https://calendly.com/hugooeseverri?primary_color=DDA15E" },
+            { id: 1, nombre: "Veterinaria Alfredo", url: "https://calendly.com/hugooeseverri" },
             { id: 2, nombre: "Veterinaria Maria Paz", url: "https://calendly.com/pazroscianorivas" },
+            { id: 3, nombre: "Veterinaria Dr. Paso", url: "https://calendly.com/veterninariadrpaso" },
+            { id: 4, nombre: "Clínica Veterinaria Layús", url: "https://calendly.com/layusclinicaveterinaria" },
         ];
         setVeterinarias(data);
     }, []);
