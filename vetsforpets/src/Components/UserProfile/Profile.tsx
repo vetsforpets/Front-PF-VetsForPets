@@ -109,7 +109,7 @@ const Profile = () => {
             <div className="mt-4">
               <label className="text-customBrown font-semibold py-1 pl-4 block">Edad:</label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left text-red-800 py-3 pl-4 min-w-96"
+                className="text-customDarkGreen.. bg-customLightBrown rounded-2xl text-left text-red-800 py-3 pl-4 min-w-96"
                 type="number"
                 value={editableUser?.age || ''}
                 onChange={(e) => handleChange('age', e.target.value)}
