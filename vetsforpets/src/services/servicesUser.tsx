@@ -1,15 +1,9 @@
-import {
-  IUserFormData,
-  IUserResponseData,
- 
-} from "@/interfaces/registerTypes";
+import { IUserFormData, IUserResponseData } from "@/interfaces/registerTypes";
 import { IUserCredentials, IUserData } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-
-
-export const fetchUserData = async (id: string, token:string) => {
+export const fetchUserData = async (id: string, token: string) => {
   try {
     const response = await fetch(`${apiURL}/users/${id}`, {
       method: "GET",
@@ -24,15 +18,19 @@ export const fetchUserData = async (id: string, token:string) => {
     }
 
     const data: IUserData = await response.json();
-    console.log("Datos recibidos del backend:", data);
+    console.log("Datos recibidos del backend:", data, token);
     return data;
   } catch (error) {
     console.error("Error:", error);
     throw new Error("Ocurrió un error desconocido al obtener los datos");
   }
-}
+};
 
-export const updateUser = async (userId: string, updatedData: Partial<IUserData>, token: string) => {
+export const updateUser = async (
+  userId: string,
+  updatedData: Partial<IUserData>,
+  token: string
+) => {
   try {
     const response = await fetch(`${apiURL}/users/${userId}`, {
       method: "PUT",
@@ -53,7 +51,6 @@ export const updateUser = async (userId: string, updatedData: Partial<IUserData>
     throw new Error("Ocurrió un error desconocido al actualizar los datos");
   }
 };
-
 
 export async function loginUser(
   userCredentials: IUserCredentials

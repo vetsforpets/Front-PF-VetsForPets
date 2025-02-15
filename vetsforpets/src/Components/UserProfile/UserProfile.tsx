@@ -16,6 +16,8 @@ export default function ProfileView() {
 
   const [addingPet, setAddingPet] = useState(false);
   const [user, setUser] = useState<IUserData>();
+  const [selectedPet, setSelectedPet] = useState<Pet>();
+  const [reloadPets, setReloadPets] = useState(false);
 
   useEffect(() => {
     if (!userData?.id) {
@@ -29,6 +31,7 @@ export default function ProfileView() {
         try {
           const data = await fetchUserData(userData.id, userData.token);
           setUser(data);
+          setSelectedPet(data.pets[0]);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
           setUser(undefined);
@@ -37,7 +40,11 @@ export default function ProfileView() {
     };
 
     fetchData();
-  }, [userData?.id, userData?.token]);
+  }, [userData?.id, userData?.token, reloadPets]);
+
+  const handleSelectPet = (pet: Pet) => {
+    setSelectedPet(pet);
+  };
 
   if (userData?.id === undefined) {
     return <div>Cargando....</div>;
@@ -45,8 +52,8 @@ export default function ProfileView() {
     return (
       <div className="min-h-screen bg-customBeige bg-opacity-20 p-4">
         <div className="max-w-6xl mx-auto space-y-4">
-          {/* //Datos del ususario */}
           <Profile />
+
           <div className="flex justify-center">
             {!addingPet && (
               <button
@@ -60,11 +67,12 @@ export default function ProfileView() {
               <PetCreateForm
                 setAddingPet={setAddingPet}
                 addingPet={addingPet}
+                setReloadPets={setReloadPets}
               />
             )}
           </div>
 
-          {/* //Vista previa de las mascotas */}
+          {/* Vista previa de las mascotas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 py-10">
             {/* Left Column - Pet Cards */}
             <div className="space-y-4">
@@ -73,13 +81,19 @@ export default function ProfileView() {
                   key={index}
                   className="bg-[#deb887] rounded-2xl pl-4 shadow-lg"
                 >
-                  <PetPreview pet={pet} />
+                  <PetPreview
+                    pet={pet}
+                    onSelectPet={handleSelectPet}
+                    setReloadPets={setReloadPets}
+                  />
                 </div>
               ))}
             </div>
 
-            {/* //Detalle de la mascota */}
-            {user?.pets?.[0] && <PetDetails pet={user.pets[0]} />}
+            {/* Detalle de la mascota seleccionada */}
+            {selectedPet && (
+              <PetDetails pet={selectedPet} token={userData.token} />
+            )}
           </div>
         </div>
       </div>
