@@ -9,6 +9,7 @@ import { RegisterVet } from '@/services/servicesVet';
 import { toast } from 'sonner';
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import CloudinaryUploader from '../Cloudinary/Cloudinary';
 
 function VetFormRegister() {
   const router = useRouter()
@@ -69,11 +70,15 @@ function VetFormRegister() {
           required: { value: true, message: "Imagen de perfil obligatoria" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className='flex gap-4 items-center justify-center'>
-            <label className='text-sm ml-2 w-40'>
-              Imagen de perfil
+          <div className='flex gap-4 items-center justify-center mb-5'>
+
+            <label className='flex items-center justify-between'>
+              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+              <CloudinaryUploader onImageUpload={(url) => field.onChange(url)}/>
             </label>
-            <input {...field} type="file" className="customInput" />
+
+            {/* <input {...field} type="file" className="customInput" /> */}
+            
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}

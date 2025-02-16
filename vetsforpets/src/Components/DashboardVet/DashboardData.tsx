@@ -44,13 +44,17 @@ const DashboardData = () => {
     
             getVetData();
         } 
-        setTimeout(()=>{
-            if(!userData?.id){   
-                router.push("/not-found")
-            }
-        }, 3000)
     }, [userData?.id]); 
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (!userData?.id) {
+                router.push("/not-found");
+            }
+        }, 1000); // Ajusta el tiempo según sea necesario
+    
+        return () => clearTimeout(timeout); // Limpia el timeout al desmontar el componente
+    }, [userData?.id, router]);
 
 
     if (loading) return <div>Cargando...</div>;

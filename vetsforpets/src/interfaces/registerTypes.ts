@@ -40,7 +40,7 @@ export interface IPetResponseData {
     name: string,
     lastName: string,
     email: string,
-    age: number,
+    age: string,
     password: string,
     confirmPassword?: string,
     phoneNumber: string,
