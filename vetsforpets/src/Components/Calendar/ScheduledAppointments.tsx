@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const TurnosSolicitados = () => {
     const [turnosSolicitados, setTurnosSolicitados] = useState<any[]>([]);
-    const userEmail = "hugooeseverri@gmail.com"; // Tu correo electrónico
+    const userEmail = "hugooeseverri@gmail.com";
 
     useEffect(() => {
         const fetchTurnosSolicitados = async () => {
@@ -12,8 +12,8 @@ const TurnosSolicitados = () => {
                 },
             });
             const data = await res.json();
+            console.log("Datos recibidos de la API:", data);
 
-            
             const turnosDeUsuario = data.collection.filter((turno: any) =>
                 turno.event_guests.some((guest: any) => guest.email === userEmail) ||
                 turno.event_memberships.some((membership: any) => membership.user_email === userEmail)
@@ -25,24 +25,44 @@ const TurnosSolicitados = () => {
         fetchTurnosSolicitados();
     }, []);
 
+    const eliminarTurnosCancelados = () => {
+        const turnosActivos = turnosSolicitados.filter(turno => !turno.cancellation);
+    
+        console.log("Turnos después de eliminar los cancelados:", turnosActivos);
+    
+        setTurnosSolicitados(turnosActivos);
+        localStorage.setItem("turnosSolicitados", JSON.stringify(turnosActivos));
+    };
+    
+
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold">Mis Turnos Solicitados</h1>
-            {turnosSolicitados.length === 0 ? (
-                <p>No tienes turnos solicitados.</p>
-            ) : (
-                <ul>
-                    {turnosSolicitados.map((turno: any) => (
-                        <li key={turno.uri} className="p-4 mb-4 border rounded shadow">
-                            <h2 className="text-xl">{turno.name}</h2>
-                            <p><strong>Fecha:</strong> {new Date(turno.start_time).toLocaleString()}</p>
-                            <p><strong>Ubicación:</strong> {turno.location?.location || "No especificada"}</p>
-                            <p><strong>Estado:</strong> {turno.status === "active" ? "Activo" : "Cancelado"}</p>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+    <h1 className="text-3xl font-bold text-gray-800 mb-6">Turnos</h1>
+
+    <button 
+        onClick={eliminarTurnosCancelados} 
+        className="bg-red-500 text-white py-2 px-6 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 mb-6"
+    >
+        Eliminar turnos cancelados
+    </button>
+
+    {turnosSolicitados.length === 0 ? (
+        <p className="text-xl text-gray-600">No tienes turnos solicitados.</p>
+    ) : (
+        <ul className="space-y-4">
+            {turnosSolicitados.map((turno: any) => (
+                <li key={turno.uri} className="bg-[#EEB87C]  p-6 rounded-lg shadow-lg border-2 border-gray-100 hover:shadow-xl transition-all duration-300">
+                    <h2 className="text-2xl font-bold text-gray-800">{turno.name}</h2>
+                    <p className="text-black mt-2"><strong>Fecha:</strong> {new Date(turno.start_time).toLocaleString()}</p>
+                    <p className={`text-sm mt-2 ${turno.status === "active" ? "text-green-500" : "text-red-800"}`}>
+                        <strong>Estado:</strong> {turno.status === "active" ? "Activo" : "Cancelado"}
+                    </p>
+                </li>
+            ))}
+        </ul>
+    )}
+</div>
+
     );
 };
 
