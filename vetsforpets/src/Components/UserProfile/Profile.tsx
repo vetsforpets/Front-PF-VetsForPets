@@ -5,6 +5,7 @@ import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
 import CloudinaryUploader from "../Cloudinary/Cloudinary"; 
 import { toast } from "sonner";
+import ConfirmModal from "../ModalDeConfirmacion/ModalDeConfirmacion";
 
 interface IAppointment {
   id: string;
@@ -35,6 +36,9 @@ const Profile = () => {
   const [users, setUsers] = useState<IUserData[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableUser, setEditableUser] = useState<IUserData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,6 +114,14 @@ const Profile = () => {
       setEditableUser({ ...editableUser, imgProfile: url });
     }
   };
+
+  const handleOpenModal = () => setIsModalOpen(true)
+  const handleCloseModal = () => setIsModalOpen(false)
+  const handleConfirm = () => {
+    handleSave();  
+    handleCloseModal(); 
+  };
+  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
@@ -234,12 +246,21 @@ const Profile = () => {
         {isEditing && (
           <button
             className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
-            onClick={handleSave}
+            onClick={handleOpenModal}
           >
             Guardar Cambios
           </button>
         )}
       </div>
+
+      {isModalOpen && (
+        <ConfirmModal
+        isOpen={isModalOpen} 
+          onConfirm={handleConfirm}
+          onClose={handleCloseModal}
+        />
+      )}
+
     </div>
   );
 };
