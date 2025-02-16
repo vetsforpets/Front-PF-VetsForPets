@@ -1,92 +1,79 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { uploadImageToCloudinary } from "@/services/servicesImage";
+import Image from "next/image";
 
-function Cloudinary() {
-    const [file, setFile] = useState<File | null>(null);
-
-    return (
-        <div>
-            <form onSubmit={async (e) => {
-                e.preventDefault();
-
-                if (!file) {
-                    console.log("No se seleccionó ningún archivo.");
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append("file", file);
-
-                const response = await fetch("/api/upload", {
-                    method: "POST",
-                    body: formData,
-                });
-
-                const data = await response.json();
-                console.log(data);
-            }}>
-                <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-                <button type="submit">Enviar</button>
-            </form>
-        </div>
-    );
+interface CloudinaryUploaderProps {
+  onImageUpload: (url: string) => void;
 }
 
-export default Cloudinary;
+function CloudinaryUploader({ onImageUpload }: CloudinaryUploaderProps) {
+  const [file, setFile] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    setFile(selectedFile || null);
+  };
 
-/*
+  useEffect(() => {
+    if (file) {
+      const uploadImage = async () => {
+        try {
+          const uploadedImageUrl = await uploadImageToCloudinary(file);
+          setImageUrl(uploadedImageUrl);
+          onImageUpload(uploadedImageUrl);
+          setFile(null);
+        } catch (error) {
+          console.error("Error durante el proceso de subida:", error);
+        }
+      };
 
-"use client";
+      uploadImage();
+    }
+  }, [file, onImageUpload]);
 
-import { useState } from "react";
+  // Función para verificar si la URL es de una imagen
+  const isImage = (url: string) => /\.(jpeg|jpg|png|gif|bmp|webp)$/i.test(url);
 
-function Cloudinary() {
-    const [file, setFile] = useState<File | null>(null);
-    const [imageUrl, setImagesUrl]= useState(null)
+  // Función para verificar si la URL es un PDF
+  const isPDF = (url: string) => url.endsWith(".pdf");
 
-    return (
-        <div>
-            <form onSubmit={async (e) => {
-                e.preventDefault();
+  return (
+    <div>
+      <label htmlFor="file-input" className="customButton">
+        Seleccionar archivo
+      </label>
+      <input
+        id="file-input"
+        type="file"
+        accept="image/*,application/pdf"
+        onChange={handleFileChange}
+        className="hidden"
+      />
 
-                if (!file) {
-                    console.log("No se seleccionó ningún archivo.");
-                    return;
-                }
-
-                const formData = new FormData();
-                formData.append("file", file); // Asegúrate de que coincide con el backend
-
-                try {
-                    const response = await fetch("/api/upload", {
-                        method: "POST",
-                        body: formData,
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error("Error en la subida:", errorData.message);
-                        return;
-                    }
-
-                    const data = await response.json();
-                    console.log("Imagen subida:", data);
-                    setImagesUrl(data.url)
-                } catch (error) {
-                    console.error("Error al enviar la solicitud:", error);
-                }
-            }}>
-                <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-                <button type="submit">Enviar</button>
-            </form>
-           { imageUrl && (
-                <img src="{imageUrl}"/>
-            )}
+      {imageUrl && (
+        <div className="flex justify-center items-center mt-5">
+          {isImage(imageUrl) ? (
+            <Image 
+              src={imageUrl} 
+              alt="Imagen subida" 
+              width={160} 
+              height={160} 
+              className="w-40 h-40 rounded-full object-cover shadow-md mt-4" 
+            />
+          ) : isPDF(imageUrl) ? (
+            <a href={imageUrl} target="_blank" rel="noopener noreferrer">
+              <button className="customButton">Ver PDF</button>
+            </a>
+          ) : (
+            <p>El archivo subido no es una imagen ni un PDF.</p>
+          )}
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
-export default Cloudinary;
+export default CloudinaryUploader;
 
-*/

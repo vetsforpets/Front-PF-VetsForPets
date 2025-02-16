@@ -1,3 +1,5 @@
+import { Pet } from "@/Components/pet/PetPreview";
+
 export interface IUserRegisterData {
   name: string;
   address: string;
@@ -19,6 +21,7 @@ export interface IUserData {
   imgProfile: string;
   isPremium: boolean;
   appointments: IAppointment[];
+  pets: Pet[];
   isVet: boolean;
 }
 
@@ -92,7 +95,6 @@ export interface IPetRegisterData {
   notes: string;
   isSterilized: string;
   profileImg: string;
-  userId: string;
 }
 
 export interface IPetEditData {

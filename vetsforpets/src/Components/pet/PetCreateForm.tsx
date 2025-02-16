@@ -15,14 +15,18 @@ interface PetFormInputs {
   isSterilized: string;
   profileImg: string;
   notes: string;
-  userId: string;
 }
-interface petDetailProps {
+interface petCreateFormProps {
   setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
   addingPet: boolean;
+  setReloadPets: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
+const PetCreateForm: React.FC<petCreateFormProps> = ({
+  setAddingPet,
+  addingPet,
+  setReloadPets,
+}) => {
   const { userData } = useUserStore();
 
   const { handleSubmit, control, reset } = useForm<PetFormInputs>({
@@ -37,15 +41,13 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
       isSterilized: "",
       profileImg:
         "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
-      userId: userData?.id,
     },
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     try {
-      console.log(petData);
-      await newPet(petData);
+      await newPet(petData, userData?.token);
       toast.success("Mascota creada con éxito", {
         duration: 3000,
         style: {
@@ -56,6 +58,9 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
           border: "1px solid #c3e6cb",
         },
       });
+
+      setReloadPets((prev) => !prev);
+      if (setAddingPet) setAddingPet(false);
     } catch (error) {
       console.error("Error al crear mascota:", error);
       toast.error("Error al crear la mascota", {
@@ -297,4 +302,4 @@ const PetDetails: React.FC<petDetailProps> = ({ setAddingPet, addingPet }) => {
   );
 };
 
-export default PetDetails;
+export default PetCreateForm;

@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardUI from "./DashboardUI";
 import { IVetCredentials } from "@/services/interfaces";
 import { getVetById } from "@/services/servicesVet";  
@@ -16,20 +16,17 @@ const DashboardData = () => {
     const router = useRouter()
     
     useEffect(() => {
-        // if (!userData || !userData.id) {
-        //     setError("No se encontró la ID de veterinaria");
-        //     setLoading(false);
-        //     return;
-        // }
-        if(userData){
+
+        if(userData?.id){
             const getVetData = async () => {
                 console.log("Buscando veterinaria con ID:", userData.id);
                 try {
-                    const vet = await getVetById(userData.id);
+                    const vet:IVetCredentials | null = await getVetById(userData.id, userData.token);
                     console.log("Respuesta de getVetById", vet);
                     if (vet) {
                         setVeterinaria(vet);
                     } else {
+                        setVeterinaria(null);
                         setError("No se encontró la veterinaria asociada al usuario");
                     }
                 } catch (err) {
@@ -45,27 +42,21 @@ const DashboardData = () => {
     
             getVetData();
   
+        } 
+    }, [userData?.id]); 
+
+    useEffect(()=>{
+        if(!userData?.id){
+            router.push("/")
         }
-    }, [userData]); 
+    },[userData?.id])
 
-  useEffect(()=>{
-    if(!userData?.id){
-      router.push("/")
-    }
-  },[userData])
-  
-    if(userData?.id === undefined){
-      return <div>Cargando....</div>
-     } else {
-    
-
-
+    if(userData?.id === undefined) return <div>Cargando....</div>
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
-}
-};
+}; 
 
 export default DashboardData;
 

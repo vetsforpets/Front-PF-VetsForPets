@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useState } from 'react'
 import { IUserFormData } from '@/interfaces/registerTypes';
@@ -9,6 +9,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { RegisterUser } from '@/services/servicesUser';
 import { toast } from 'sonner';
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importar los íconos
+import CloudinaryUploader from '../Cloudinary/Cloudinary';
 
 function OwnPetFormRegister() {
   const router = useRouter()
@@ -65,7 +66,7 @@ function OwnPetFormRegister() {
       redirect("/")
     }
   }, [user]);
-
+  
   return (
     <form
       className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
@@ -76,6 +77,7 @@ function OwnPetFormRegister() {
         ¿Ya tienes cuenta? <Link href="/login" className=" text-customBrown hover:text-customHardBrown">inicia sesión</Link>
       </p>
       
+
       <Controller
         name="imgProfile"
         control={control}
@@ -84,14 +86,19 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div className='flex gap-4 items-center justify-center'>
-            <label className='text-sm ml-2 w-40'>
-              Imagen de perfil
+
+            <label className='flex items-center justify-between'>
+              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+              <CloudinaryUploader onImageUpload={(url) => field.onChange(url)}/>
             </label>
-            <input {...field} type="file" className="customInput" />
+
+            {/* <input {...field} type="file" className="customInput" /> */}
+            
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
       />
+
 
       <Controller
         name="name"
@@ -156,6 +163,19 @@ function OwnPetFormRegister() {
         render={({ field, fieldState: { error } }) => (
           <div>
             <input {...field} type="tel" className="customInput" placeholder='Teléfono'/>
+            {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
+          </div>
+        )}
+      />
+<Controller
+        name="age"
+        control={control}
+        rules={{
+          required: { value: true, message: "Edad obligatoria" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div>
+            <input {...field} type="number" className="customInput" placeholder='Edad'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
