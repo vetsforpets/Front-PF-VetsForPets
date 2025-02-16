@@ -19,7 +19,7 @@ function OwnPetFormRegister() {
     defaultValues: {
       name: "",
       lastName: "",
-      age: 0,
+      age: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -121,7 +121,7 @@ function OwnPetFormRegister() {
         control={control}
         rules={{
           required: { value: true, message: "Apellido obligatorio." },
-          minLength: { value: 6, message: "El apellido debe tener al menos 6 caracteres." },
+          minLength: { value: 10, message: "El apellido debe tener al menos 10 caracteres." },
           maxLength: { value: 50, message: "El apellido no puede superar los 50 caracteres." },
         }}
         render={({ field, fieldState: { error } }) => (
