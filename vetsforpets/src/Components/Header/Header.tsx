@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
 
@@ -12,13 +12,18 @@ export function Header() {
   const { userData } = useUserStore();
   const isAuthenticated = userData?.id;
 
+  const pathname = usePathname();
+  const headerClass = pathname === "/" ? "absolute" : "relative";
+
   const handleNavigation = (path: string): void => {
     router.push(path);
     setIsOpen(false);
   };
 
   return (
-    <div className="flex justify-between items-center m-7 p-4 rounded-full font-tenor shadowFull bg-[#FFFAD7] relative">
+    <div
+      className={`flex justify-between items-center m-7 p-4 rounded-full font-tenor shadowFull bg-[#FFFAD7] w-11/12 self-center ${headerClass}`}
+    >
       <div className="flex items-center">
         <button
           onClick={() => handleNavigation("/")}

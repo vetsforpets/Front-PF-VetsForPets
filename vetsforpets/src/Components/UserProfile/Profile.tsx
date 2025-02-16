@@ -3,7 +3,7 @@
 import { fetchUserData, updateUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
-import CloudinaryUploader from "../Cloudinary/Cloudinary"; // Importa tu componente de subida
+import CloudinaryUploader from "../Cloudinary/Cloudinary"; 
 import { toast } from "sonner";
 
 interface IAppointment {
