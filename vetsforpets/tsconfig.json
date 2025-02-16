@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     "src/app/api/upload/route.js",
     "src/Components/pet/PetCreateForm.tsx"
-  ],
+, "next.config.ts"  ],
   "exclude": ["node_modules"]
 }
