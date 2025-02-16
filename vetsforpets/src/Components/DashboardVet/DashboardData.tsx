@@ -7,12 +7,14 @@ import { IVetCredentials } from "@/services/interfaces";
 import { getVetById } from "@/services/servicesVet";  
 import { useUserStore } from "@/store";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const DashboardData = () => {
     const [veterinaria, setVeterinaria] = useState<IVetCredentials | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const userData = useUserStore((state) => state.userData);
+    
     const router = useRouter()
     
     useEffect(() => {
@@ -26,7 +28,6 @@ const DashboardData = () => {
                     if (vet) {
                         setVeterinaria(vet);
                     } else {
-                        setVeterinaria(null);
                         setError("No se encontró la veterinaria asociada al usuario");
                     }
                 } catch (err) {
@@ -41,17 +42,19 @@ const DashboardData = () => {
             };
     
             getVetData();
-  
+
         } 
     }, [userData?.id]); 
 
-    useEffect(()=>{
-        if(!userData?.id){
-            router.push("/")
-        }
-    },[userData?.id])
+     setTimeout(()=>{
+        useEffect(()=>{
+            if(!userData?.id){   
+                router.push("/not-found")
+            }
+            },[userData?.id])
+        
+            }, 3000)
 
-    if(userData?.id === undefined) return <div>Cargando....</div>
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
 

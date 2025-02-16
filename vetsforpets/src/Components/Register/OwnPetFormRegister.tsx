@@ -175,7 +175,7 @@ function OwnPetFormRegister() {
         }}
         render={({ field, fieldState: { error } }) => (
           <div>
-            <input {...field} type="number" className="customInput" placeholder='Edad'/>
+            <input {...field} type="number" className="customInput" placeholder='Edad:'/>
             {error && <p className="text-red-500 text-xs mt-1">{error.message}</p>}
           </div>
         )}
