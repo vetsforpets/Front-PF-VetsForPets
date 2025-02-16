@@ -43,18 +43,15 @@ const DashboardData = () => {
             };
     
             getVetData();
-
         } 
-    }, [userData?.id]); 
-
-     setTimeout(()=>{
-        useEffect(()=>{
+        setTimeout(()=>{
             if(!userData?.id){   
                 router.push("/not-found")
             }
-            },[userData?.id])
-        
-            }, 3000)
+        }, 3000)
+    }, [userData?.id]); 
+
+
 
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
