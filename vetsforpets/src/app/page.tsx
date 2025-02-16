@@ -1,6 +1,5 @@
 import { UpperBody } from "@/Components/Home/UpperBody/UpperBody";
-import AboutUs  from "../Components/AboutUs/AboutUs";
-import Calendar from "../Components/Calendar/Calendar";
+
 
 
 
@@ -9,8 +8,11 @@ export default function Home() {
     <>
       <div>
         <UpperBody />
-        <AboutUs />
-        <Calendar />
+
+        
+
+      
+
 
    
       </div>
