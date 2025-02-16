@@ -1,10 +1,10 @@
-import AboutUs from "../../Components/AboutUs/AboutUs"; 
-import React from "react";
+// import {AboutUs} from "../../Components/AboutUs/AboutUs"; 
+// import React from "react";
 
-export default function About() {
-  return (
-    <>
-      <AboutUs />
-    </>
-  );
-}
+// export default function AboutUs() {
+//   return (
+//     <>
+//       <AboutUs />
+//     </>
+//   );
+// }
