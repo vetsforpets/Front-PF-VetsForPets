@@ -21,7 +21,8 @@ const DashboardData = () => {
             const getVetData = async () => {
                 console.log("Buscando veterinaria con ID:", userData.id);
                 try {
-                    const vet:IVetCredentials | null = await getVetById(userData.id, userData.token);
+                    const vet: IVetCredentials | null = await getVetById(userData.token, userData.id);
+
                     console.log("Respuesta de getVetById", vet);
                     if (vet) {
                         setVeterinaria(vet);
