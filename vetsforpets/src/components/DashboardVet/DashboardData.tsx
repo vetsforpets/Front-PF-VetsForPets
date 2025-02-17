@@ -16,7 +16,7 @@ const DashboardData = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (userData?.id) {
+    if (userData?.token) {
       const getVetData = async () => {
         console.log("Buscando veterinaria con ID:", userData.id);
         try {
@@ -44,7 +44,7 @@ const DashboardData = () => {
 
       getVetData();
     }
-  }, [userData?.id]);
+  }, [userData?.token]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -54,7 +54,7 @@ const DashboardData = () => {
     }, 1000); // Ajusta el tiempo según sea necesario
 
     return () => clearTimeout(timeout); // Limpia el timeout al desmontar el componente
-  }, [userData?.id, router]);
+  }, [userData?.token, router]);
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;

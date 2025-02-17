@@ -12,7 +12,7 @@ export function Header() {
   const [isvet, setIsVet] = useState(false);
 
   const { userData } = useUserStore();
-  const isAuthenticated = userData?.isVet || userData?.id;
+  const isAuthenticated = userData?.id;
 
   const pathname = usePathname();
   const headerClass = pathname === "/" ? "absolute" : "relative";
@@ -23,12 +23,11 @@ export function Header() {
   };
 
   useEffect(() => {
-    console.log(userData);
     console.log(userData?.isVet);
     if (userData) {
       setIsVet(userData.isVet);
     }
-  }, [userData?.isVet]);
+  }, [userData]);
 
   return (
     <div
@@ -61,7 +60,7 @@ export function Header() {
           onClick={() => handleNavigation("/register")}
           className="flex flex-col items-center"
         >
-          <img
+          <Image
             src="/images/emergency.png"
             width={1920}
             height={500}
@@ -80,8 +79,8 @@ export function Header() {
         </button>
       </div>
 
-      <button onClick={() => setIsOpen(!isOpen)} className="p-2 z-10">
-        <div className="w-6 h-6 flex flex-col justify-between items-center space-y-1 hover:scale-105 transform transition-all duration-300">
+      <button onClick={() => setIsOpen(!isOpen)} className="z-10 p-2">
+        <div className="flex flex-col items-center justify-between w-6 h-6 space-y-1 transition-all duration-300 transform hover:scale-105">
           <div
             className={`bg-black w-full h-1 transform transition-transform duration-300 ${
               isOpen ? "rotate-45 translate-y-2" : ""
