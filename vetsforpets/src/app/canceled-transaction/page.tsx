@@ -1,4 +1,4 @@
-import CanceledTransaction from '@/Components/Stripe/Cancel /CanceledTransaction'
+import CanceledTransaction from '@/Components/Stripe/Canceled/CanceledTransaction'
 import React from 'react'
 
 const page = () => {
