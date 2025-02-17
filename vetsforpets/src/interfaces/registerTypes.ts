@@ -48,7 +48,13 @@ export interface IPetResponseData {
   } 
   
 
-
+export interface IMembershipResponse {
+id: string,
+name: string,
+price: string,
+benefits: string[]
+}
+ 
 
   export interface IUserResponseData {
           id: string,
