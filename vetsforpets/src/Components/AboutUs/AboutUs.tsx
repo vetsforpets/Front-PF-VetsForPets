@@ -16,7 +16,7 @@ export default function AboutUs() {
   return (
     <div className="min-h-screen p-6 flex flex-col items-center justify-center w-[90%] mx-auto">
       <h1 
-        className="text-l sm:text-xl md:text-3xl lg:text-4xl font-bold mb-8 font-poppins text-customBrown text-center"
+        className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 font-poppins text-customBrown text-center"
         data-aos="fade-up" 
       >
         QUIENES SOMOS
@@ -69,7 +69,7 @@ export default function AboutUs() {
 
         <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-8 mt-8 md:mt-0 ml-auto">
           <Image
-            src="/AboutUsDogCat.svg"
+            src="/AboutUs.svg"
             alt="Imagen de nosotros"
             width={500} 
             height={300} 
