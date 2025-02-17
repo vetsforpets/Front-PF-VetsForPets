@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="w-full bottom-0 mt-14">
       <div className="relative w-full flex justify-center items-start pt-[139px]">
         {/* Imagen SVG */}
-        <div className="absolute top-0 left-0 w-full flex justify-center z-10">
+        <div className="absolute top-0 left-0 w-full flex justify-center z-10 overflow-hidden">
           <Image
             src="/Footer.svg"
             alt="Logo SVG"
