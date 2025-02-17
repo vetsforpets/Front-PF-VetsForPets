@@ -40,7 +40,13 @@ export function Header() {
           onClick={() => handleNavigation("/")}
           className="flex flex-col items-center"
         >
-          <Image src="/images/logo.png" className="w-20" alt="Logo" />
+          <Image
+            src="/images/logo.png"
+            width={1920}
+            height={500}
+            className="w-20"
+            alt="Logo"
+          />
         </button>
       </div>
       <div>
@@ -58,6 +64,8 @@ export function Header() {
         >
           <Image
             src="/images/emergency.png"
+            width={1920}
+            height={500}
             className="w-10 bg-yellow-200 rounded-full"
             alt="sirena"
           />

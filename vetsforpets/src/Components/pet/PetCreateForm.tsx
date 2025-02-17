@@ -40,8 +40,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
       sex: "",
       notes: "",
       isSterilized: "",
-      profileImg:
-        "https://www.veterinariadelbosque.com/images/articulos/th-cachorros.jpg",
+      profileImg: "",
     },
     mode: "onChange",
   });
@@ -89,13 +88,21 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
               }
             }}
           >
-            <Image className="h-4 w-4" src="images/cross.png" alt="" />
+            <Image
+              className="h-4 w-4"
+              width={1920}
+              height={500}
+              src="/images/cross.png"
+              alt=""
+            />
           </button>
         )}
         <div className="space-y-4">
           <Image
             src="/Dog.svg"
             alt="user"
+            width={1920}
+            height={500}
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
           />
 

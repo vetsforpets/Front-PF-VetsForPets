@@ -71,8 +71,10 @@ const PetPreview: React.FC<PetPreviewProps> = ({
   return (
     <div className="flex gap-4 ">
       <Image
-        src={pet.profileImg ? pet.profileImg : "/Cat.svg"}
+        src={"/Cat.svg"}
         alt={pet.name}
+        width={1920}
+        height={500}
         className="w-40 h-40 m-4 rounded-full object-cover shadow-md"
       />
 
@@ -113,6 +115,8 @@ const PetPreview: React.FC<PetPreviewProps> = ({
           <Image
             src="/images/delete.png"
             alt="eliminar"
+            width={1920}
+            height={500}
             className="w-8 h-8 m-2 rounded-full"
             onClick={() => handleDelete(pet.id)}
           />

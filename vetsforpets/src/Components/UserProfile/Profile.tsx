@@ -3,7 +3,7 @@
 import { fetchUserData, updateUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
-import CloudinaryUploader from "../Cloudinary/Cloudinary"; 
+import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { toast } from "sonner";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
 import Image from "next/image";
@@ -39,8 +39,6 @@ const Profile = () => {
   const [editableUser, setEditableUser] = useState<IUserData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       if (userData?.id && userData?.token) {
@@ -67,7 +65,6 @@ const Profile = () => {
 
   console.log("Ruta de la imagen:", user?.imgProfile);
 
-
   if (!user) return <p>Cargando datos del usuario...</p>;
 
   const handleEdit = () => {
@@ -80,20 +77,23 @@ const Profile = () => {
   const handleSave = async () => {
     if (editableUser) {
       try {
-
-        const updatedUser = await updateUser(userData.id, editableUser, userData.token);
+        const updatedUser = await updateUser(
+          userData.id,
+          editableUser,
+          userData.token
+        );
         console.log("Usuario actualizado:", updatedUser);
         setUsers([updatedUser]);
-         toast.success("Perfil editado con éxito", {
-              duration: 3000,
-              style: {
-                color: "#155724",
-                background: "#d4edda",
-                borderRadius: "8px",
-                padding: "16px",
-                border: "1px solid #c3e6cb",
-              },
-            })
+        toast.success("Perfil editado con éxito", {
+          duration: 3000,
+          style: {
+            color: "#155724",
+            background: "#d4edda",
+            borderRadius: "8px",
+            padding: "16px",
+            border: "1px solid #c3e6cb",
+          },
+        });
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
@@ -116,37 +116,40 @@ const Profile = () => {
     }
   };
 
-  const handleOpenModal = () => setIsModalOpen(true)
-  const handleCloseModal = () => setIsModalOpen(false)
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
   const handleConfirm = () => {
-    handleSave();  
-    handleCloseModal(); 
+    handleSave();
+    handleCloseModal();
   };
-  
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
-
-
-      {isEditing ? (
-  <div className="flex flex-col items-center">
-    
-    <CloudinaryUploader onImageUpload={handleImageUpload} />
-  </div>
-) : (
-  // En modo no edición, mostramos la imagen actual o un avatar genérico
-  <Image
-    src={user?.imgProfile || "/Generic avatar.png"}
-    alt="Perfil"
-    className="w-40 h-40 rounded-full object-cover shadow-md"
-  />
-)}
+        {isEditing ? (
+          <div className="flex flex-col items-center">
+            <CloudinaryUploader onImageUpload={handleImageUpload} />
+          </div>
+        ) : (
+          <Image
+            src={user?.imgProfile || "/Generic avatar.png"}
+            alt="Perfil"
+            width={1920}
+            height={500}
+            className="w-40 h-40 rounded-full object-cover shadow-md"
+          />
+        )}
         <button
           className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
           onClick={handleEdit}
         >
-          <Image src="/images/icon.png" alt="editar" className="w-10 h-7 m-2" />
+          <Image
+            src="/images/icon.png"
+            width={1920}
+            height={500}
+            alt="editar"
+            className="w-10 h-7 m-2"
+          />
         </button>
 
         <h1 className="mt-4 text-3xl font-bold px-4 py-2 rounded-lg w-full flex justify-center items-center text-center">
@@ -256,12 +259,11 @@ const Profile = () => {
 
       {isModalOpen && (
         <ConfirmModal
-        isOpen={isModalOpen} 
+          isOpen={isModalOpen}
           onConfirm={handleConfirm}
           onClose={handleCloseModal}
         />
       )}
-
     </div>
   );
 };
