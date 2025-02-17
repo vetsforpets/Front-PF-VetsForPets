@@ -8,11 +8,10 @@ import { LogoutButton } from "../LogoutButton/LogoutButton";
 export function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isvet, setIsVet] = useState(false)
+  const [isvet, setIsVet] = useState(false);
 
   const { userData } = useUserStore();
   const isAuthenticated = userData?.id;
- 
 
   const pathname = usePathname();
   const headerClass = pathname === "/" ? "absolute" : "relative";
@@ -22,14 +21,14 @@ export function Header() {
     setIsOpen(false);
   };
 
-  useEffect(()=>{
-    console.log('====================================');
+  useEffect(() => {
+    console.log("====================================");
     console.log(userData?.isVet);
-    console.log('====================================');
-    if(userData) {
-      setIsVet(userData.isVet)
+    console.log("====================================");
+    if (userData) {
+      setIsVet(userData.isVet);
     }
-  },[userData?.isVet])
+  }, [userData?.isVet]);
 
   return (
     <div
@@ -97,19 +96,21 @@ export function Header() {
         <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-5 w-[240px] flex-grow">
           {isAuthenticated ? (
             <>
-            {!isvet ? <button 
-                onClick={() => handleNavigation("/dashboard")}
-                className="customButtonDos"
-              >
-                Perfil Usuario
-              </button> :
-              <button
-              onClick={() => handleNavigation("/dashboard-vet")}
-              className="customButtonDos"
-            >
-              Perfil Veterinaria
-            </button>
-              }
+              {!isvet ? (
+                <button
+                  onClick={() => handleNavigation("/dashboard")}
+                  className="customButtonDos"
+                >
+                  Perfil Usuario
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleNavigation("/dashboard-vet")}
+                  className="customButtonDos"
+                >
+                  Perfil Veterinaria
+                </button>
+              )}
             </>
           ) : (
             <>
