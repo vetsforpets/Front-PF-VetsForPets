@@ -62,7 +62,7 @@ export function Header() {
           onClick={() => handleNavigation("/register")}
           className="flex flex-col items-center"
         >
-          <Image
+          <img
             src="/images/emergency.png"
             width={1920}
             height={500}
