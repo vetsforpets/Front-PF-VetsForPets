@@ -1,15 +1,47 @@
 "use client"
-import { IMembershipResponse } from '@/interfaces/registerTypes';
+import { IMembershipResponse, IPostOrder } from '@/interfaces/registerTypes';
 import { fetchOrderData } from '@/services/servicesOrder';
 import { useUserStore } from '@/store';
 import React, { useEffect, useState } from 'react'
-
+import { postOrder } from '@/services/servicesOrder';
+import { toast } from 'sonner';
 
 const MembershipCard = () => {
 const [membership, setmembership] = useState<IMembershipResponse | void>()
 const userData = useUserStore((state)=>state.userData)
 
-
+const postOrderButton = async ()=>{
+  if(userData?.id && membership?.id){
+try {
+  const order: IPostOrder = await postOrder({
+    userId: userData?.id,
+    paymentMethod: "Credit Card",
+    membership:[{id: membership?.id}]
+  }, userData.token)
+  toast.success("orden realizada con exito", {
+    duration: 3000,
+    style: {
+      color: "#dc3545",
+      background: "#f8d7da",
+      borderRadius: "8px",
+      padding: "16px",
+      border: "1px solid #f5c6cb",
+    },
+  })
+} catch (error) {
+  toast.error("Error en la orden", {
+    duration: 3000,
+    style: {
+      color: "#dc3545",
+      background: "#f8d7da",
+      borderRadius: "8px",
+      padding: "16px",
+      border: "1px solid #f5c6cb",
+    },
+  })
+}
+  }
+}
 
 useEffect(()=>{
   const fetchMembership = async () =>{
