@@ -11,6 +11,8 @@ const Footer = () => {
           <Image
             src="/Footer.svg"
             alt="Logo SVG"
+            width={1920}
+            height={500}
             className="max-w-full h-auto object-contain"
             style={{ maxWidth: "1115.84px", height: "auto" }}
           />
