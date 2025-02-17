@@ -27,7 +27,7 @@ function VetFormRegister() {
       location: "anything",
       licenseNumber: "",
       foundation: "",
-      businessHours: "pendiente",
+      businessHours: {open:"", close:""},
     },
     mode: "onChange"
   });
@@ -37,11 +37,11 @@ function VetFormRegister() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
-    if (data.businessHours === "is24Hours") {
-      data.is24Hours === true
-    }
-    const { businessHours, ...submmitData } = data
-    await RegisterVet(submmitData)
+    // if (data.businessHours === "is24Hours") {
+    //   data.is24Hours = true
+    // }
+    // const { ...submmitData } = data
+    await RegisterVet(data)
     toast.success("Usuario registrado con éxito", {
       duration: 3000,
       style: {

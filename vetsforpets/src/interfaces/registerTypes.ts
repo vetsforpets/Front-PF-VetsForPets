@@ -74,6 +74,12 @@ benefits: string[]
   //     licenseNumber: "",
   //     foundation: "",
   //     businessHours: "",
+
+  interface IBusinessHours {
+    open: string;
+    close: string;
+  }
+
   export interface IVetFormData {
     name: string,
     veterinarian?: string,
@@ -86,8 +92,9 @@ benefits: string[]
     location: string
     licenseNumber?: string,
     foundation?: string,
-    businessHours?: {}
-  } 
+    businessHours?: IBusinessHours; 
+  }
+  
   export interface IVetFormDataPrev {
     name: string,
     veterinarian?: string,

@@ -5,7 +5,8 @@ import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
 import CloudinaryUploader from "../Cloudinary/Cloudinary"; 
 import { toast } from "sonner";
-import ConfirmModal from "../ModalDeConfirmacion/ModalDeConfirmacion";
+import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import Image from "next/image";
 
 interface IAppointment {
   id: string;
@@ -135,7 +136,7 @@ const Profile = () => {
   </div>
 ) : (
   // En modo no edición, mostramos la imagen actual o un avatar genérico
-  <img
+  <Image
     src={user?.imgProfile || "/Generic avatar.png"}
     alt="Perfil"
     className="w-40 h-40 rounded-full object-cover shadow-md"
@@ -145,7 +146,7 @@ const Profile = () => {
           className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
           onClick={handleEdit}
         >
-          <img src="/images/icon.png" alt="editar" className="w-10 h-7 m-2" />
+          <Image src="/images/icon.png" alt="editar" className="w-10 h-7 m-2" />
         </button>
 
         <h1 className="mt-4 text-3xl font-bold px-4 py-2 rounded-lg w-full flex justify-center items-center text-center">

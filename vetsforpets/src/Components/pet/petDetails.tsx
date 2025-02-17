@@ -208,6 +208,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Pet } from "./PetPreview";
 import { editPet } from "@/services/servicesPets";
 import { toast } from "sonner";
+import Image from "next/image";
 
 interface PetFormInputs {
   name: string;
@@ -282,7 +283,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       <div className="bg-[#deb887] rounded-2xl p-5 px-10 shadow-lg mx-5">
         <div className="space-y-4">
-          <img
+          <Image
             src={pet.profileImg || "/Cat.svg"}
             alt={pet.name}
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"

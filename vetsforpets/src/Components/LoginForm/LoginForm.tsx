@@ -8,6 +8,7 @@ import { CredentialResponse } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "sonner";
+import Image from "next/image";
 
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -94,7 +95,7 @@ export default function LoginForm() {
 
   return (
     <div className="w-1/4 mx-auto mt-10 mb-20">
-      <img src="./images/logo.png" alt="logo" className="justify-self-center" />
+      <Image src="./images/logo.png" alt="logo" className="justify-self-center" />
       <h2 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

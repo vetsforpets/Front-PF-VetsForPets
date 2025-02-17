@@ -23,7 +23,7 @@ export default function ProfileView() {
     if (!userData?.id) {
       router.push("/");
     }
-  }, [userData]);
+  }, [userData, router]);
 
   useEffect(() => {
     const fetchData = async () => {

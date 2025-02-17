@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { LogoutButton } from "../LogoutButton/LogoutButton";
+import Image from "next/image";
 
 export function Header() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export function Header() {
           onClick={() => handleNavigation("/")}
           className="flex flex-col items-center"
         >
-          <img src="/images/logo.png" className="w-20" alt="Logo" />
+          <Image src="/images/logo.png" className="w-20" alt="Logo" />
         </button>
       </div>
       <div>
@@ -56,7 +57,7 @@ export function Header() {
           onClick={() => handleNavigation("/register")}
           className="flex flex-col items-center"
         >
-          <img
+          <Image
             src="/images/emergency.png"
             className="w-10 bg-yellow-200 rounded-full"
             alt="sirena"
