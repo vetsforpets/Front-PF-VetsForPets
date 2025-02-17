@@ -5,15 +5,17 @@ import { useUserStore } from '@/store';
 import React, { useEffect, useState } from 'react'
 import { postOrder } from '@/services/servicesOrder';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 const MembershipCard = () => {
 const [membership, setmembership] = useState<IMembershipResponse | void>()
 const userData = useUserStore((state)=>state.userData)
+const router = useRouter()
 
 const postOrderButton = async ()=>{
   if(userData?.id && membership?.id){
 try {
-  const order: IPostOrder = await postOrder({
+  const order = await postOrder({
     userId: userData?.id,
     paymentMethod: "Credit Card",
     membership:[{id: membership?.id}]
@@ -27,7 +29,9 @@ try {
       padding: "16px",
       border: "1px solid #f5c6cb",
     },
-  })
+  }
+)
+router.push(`${order.url}`)
 } catch (error) {
   toast.error("Error en la orden", {
     duration: 3000,
@@ -67,7 +71,7 @@ fetchMembership()
         {membership?.benefits.map((benefit, index) => <p key={index} className="text-gray-600 mt-2">- {benefit}.</p>)}
         <p className="text-gray-600 mt-2">Disfruta de beneficios exclusivos con nuestra membresía premium.</p>
         <p className="text-gray-800 font-bold text-lg mt-4">Precio: ${membership?.price}</p>
-        <button 
+        <button onClick={postOrderButton}
           className="mt-4 bg-blue-600∫ text-customDarkGreen px-6 py-2 rounded-lg hover:bg-customHardBrown hover:text-customBeige transition-all duration-500"
         >
           Comprar Ahora

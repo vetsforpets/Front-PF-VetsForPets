@@ -42,7 +42,7 @@ export async function postOrder(
     });
 
     if (!response.ok) {
-      throw new Error("Error al enviar formulario de creación de mascota");
+      throw new Error("Error al enviar el post de la orden");
     }
 
     const data = await response.json();
