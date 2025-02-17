@@ -63,7 +63,6 @@ export function UpperBody() {
               width={500}
               height={500}
               alt="Perro corriendo"
-              layout="intrinsic"
               className="mx-auto font-tenor-sans"
             />
             <p className="text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
@@ -107,7 +106,6 @@ export function UpperBody() {
             width={1000}
             height={1000}
             alt="Perro corriendo"
-            layout="intrinsic"
             className="mx-auto font-tenor-sans"
           />
           <p className="font-kiwi text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
@@ -123,8 +121,8 @@ export function UpperBody() {
         <h2 className="text-center text-6xl font-tenor m-9">
           Veterinarias destacadas
         </h2>
-        <div className="flex justify-center items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex justify-center items-center w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1200px] w-full justify-center">
             <div
               className="w-[300px] text-center rounded-2xl p-2"
               data-aos="fade-up"
