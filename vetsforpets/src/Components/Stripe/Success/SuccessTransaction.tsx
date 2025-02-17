@@ -1,11 +1,12 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const SuccessTransaction = () => {
   return (
     <div className="flex flex-col items-center justify-center p-6">
       <div className="bg-white p-8 rounded-2xl shadow-lg text-center max-w-md">
-        <img
+        <Image
           src="/success.png" 
           alt="Success"
           width={100}

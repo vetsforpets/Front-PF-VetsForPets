@@ -2,6 +2,7 @@
 
 import { newPet } from "@/services/servicesPets";
 import { useUserStore } from "@/store";
+import Image from "next/image";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -88,11 +89,11 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
               }
             }}
           >
-            <img className="h-4 w-4" src="images/cross.png" alt="" />
+            <Image className="h-4 w-4" src="images/cross.png" alt="" />
           </button>
         )}
         <div className="space-y-4">
-          <img
+          <Image
             src="/Dog.svg"
             alt="user"
             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"

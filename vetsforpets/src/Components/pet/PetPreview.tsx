@@ -5,6 +5,7 @@ import React from "react";
 import { FaEye } from "react-icons/fa";
 import { toast } from "sonner";
 import { deletePet } from "@/services/servicesPets";
+import Image from "next/image";
 
 export interface Pet {
   id: string;
@@ -69,7 +70,7 @@ const PetPreview: React.FC<PetPreviewProps> = ({
 
   return (
     <div className="flex gap-4 ">
-      <img
+      <Image
         src={pet.profileImg ? pet.profileImg : "/Cat.svg"}
         alt={pet.name}
         className="w-40 h-40 m-4 rounded-full object-cover shadow-md"
@@ -109,7 +110,7 @@ const PetPreview: React.FC<PetPreviewProps> = ({
         </button>
 
         <button className="rounded-2xl hover:bg-customBeige flex items-center justify-center">
-          <img
+          <Image
             src="/images/delete.png"
             alt="eliminar"
             className="w-8 h-8 m-2 rounded-full"
