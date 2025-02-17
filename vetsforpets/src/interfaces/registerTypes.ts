@@ -147,3 +147,8 @@ benefits: string[]
           appointments: []
   } 
   
+  export interface IPostOrder {
+    userId: string,
+    paymentMethod: string,
+    membership: [{id: string}]
+  }
