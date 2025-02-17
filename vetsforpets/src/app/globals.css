@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #283618;
+  background: #fffad7;
+  font-family: var(--font-kiwi-maru), serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-tenor-sans), sans-serif;
+}
+
+/* ----- Clases reutilizables ----- */
+
+.customButton {
+  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customLightBrown hover:bg-customBrown dark:bg-customBeige dark:hover:bg-customBrown shadow-lg;
+}
+
+.customButtonDos {
+  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customLightBrown hover:bg-customBrown dark:bg-customBeige dark:hover:bg-customBrown shadow-lg w-full;
+}
+
+.customInput {
+  @apply focus:ring-0 block mt-2 w-full p-2 text-customDarkGreen border border-gray-300 rounded-lg bg-gray-50 text-xs  focus:border-customBrown dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-customBrown;
+}
+
+.shadowFull {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* ----- Otros ----- */
+
+/* Quita las flechas de incremento y decremento en los inputs de tipo numero  */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
