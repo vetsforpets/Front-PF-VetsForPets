@@ -34,6 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+<<<<<<< HEAD
     <html lang="es">
       <body
         className={`flex flex-col min-h-screen ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
@@ -44,6 +45,18 @@ export default function RootLayout({
         <Footer />
       </body>
     </html>
+=======
+      <html lang="es">
+        <body
+          className={`flex flex-col min-h-screen ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
+        >
+          <Toaster position="top-center"/>
+          <Header />
+          <div className="flex flex-col flex-grow">{children}</div>
+          <Footer />
+        </body>
+      </html>
+>>>>>>> 87727e1a0e628b29a648b0ee776d90692dadd528
     // </GoogleOAuthProvider>
   );
 }
