@@ -1,11 +1,10 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  reactStrictMode: true, // Recomendado para evitar errores en desarrollo
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  output: "standalone",
   images: {
     domains: ["res.cloudinary.com"],
   },
-  trailingSlash: true,
 };
 
 module.exports = nextConfig;
