@@ -1,67 +1,70 @@
-
-'use client'
+"use client";
 
 import React, { useState, useEffect } from "react";
 import DashboardUI from "./DashboardUI";
 import { IVetCredentials } from "@/services/interfaces";
-import { getVetById } from "@/services/servicesVet";  
+import { getVetById } from "@/services/servicesVet";
 import { useUserStore } from "@/store";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 const DashboardData = () => {
-    const [veterinaria, setVeterinaria] = useState<IVetCredentials | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const userData = useUserStore((state) => state.userData);
-    
-    const router = useRouter()
-    
-    useEffect(() => {
+  const [veterinaria, setVeterinaria] = useState<IVetCredentials | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const userData = useUserStore((state) => state.userData);
 
-        if(userData?.id){
-            const getVetData = async () => {
-                console.log("Buscando veterinaria con ID:", userData.id);
-                try {
-                    const vet: IVetCredentials | null = await getVetById(userData.token, userData.id);
+  const router = useRouter();
 
-                    console.log("Respuesta de getVetById", vet);
-                    if (vet) {
-                        setVeterinaria(vet);
-                    } else {
-                        setError("No se encontró la veterinaria asociada al usuario");
-                    }
-                } catch (err) {
-                    if (err instanceof Error) {
-                        setError(err.message);
-                    } else {
-                        setError("Ocurrió un error desconocido");
-                    }
-                } finally {
-                    setLoading(false);
-                }
-            };
-    
-            getVetData();
-        } 
-    }, [userData?.id]); 
+  useEffect(() => {
+    if (userData?.id) {
+      const getVetData = async () => {
+        console.log("Buscando veterinaria con ID:", userData.id);
+        try {
+          const vet: IVetCredentials | null = await getVetById(
+            userData.token,
+            userData.id
+          );
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            if (!userData?.id) {
-                router.push("/not-found");
-            }
-        }, 1000); // Ajusta el tiempo según sea necesario
-    
-        return () => clearTimeout(timeout); // Limpia el timeout al desmontar el componente
-    }, [userData?.id, router]);
+          console.log("Respuesta de getVetById", vet);
+          if (vet) {
+            setVeterinaria(vet);
+          } else {
+            setError("No se encontró la veterinaria asociada al usuario");
+          }
+        } catch (err) {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("Ocurrió un error desconocido");
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
 
+      getVetData();
+    }
+  }, [userData?.id]);
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div>Error: {error}</div>;
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!userData?.id) {
+        router.push("/not-found");
+      }
+    }, 1000); // Ajusta el tiempo según sea necesario
 
-    return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
-}; 
+    return () => clearTimeout(timeout); // Limpia el timeout al desmontar el componente
+  }, [userData?.id, router]);
+
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return veterinaria ? (
+    <DashboardUI veterinaria={veterinaria} />
+  ) : (
+    <div>No hay datos disponibles</div>
+  );
+};
 
 export default DashboardData;
 
@@ -94,7 +97,6 @@ export default DashboardData;
 //             setLoading(false);
 //             return;
 //         }
-    
 
 //         const getVetData = async () => {
 //             console.log("Buscando veterinaria con ID:", userData.id);
@@ -107,7 +109,7 @@ export default DashboardData;
 //                     setError("No se encontró la veterinaria asociada al usuario");
 //                 }
 //             } catch (err) {
-                
+
 //                 if (err instanceof Error) {
 //                     setError(err.message);
 //                 } else {
@@ -122,11 +124,9 @@ export default DashboardData;
 
 //     }, [userData]);
 
-
 //     if (loading) return <div>Cargando...</div>;
 //     if (error) return <div>Error: {error}</div>;
 
-    
 //     return veterinaria ? <DashboardUI veterinaria={veterinaria} /> : <div>No hay datos disponibles</div>;
 // };
 
