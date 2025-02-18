@@ -1,8 +1,6 @@
-import UserProfile from "@/Components/UserProfile/UserProfile"
-import React from "react"
+import UserProfile from "@/components/UserProfile/UserProfile";
+import React from "react";
 
-export default function dashboard () {
-    return (
-        <UserProfile/>
-    )
+export default function dashboard() {
+  return <UserProfile />;
 }

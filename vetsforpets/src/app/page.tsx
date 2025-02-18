@@ -1,4 +1,4 @@
-import { UpperBody } from "@/Components/Home/UpperBody/UpperBody";
+import { UpperBody } from "@/components/Home/UpperBody/UpperBody";
 
 export default function Home() {
   return (

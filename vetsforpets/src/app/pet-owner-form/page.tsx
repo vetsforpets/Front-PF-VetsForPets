@@ -1,10 +1,8 @@
-import OwnPetFormRegister from '@/Components/Register/OwnPetFormRegister'
-import React from 'react'
+import OwnPetFormRegister from "@/components/Register/OwnPetFormRegister";
+import React from "react";
 
 function page() {
-  return (
-    <OwnPetFormRegister/>
-  )
+  return <OwnPetFormRegister />;
 }
 
-export default page
+export default page;
