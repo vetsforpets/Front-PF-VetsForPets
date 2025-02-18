@@ -1,4 +1,4 @@
-import { Pet } from "@/Components/pet/PetPreview";
+import { Pet } from "@/components/pet/PetPreview";
 import { IPetRegisterData } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;

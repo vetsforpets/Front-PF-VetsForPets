@@ -1,8 +1,6 @@
-import IndexRegister from "@/Components/Register/IndexRegister"
-import React from 'react'
+import IndexRegister from "@/components/Register/IndexRegister";
+import React from "react";
 
 export default function Register() {
-  return (
-    <IndexRegister/>
-  )
+  return <IndexRegister />;
 }

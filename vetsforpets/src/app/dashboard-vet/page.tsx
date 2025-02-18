@@ -1,11 +1,11 @@
-import DashboardData from "@/Components/DashboardVet/DashboardData";
+import DashboardData from "@/components/DashboardVet/DashboardData";
 
 const DashboardVetPage = () => {
-    return (
-        <div>          
-            <DashboardData />
-        </div>
-    );
+  return (
+    <div>
+      <DashboardData />
+    </div>
+  );
 };
 
 export default DashboardVetPage;

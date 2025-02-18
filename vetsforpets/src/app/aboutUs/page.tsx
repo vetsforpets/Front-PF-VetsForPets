@@ -1,4 +1,4 @@
-import AboutUs from "../../Components/AboutUs/AboutUs"; 
+import AboutUs from "../../components/AboutUs/AboutUs";
 
 import React from "react";
 

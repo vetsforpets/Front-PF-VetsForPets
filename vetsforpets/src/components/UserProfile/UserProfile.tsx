@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
+import CalendlySearch from "../Calendar/CalendlySearch";
 
 export default function ProfileView() {
   const router = useRouter();
@@ -96,6 +97,7 @@ export default function ProfileView() {
             )}
           </div>
         </div>
+        <CalendlySearch/>
       </div>
     );
   }
