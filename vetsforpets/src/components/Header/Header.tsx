@@ -23,9 +23,7 @@ export function Header() {
   };
 
   useEffect(() => {
-    console.log("====================================");
     console.log(userData?.isVet);
-    console.log("====================================");
     if (userData) {
       setIsVet(userData.isVet);
     }
