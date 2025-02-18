@@ -28,7 +28,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/api/upload/route.js",
-    "src/Components/pet/PetCreateForm.tsx"
-, "next.config.ts"  ],
+    "src/Components/pet/PetCreateForm.tsx",
+    "next.config.ts",
+    "tailwind.config.js"
+  ],
   "exclude": ["node_modules"]
 }
