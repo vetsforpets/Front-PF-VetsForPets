@@ -99,12 +99,8 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
             />
           </button>
         )}
-
         
         <div className="space-y-4">
-
-
-
         <Controller
         name="profileImg"
         control={control}
@@ -126,7 +122,6 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
           </div>
         )}
       />
-       
           <Controller
             name="name"
             control={control}

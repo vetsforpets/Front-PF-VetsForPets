@@ -89,9 +89,6 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
       <div className="bg-[#deb887] rounded-2xl p-5 px-10 shadow-lg mx-5">
         <div className="space-y-4">
 
-          
-
-
 
 {isEditing ? (
             
