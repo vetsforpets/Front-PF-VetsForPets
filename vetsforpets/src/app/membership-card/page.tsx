@@ -1,9 +1,7 @@
-import MembershipCard from '@/Components/Stripe/MembershipCard/MembershipCard'
-import React from 'react'
+import MembershipCard from "@/components/Stripe/MembershipCard/MembershipCard";
+import React from "react";
 
 const page = () => {
-  return (
-    <MembershipCard/>
-  )
-}
+  return <MembershipCard />;
+};
 export default page;

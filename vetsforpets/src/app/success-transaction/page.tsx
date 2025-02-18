@@ -1,10 +1,8 @@
-import SuccessTransaction from '@/Components/Stripe/Success/SuccessTransaction'
-import React from 'react'
+import SuccessTransaction from "@/components/Stripe/Success/SuccessTransaction";
+import React from "react";
 
 const page = () => {
-  return (
-    <SuccessTransaction />
-  )
-}
+  return <SuccessTransaction />;
+};
 
-export default page
+export default page;

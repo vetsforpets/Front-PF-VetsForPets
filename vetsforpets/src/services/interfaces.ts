@@ -1,4 +1,4 @@
-import { Pet } from "@/Components/pet/PetPreview";
+import { Pet } from "@/components/pet/PetPreview";
 
 export interface IUserRegisterData {
   name: string;

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
-import { LogoutButton } from "../LogoutButton/LogoutButton";
 import Image from "next/image";
+import { LogoutButton } from "../LogoutButton/LogoutButton";
 
 export function Header() {
   const router = useRouter();
@@ -23,9 +23,7 @@ export function Header() {
   };
 
   useEffect(() => {
-    console.log("====================================");
     console.log(userData?.isVet);
-    console.log("====================================");
     if (userData) {
       setIsVet(userData.isVet);
     }

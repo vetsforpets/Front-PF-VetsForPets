@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Kiwi_Maru, Tenor_Sans } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/Components/Header/Header";
-import Footer from "@/Components/Footer/Footer";
+import { Header } from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 // -
 
@@ -37,7 +37,7 @@ export default function RootLayout({
     // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
     <html lang="es">
       <body
-        className={`flex flex-col min-h-screen ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
+        className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
       >
         <Toaster position="top-center" />
         <Header />

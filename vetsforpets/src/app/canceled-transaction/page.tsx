@@ -1,10 +1,8 @@
-import CanceledTransaction from '@/Components/Stripe/Canceled/CanceledTransaction'
-import React from 'react'
+import CanceledTransaction from "@/components/Stripe/Canceled/CanceledTransaction";
+import React from "react";
 
 const page = () => {
-  return (
-    <CanceledTransaction />
-  )
-}
+  return <CanceledTransaction />;
+};
 
-export default page
+export default page;
