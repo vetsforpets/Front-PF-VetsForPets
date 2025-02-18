@@ -58,7 +58,7 @@ function VetFormRegister() {
 
   return (
     <form
-      className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
+      className="z-10 px-12 pb-10 mx-auto my-20 border-none rounded-lg sm:w-1/2 sm:px-5"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h1 className="text-3xl text-customBrown">Registro veterinaria</h1>
@@ -73,6 +73,7 @@ function VetFormRegister() {
         </Link>
       </p>
 
+
       <Controller
         name="imgProfile"
         control={control}
@@ -80,18 +81,15 @@ function VetFormRegister() {
           required: { value: true, message: "Imagen de perfil obligatoria" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="flex gap-4 items-center justify-center mb-5">
+          <div className="flex items-center justify-center gap-4 mb-5">
             <label className="flex items-center justify-between">
               <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
               <CloudinaryUploader
                 onImageUpload={(url) => field.onChange(url)}
               />
             </label>
-
-            {/* <input {...field} type="file" className="customInput" /> */}
-
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -120,7 +118,7 @@ function VetFormRegister() {
               className="customInput"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -149,7 +147,7 @@ function VetFormRegister() {
               placeholder="Nombre Veterinario a cargo"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -178,7 +176,7 @@ function VetFormRegister() {
               placeholder="# Licencia del veterinario a cargo"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -201,7 +199,7 @@ function VetFormRegister() {
               placeholder="Año de creación (YYYY):"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -226,7 +224,7 @@ function VetFormRegister() {
               placeholder="email"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -255,7 +253,7 @@ function VetFormRegister() {
               placeholder="Teléfono"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -279,18 +277,18 @@ function VetFormRegister() {
             <input
               {...field}
               type={showPassword ? "text" : "password"}
-              className="customInput w-full pr-10"
+              className="w-full pr-10 customInput"
               placeholder="Contraseña"
               autoComplete="new-password"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+              className="absolute text-gray-600 transform -translate-y-1/2 cursor-pointer right-3 top-1/2"
             >
               {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
             </span>
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -311,13 +309,13 @@ function VetFormRegister() {
             <input
               {...field}
               type={showConfirmPassword ? "text" : "password"}
-              className="customInput w-full pr-10"
+              className="w-full pr-10 customInput"
               placeholder="Confirmar Contraseña"
               autoComplete="new-password"
             />
             <span
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-600"
+              className="absolute text-gray-600 transform -translate-y-1/2 cursor-pointer right-3 top-1/2"
             >
               {showConfirmPassword ? (
                 <FaEyeSlash size={20} />
@@ -326,13 +324,13 @@ function VetFormRegister() {
               )}
             </span>
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
       />
 
-      <button type="submit" className="customButton mt-6">
+      <button type="submit" className="mt-6 customButton">
         Registrarse
       </button>
     </form>
