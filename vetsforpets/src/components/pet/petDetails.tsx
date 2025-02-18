@@ -6,6 +6,7 @@ import { Pet } from "./PetPreview";
 import { editPet } from "@/services/servicesPets";
 import { toast } from "sonner";
 import Image from "next/image";
+import CloudinaryUploader from "../Cloudinary/Cloudinary";
 
 interface PetFormInputs {
   name: string;
@@ -29,7 +30,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { handleSubmit, control, reset } = useForm<PetFormInputs>({
+  const { handleSubmit, control, reset, setValue} = useForm<PetFormInputs>({
     defaultValues: pet,
     mode: "onChange",
   });
@@ -39,6 +40,13 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
       reset(pet);
     }
   }, [pet, reset]);
+
+
+  const handleImageUpload = (imageUrl: string) => {
+    // Actualizamos el campo 'profileImg' con la URL de la imagen cargada
+    setValue("profileImg", imageUrl);
+  };
+
 
   const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
     setLoading(true);
@@ -80,21 +88,32 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       <div className="bg-[#deb887] rounded-2xl p-5 px-10 shadow-lg mx-5">
         <div className="space-y-4">
+
+          
+
+
+
+{isEditing ? (
+            
+          <div className="flex flex-col items-center">
+            <CloudinaryUploader onImageUpload={handleImageUpload} />
+          </div>
+        ) : (
           <Image
-            src={"/Cat.svg"}
-            alt={pet.name}
+            src={pet.profileImg || "/Cat.svg"}
+            alt="Perfil"
             width={1920}
             height={500}
-            className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
+            className="object-cover w-40 h-40 mx-auto rounded-full shadow-lg"
           />
-
+        )}
           <Controller
             name="name"
             control={control}
             render={({ field }) => (
               <input
                 {...field}
-                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                 placeholder="Nombre"
                 disabled={!isEditing}
               />
@@ -108,7 +127,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
               <input
                 {...field}
                 type="number"
-                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                 placeholder="Edad"
                 disabled={!isEditing}
               />
@@ -121,7 +140,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl disabled:opacity-100 bg-customBeige"
                 disabled={!isEditing}
               >
                 <option value="">Especie</option>
@@ -142,7 +161,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
               <input
                 {...field}
                 type="date"
-                className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                 disabled={!isEditing}
               />
             )}
@@ -155,7 +174,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
               <input
                 {...field}
                 type="text"
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                 placeholder="Raza"
                 disabled={!isEditing}
               />
@@ -168,7 +187,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl disabled:opacity-100 bg-customBeige"
                 disabled={!isEditing}
               >
                 <option value="">Sexo</option>
@@ -184,7 +203,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl disabled:opacity-100 bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl disabled:opacity-100 bg-customBeige"
                 disabled={!isEditing}
                 value={field.value ? "true" : "false"}
                 onChange={(e) => field.onChange(e.target.value === "true")}
@@ -201,7 +220,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
             render={({ field }) => (
               <textarea
                 {...field}
-                className="w-full px-3 py-2 rounded-2xl  bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                 placeholder="Comentarios adicionales"
                 rows={4}
                 disabled={!isEditing}
@@ -210,10 +229,10 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           />
         </div>
 
-        <div className="mt-6 flex justify-between">
+        <div className="flex justify-between mt-6">
           <button
             type="button"
-            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            className="self-end px-6 py-2 mt-6 text-white transition bg-customBrown rounded-2xl hover:bg-opacity-90"
             onClick={() => setIsEditing((prev) => !prev)}
           >
             {isEditing ? "Cancelar" : "Editar"}
@@ -221,7 +240,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           {isEditing && (
             <button
               type="submit"
-              className="mt-6 self-end bg-customGreen text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+              className="self-end px-6 py-2 mt-6 text-white transition bg-customGreen rounded-2xl hover:bg-opacity-90"
               disabled={loading}
             >
               {loading ? "Guardando..." : "Guardar Cambios"}
