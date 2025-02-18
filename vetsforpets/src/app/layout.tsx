@@ -37,7 +37,7 @@ export default function RootLayout({
     // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
     <html lang="es">
       <body
-        className={`flex flex-col min-h-screen bg-slate-50  ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
+        className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
       >
         <Toaster position="top-center" />
         <Header />
