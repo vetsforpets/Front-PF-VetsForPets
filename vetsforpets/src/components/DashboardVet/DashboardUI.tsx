@@ -1,6 +1,5 @@
 import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
-import dog2 from "@/../public/images/dog2.png";
 import ScheduledAppointments from "../Calendar/ScheduledAppointments";
 
 interface DashboardUIProps {
@@ -22,7 +21,7 @@ const VetProfile = ({ veterinaria }: DashboardUIProps) => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
         <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
           <Image
-            src={dog2}
+            src="images/dog2.png"
             width={160}
             height={160}
             alt="Imagen de perfil"
