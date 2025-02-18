@@ -2,7 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+:root {
+  --background: #fc0000;
+  --foreground: #000000;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* html {
   scroll-behavior: smooth;
 }
 
@@ -19,11 +34,11 @@ h4,
 h5,
 h6 {
   font-family: var(--font-tenor-sans), sans-serif;
-}
+} */
 
 /* ----- Clases reutilizables ----- */
 
-.customButton {
+/* .customButton {
   @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customLightBrown hover:bg-customBrown dark:bg-customBeige dark:hover:bg-customBrown shadow-lg;
 }
 
@@ -37,12 +52,12 @@ h6 {
 
 .shadowFull {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
+} */
 
 /* ----- Otros ----- */
 
 /* Quita las flechas de incremento y decremento en los inputs de tipo numero  */
-input[type="number"]::-webkit-inner-spin-button,
+/* input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
@@ -50,4 +65,4 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
-}
+} */
