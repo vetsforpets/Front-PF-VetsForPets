@@ -53,13 +53,14 @@ export default function LoginForm() {
       const data = await loginUser(userCredentials);
 
       if (data.token) {
-        const decodedToken = jwtDecode<{ id: string; isVet: boolean }>(
+        const decodedToken = jwtDecode<{ id: string; isVet: boolean; email:string; }>(
           data.token
         );
         setUserData({
           token: data.token,
           id: decodedToken.id,
           isVet: decodedToken.isVet,
+          email: decodedToken.email,
         });
         console.log(userData, decodedToken);
         reset();

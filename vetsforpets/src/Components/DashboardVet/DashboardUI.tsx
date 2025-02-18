@@ -1,6 +1,5 @@
 import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
-import ConnectCalendly from "../Calendar/Button";
 import dog2 from "@/../public/images/dog2.png";
 import TurnosSolicitados from "../Calendar/ScheduledAppointments";
 
@@ -61,8 +60,7 @@ const VetProfile = ({ veterinaria }: DashboardUIProps) => {
           <VetDetail label="Teléfono:" value={veterinaria.phoneNumber} />
         </div>
       </div>
-      <ConnectCalendly id={veterinaria.id} />
-      <TurnosSolicitados />
+        <TurnosSolicitados/>
     </div>
   );
 };
