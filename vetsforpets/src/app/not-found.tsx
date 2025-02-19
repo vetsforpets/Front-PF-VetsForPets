@@ -20,9 +20,9 @@ export default function NotFound() {
       <Image src={notFoundImage} alt="Página no encontrada" width={600} height={400} className="mb-4 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"  data-aos="fade-down"
      data-aos-easing="linear"
      data-aos-duration="1500"/>
-      <h1 className="text-4xl font-bold mb-5">Página no encontrada</h1>
-      <p className="text-xl mb-8">
-        Lo sentimos, la página que está buscando no existe o ha sido movida.
+      <h1 className="mb-5 text-4xl font-bold">Página no encontrada</h1>
+      <p className="mb-8 text-xl">
+        Lo sentimos, la página que está buscando no existe o ha sido movida, disculpe los inconvenientes.
       </p>
       <Link href="/" className="customButton">
         Ir al inicio
