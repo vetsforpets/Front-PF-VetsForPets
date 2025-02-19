@@ -6,7 +6,6 @@ import { loginUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 // import { CredentialResponse } from "@react-oauth/google";
 // import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { toast } from "sonner";
 import Image from "next/image";
 
@@ -52,17 +51,14 @@ export default function LoginForm() {
     try {
       const data = await loginUser(userCredentials);
 
-      if (data.token) {
-        const decodedToken = jwtDecode<{ id: string; isVet: boolean; email: string; }>(
-          data.token
-        );
+      if (data.user) {
         setUserData({
           token: data.token,
-          id: decodedToken.id,
-          isVet: decodedToken.isVet,
-          email: decodedToken.email
+          id: data.user.id,
+          isVet: data.user.isVet,
+          email: data.user.email,
         });
-        console.log(userData, decodedToken);
+        console.log(userData, data.token, data.user);
         reset();
         toast.success("Usuario logueado con éxito", {
           duration: 3000,

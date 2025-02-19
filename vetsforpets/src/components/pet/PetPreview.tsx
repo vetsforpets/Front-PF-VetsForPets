@@ -71,11 +71,11 @@ const PetPreview: React.FC<PetPreviewProps> = ({
   return (
     <div className="flex gap-4 ">
       <Image
-        src={"/Cat.svg"}
+        src={pet.profileImg || "/Cat.svg"}
         alt={pet.name}
         width={1920}
         height={500}
-        className="w-40 h-40 m-4 rounded-full object-cover shadow-md"
+        className="object-cover w-40 h-40 m-4 rounded-full shadow-md"
       />
 
       {/* Pet Information */}
@@ -103,15 +103,15 @@ const PetPreview: React.FC<PetPreviewProps> = ({
       </div>
 
       {/* Botones en forma vertical */}
-      <div className="flex flex-col justify-evenly h-30 py-3 px-3 bg-customLightBrown rounded-2xl">
+      <div className="flex flex-col px-3 py-3 justify-evenly h-30 bg-customLightBrown rounded-2xl">
         <button
           onClick={() => onSelectPet(pet)}
-          className="rounded-full hover:bg-customBeige flex items-center justify-center p-2"
+          className="flex items-center justify-center p-2 rounded-full hover:bg-customBeige"
         >
           <FaEye size={25} color="black" />
         </button>
 
-        <button className="rounded-2xl hover:bg-customBeige flex items-center justify-center">
+        <button className="flex items-center justify-center rounded-2xl hover:bg-customBeige">
           <Image
             src="/images/delete.png"
             alt="eliminar"

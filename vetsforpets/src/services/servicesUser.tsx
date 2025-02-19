@@ -54,7 +54,7 @@ export const updateUser = async (
 
 export async function loginUser(
   userCredentials: IUserCredentials
-): Promise<{ success: string; token: string }> {
+): Promise<{ success: string; token: string; user: IUserData }> {
   try {
     const response = await fetch(`${apiURL}/auth/signIn`, {
       method: "POST",

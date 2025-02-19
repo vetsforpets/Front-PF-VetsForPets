@@ -60,12 +60,7 @@ const Profile = () => {
 
   const user = userData && users.find((u) => u.id === userData.id);
 
-  console.log("userData:", userData);
-  console.log("user:", user);
-
-  console.log("Ruta de la imagen:", user?.imgProfile);
-
-  if (!user) return <p>Cargando datos del usuario...</p>;
+  if (!user) return <p>No fue posible obtener los datos del usuario...</p>;
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -109,7 +104,6 @@ const Profile = () => {
     }));
   };
 
-  // Esta función se pasa al CloudinaryUploader para actualizar la imagen
   const handleImageUpload = (url: string) => {
     if (editableUser) {
       setEditableUser({ ...editableUser, imgProfile: url });
@@ -124,23 +118,24 @@ const Profile = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 rounded-2xl overflow-hidden w-full max-w-4xl place-items-center">
+    <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
         {isEditing ? (
           <div className="flex flex-col items-center">
             <CloudinaryUploader onImageUpload={handleImageUpload} />
           </div>
+          
         ) : (
           <Image
             src={user?.imgProfile || "/Generic avatar.png"}
             alt="Perfil"
             width={1920}
             height={500}
-            className="w-40 h-40 rounded-full object-cover shadow-md"
+            className="object-cover w-40 h-40 rounded-full shadow-md"
           />
         )}
         <button
-          className="absolute top-2 right-2 rounded-full px-1 py-2 hover:bg-customBrown transition"
+          className="absolute px-1 py-2 transition rounded-full top-2 right-2 hover:bg-customBrown"
           onClick={handleEdit}
         >
           <Image
@@ -148,24 +143,24 @@ const Profile = () => {
             width={1920}
             height={500}
             alt="editar"
-            className="w-10 h-7 m-2"
+            className="w-10 m-2 h-7"
           />
         </button>
 
-        <h1 className="mt-4 text-3xl font-bold px-4 py-2 rounded-lg w-full flex justify-center items-center text-center">
+        <h1 className="flex items-center justify-center w-full px-4 py-2 mt-4 text-3xl font-bold text-center rounded-lg">
           {user?.name} {user.lastName}
         </h1>
       </div>
 
-      <div className="m-6 flex flex-col space-y-4">
+      <div className="flex flex-col m-6 space-y-4">
         {isEditing ? (
           <>
             <div className="mt-4">
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Nombre:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="text"
                 value={editableUser?.name || ""}
                 onChange={(e) => handleChange("name", e.target.value)}
@@ -173,11 +168,11 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Apellido:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="text"
                 value={editableUser?.lastName || ""}
                 onChange={(e) => handleChange("lastName", e.target.value)}
@@ -185,11 +180,11 @@ const Profile = () => {
             </div>
 
             <div className="mt-4">
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Edad:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="number"
                 value={editableUser?.age || ""}
                 onChange={(e) => handleChange("age", e.target.value)}
@@ -197,11 +192,11 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Correo Electrónico:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="text"
                 value={editableUser?.email || ""}
                 onChange={(e) => handleChange("email", e.target.value)}
@@ -209,11 +204,11 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Teléfono:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="text"
                 value={editableUser?.phoneNumber || ""}
                 onChange={(e) => handleChange("phoneNumber", e.target.value)}
@@ -221,11 +216,11 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="text-customBrown font-semibold py-1 pl-4 block">
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Usuario Premium:
               </label>
               <input
-                className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96"
+                className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96"
                 type="text"
                 value={editableUser?.isPremium ? "Sí" : "No"}
                 readOnly
@@ -249,7 +244,7 @@ const Profile = () => {
         )}
         {isEditing && (
           <button
-            className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+            className="self-end px-6 py-2 mt-6 text-white transition bg-customBrown rounded-2xl hover:bg-opacity-90"
             onClick={handleOpenModal}
           >
             Guardar Cambios
@@ -273,8 +268,8 @@ const UserDetail: React.FC<{ label: string; value: string }> = ({
   value,
 }) => (
   <div>
-    <h2 className="text-customBrown font-semibold py-1 pl-4">{label}</h2>
-    <p className="text-customDarkGreen bg-customLightBrown rounded-2xl text-left py-3 pl-4 min-w-96">
+    <h2 className="py-1 pl-4 font-semibold text-customBrown">{label}</h2>
+    <p className="py-3 pl-4 text-left text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96">
       {value}
     </p>
   </div>
