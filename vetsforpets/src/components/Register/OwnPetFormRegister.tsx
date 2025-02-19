@@ -27,6 +27,7 @@ function OwnPetFormRegister() {
       confirmPassword: "",
       phoneNumber: "",
       imgProfile: "",
+      isVet: false,
     },
     mode: "onChange",
   });
