@@ -27,7 +27,8 @@ function VetFormRegister() {
       location: "anything",
       licenseNumber: "",
       foundation: "",
-      businessHours: {open:"", close:""},
+      businessHours: { open: "", close: "" },
+      isVet: true,
     },
     mode: "onChange",
   });
@@ -72,7 +73,6 @@ function VetFormRegister() {
           inicia sesión{" "}
         </Link>
       </p>
-
 
       <Controller
         name="imgProfile"

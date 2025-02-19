@@ -12,7 +12,7 @@ export function Header() {
   const [isvet, setIsVet] = useState(false);
 
   const { userData } = useUserStore();
-  const isAuthenticated = userData?.id;
+  const isAuthenticated = userData?.isVet || userData?.id;
 
   const pathname = usePathname();
   const headerClass = pathname === "/" ? "absolute" : "relative";
@@ -23,6 +23,7 @@ export function Header() {
   };
 
   useEffect(() => {
+    console.log(userData);
     console.log(userData?.isVet);
     if (userData) {
       setIsVet(userData.isVet);
@@ -118,6 +119,7 @@ export function Header() {
                   Perfil Veterinaria
                 </button>
               )}
+              <LogoutButton />
             </>
           ) : (
             <>
@@ -135,8 +137,6 @@ export function Header() {
               </button>
             </>
           )}
-
-          <LogoutButton />
         </div>
       )}
     </div>
