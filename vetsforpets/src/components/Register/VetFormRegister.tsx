@@ -81,9 +81,9 @@ function VetFormRegister() {
           required: { value: true, message: "Imagen de perfil obligatoria" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="flex items-center justify-center gap-4 mb-5">
+          <div className="flex items-center justify-center gap-4 mt-6 mb-6">
             <label className="flex items-center justify-between">
-              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+              <p className="p-3 mr-4 border border-gray-300 rounded-lg bg-gray-50 text-customDarkGreen whitespace-nowra">Imagen de perfil </p>
               <CloudinaryUploader
                 onImageUpload={(url) => field.onChange(url)}
               />
@@ -118,7 +118,7 @@ function VetFormRegister() {
               className="customInput"
             />
             {error && (
-              <p className="mt-1 text-xs text-red-500">{error.message}</p>
+              <p className="mt-8 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -134,8 +134,8 @@ function VetFormRegister() {
             message: "El nombre debe tener al menos 5 caracteres.",
           },
           maxLength: {
-            value: 50,
-            message: "El nombre no puede superar los 50 caracteres.",
+            value: 20,
+            message: "El nombre no puede superar los 20 caracteres.",
           },
         }}
         render={({ field, fieldState: { error } }) => (
@@ -159,12 +159,12 @@ function VetFormRegister() {
         rules={{
           required: { value: true, message: "Licencia obligatorio." },
           minLength: {
-            value: 8,
-            message: "La Licencia debe tener al menos 8 caracteres.",
+            value: 3,
+            message: "La Licencia debe tener al menos 3 caracteres.",
           },
           maxLength: {
-            value: 50,
-            message: "La Licencia debe no puede superar los 50 caracteres.",
+            value: 5,
+            message: "La Licencia debe no puede superar los 5 caracteres.",
           },
         }}
         render={({ field, fieldState: { error } }) => (
@@ -221,7 +221,7 @@ function VetFormRegister() {
               {...field}
               type="email"
               className="customInput"
-              placeholder="email"
+              placeholder="Email"
             />
             {error && (
               <p className="mt-1 text-xs text-red-500">{error.message}</p>

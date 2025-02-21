@@ -26,20 +26,19 @@ export function UpperBody() {
             className="self-end"
           />
         </div>
-        <div className="text-black text-5xl flex items-center flex-col pt-10">
-          <p className="p-2">Encontrá tu</p>
-          <p className="p-2">
+        <div className="flex flex-col items-center pt-10 black text-">
+          <p className="mb-20 text-6xl"><strong>Vets For Pets</strong></p>
+          
+          <p className="p-2 text-3xl">Encontrá tu</p>
+          <p className="p-2 text-3xl">
             <strong>VETERINARIA</strong>
           </p>
-          <p className="p-2">más</p>
-          <p className="p-2">
-            <strong>CERCANA</strong>
-          </p>
-          <div className="flex items-center mt-4">
+          
+          <div className="flex items-center mt-4 text-lg">
             <input
               type="text"
-              placeholder="Tu zona o ubicación"
-              className="p-2 rounded-md w-[100px] md:w-[300px] border-none focus:outline-none focus:ring-2 focus:ring-[#F4A300] shadow-md transition-shadow duration-300 ease-in-out focus:shadow-lg"
+              
+              className="p-2 rounded-md w-full h-12 border-none focus:outline-none focus:ring-2 focus:ring-[#F4A300] shadow-md transition-shadow duration-300 ease-in-out focus:shadow-lg"
             />
             <button className="ml-2">
               <Image src={lupa} width={30} height={30} alt="Lupa" />
@@ -49,10 +48,10 @@ export function UpperBody() {
       </div>
 
       <div>
-        <h2 className="text-center text-6xl font-tenor mt-9">Noticias</h2>
+        <h2 className="text-6xl text-center font-tenor mt-9">Noticias</h2>
       </div>
 
-      <div className="flex justify-center items-center p-12">
+      <div className="flex items-center justify-center p-12">
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 w-full max-w-[1000px]">
           <div
             className="w-full sm:w-[400px] md:w-[500px] text-center rounded-2xl p-2 flex flex-col items-center"
@@ -66,7 +65,7 @@ export function UpperBody() {
               layout="intrinsic"
               className="mx-auto font-tenor-sans"
             />
-            <p className="text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
+            <p className="w-full p-4 mx-auto text-gray-700 bg-customLightBrown rounded-b-2xl">
               La vacunación antirrabica es anual y obligatoria en perros y gatos
               a partir de los 3 meses de edad y debe cumplirse durante toda su
               vida. Recomendamos que la revacunación sea antes que se cumpla la
@@ -87,7 +86,7 @@ export function UpperBody() {
               layout="intrinsic"
               className="mx-auto font-tenor-sans"
             />
-            <p className="text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
+            <p className="w-full p-4 mx-auto text-gray-700 bg-customLightBrown rounded-b-2xl">
               Descripción de la imagen 2 Lorem ipsum dolor sit, amet consectetur
               adipisicing elit. Fugiat porro natus sapiente pariatur adipisci
               hic sunt ipsum iure libero exercitationem aperiam inventore
@@ -97,7 +96,7 @@ export function UpperBody() {
         </div>
       </div>
 
-      <div className="flex justify-center items-center space-x-4">
+      <div className="flex items-center justify-center space-x-4">
         <div
           className="w-[1000px] text-center rounded-2xl p-2 flex flex-col items-center"
           data-aos="fade-up"
@@ -110,7 +109,7 @@ export function UpperBody() {
             layout="intrinsic"
             className="mx-auto font-tenor-sans"
           />
-          <p className="font-kiwi text-gray-700 p-4 w-full mx-auto bg-customLightBrown rounded-b-2xl">
+          <p className="w-full p-4 mx-auto text-gray-700 font-kiwi bg-customLightBrown rounded-b-2xl">
             Descripción de la imagen 2 Lorem ipsum dolor sit, amet consectetur
             adipisicing elit. Fugiat porro natus sapiente pariatur adipisci hic
             sunt ipsum iure libero exercitationem aperiam inventore distinctio
@@ -120,11 +119,11 @@ export function UpperBody() {
       </div>
 
       <div>
-        <h2 className="text-center text-6xl font-tenor m-9">
+        <h2 className="text-6xl text-center font-tenor m-9">
           Veterinarias destacadas
         </h2>
-        <div className="flex justify-center items-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div
               className="w-[300px] text-center rounded-2xl p-2"
               data-aos="fade-up"
@@ -134,9 +133,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}
@@ -156,9 +155,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}
@@ -178,9 +177,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}
@@ -200,9 +199,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}
@@ -222,9 +221,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}
@@ -244,9 +243,9 @@ export function UpperBody() {
                 width={300}
                 height={300}
                 alt="Perro corriendo"
-                className="mx-auto font-tenor-sans w-full h-auto object-cover"
+                className="object-cover w-full h-auto mx-auto font-tenor-sans"
               />
-              <div className="bg-customLightBrown rounded-b-2xl flex justify-end p-3">
+              <div className="flex justify-end p-3 bg-customLightBrown rounded-b-2xl">
                 <Image
                   src="/estrellas.svg"
                   width={100}

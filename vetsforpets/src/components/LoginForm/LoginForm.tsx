@@ -91,7 +91,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-1/4 mx-auto mt-10 mb-20">
+    <div className="w-1/4 mx-auto mb-20 mt-28">
       <Image
         src="/images/logo.png"
         width={100}
@@ -99,7 +99,7 @@ export default function LoginForm() {
         alt="logo"
         className="justify-self-center"
       />
-      <h2 className="text-2xl font-bold text-center mb-4">Iniciar Sesión</h2>
+      <h2 className="mb-4 text-2xl font-bold text-center">Iniciar Sesión</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Email */}
@@ -117,7 +117,7 @@ export default function LoginForm() {
             placeholder="ejemplo@email.com"
           />
           {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
+            <p className="text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
 
@@ -139,17 +139,17 @@ export default function LoginForm() {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            className="absolute transform -translate-y-1/2 right-3 top-1/2"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
           {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
+            <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
 
         {/* Botón de envío */}
-        <div className="flex justify-evenly text-sm">
+        <div className="flex text-sm justify-evenly">
           {/* <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={handleGoogleError}

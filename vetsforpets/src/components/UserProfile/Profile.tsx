@@ -44,9 +44,6 @@ const Profile = () => {
       if (userData?.id && userData?.token) {
         try {
           const data = await fetchUserData(userData.id, userData.token);
-
-          console.log(data);
-
           setUsers([data]);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
@@ -59,6 +56,8 @@ const Profile = () => {
   }, [userData?.id, userData?.token]);
 
   const user = userData && users.find((u) => u.id === userData.id);
+
+  //Agregar un cargando...
 
   if (!user) return <p>No fue posible obtener los datos del usuario...</p>;
 
