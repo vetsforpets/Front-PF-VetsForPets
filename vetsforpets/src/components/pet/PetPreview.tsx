@@ -1,5 +1,3 @@
-// components/pet/PetPreview.tsx
-
 import { useUserStore } from "@/store";
 import React from "react";
 import { FaEye } from "react-icons/fa";
@@ -68,6 +66,7 @@ const PetPreview: React.FC<PetPreviewProps> = ({
     }
   };
 
+
   return (
     <div className="flex gap-4 ">
       <Image
@@ -90,7 +89,7 @@ const PetPreview: React.FC<PetPreviewProps> = ({
           <input
             disabled
             type="text"
-            value={pet.breed}
+            value={pet.animalType}
             className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
           />
           <input

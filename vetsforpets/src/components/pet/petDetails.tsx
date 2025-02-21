@@ -7,6 +7,7 @@ import { editPet } from "@/services/servicesPets";
 import { toast } from "sonner";
 import Image from "next/image";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
+import ConfirmModal from "../ConfirnModal/ConfirmModal";
 
 interface PetFormInputs {
   name: string;
@@ -29,11 +30,18 @@ interface PetDetailsProps {
 const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [petData, setPetData] =useState<Pet>(pet)
 
   const { handleSubmit, control, reset, setValue} = useForm<PetFormInputs>({
     defaultValues: pet,
     mode: "onChange",
   });
+
+  useEffect(() => {
+    setPetData(pet);
+  }, [pet]
+)
 
   useEffect(() => {
     if (pet) {
@@ -43,16 +51,19 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
 
 
   const handleImageUpload = (imageUrl: string) => {
-    // Actualizamos el campo 'profileImg' con la URL de la imagen cargada
     setValue("profileImg", imageUrl);
   };
 
 
-  const onSubmit: SubmitHandler<PetFormInputs> = async (petData) => {
+  const onSubmit: SubmitHandler<PetFormInputs> = async (updatedPet) => {
     setLoading(true);
+    setIsModalOpen(false);
     try {
-      const response = await editPet(pet.id, petData, token);
+      const response = await editPet(pet.id, updatedPet, token);
       if (response.success) {
+        const updatedPetWithId = { ...updatedPet, id: pet.id };
+        setPetData(updatedPetWithId);
+        reset(updatedPetWithId);
         toast.success("Mascota actualizada", {
           duration: 3000,
           style: {
@@ -97,7 +108,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           </div>
         ) : (
           <Image
-            src={pet.profileImg || "/Cat.svg"}
+            src={petData.profileImg || "/Cat.svg"}
             alt="Perfil"
             width={1920}
             height={500}
@@ -226,23 +237,35 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           />
         </div>
 
+
         <div className="flex justify-between mt-6">
           <button
             type="button"
             className="self-end px-6 py-2 mt-6 text-white transition bg-customBrown rounded-2xl hover:bg-opacity-90"
             onClick={() => setIsEditing((prev) => !prev)}
+            disabled={loading}
           >
             {isEditing ? "Cancelar" : "Editar"}
           </button>
+          
           {isEditing && (
             <button
-              type="submit"
+              type="button"
               className="self-end px-6 py-2 mt-6 text-white transition bg-customGreen rounded-2xl hover:bg-opacity-90"
-              disabled={loading}
+              onClick={() => setIsModalOpen(true)}
             >
-              {loading ? "Guardando..." : "Guardar Cambios"}
+              Guardar Cambios
             </button>
           )}
+          
+          <ConfirmModal
+  isOpen={isModalOpen}
+  onConfirm={() => {
+    setIsModalOpen(false);
+    handleSubmit(onSubmit)();
+  }}
+  onClose={() => setIsModalOpen(false)}
+/>
         </div>
       </div>
     </form>

@@ -40,7 +40,7 @@ function CloudinaryUploader({ onImageUpload }: CloudinaryUploaderProps) {
   const isPDF = (url: string) => url.endsWith(".pdf");
 
   return (
-    <div>
+    <div className="mb-1">
       <label htmlFor="file-input" className="customButton">
         Seleccionar archivo
       </label>
@@ -53,14 +53,14 @@ function CloudinaryUploader({ onImageUpload }: CloudinaryUploaderProps) {
       />
 
       {imageUrl && (
-        <div className="flex justify-center items-center mt-5">
+        <div className="flex items-center justify-center mt-5">
           {isImage(imageUrl) ? (
             <Image 
               src={imageUrl} 
               alt="Imagen subida" 
               width={160} 
               height={160} 
-              className="w-40 h-40 rounded-full object-cover shadow-md mt-4" 
+              className="object-cover w-40 h-40 mt-4 rounded-full shadow-md" 
             />
           ) : isPDF(imageUrl) ? (
             <a href={imageUrl} target="_blank" rel="noopener noreferrer">
