@@ -12,21 +12,6 @@ interface Appointment {
 export function DashboardAppointments() {
   const [appointments] = useState<Appointment[]>([]);
 
-  // useEffect(() => {
-
-  //     const fetchAppointments = async () => {
-  //         try {
-  //             const response = await fetch("/api/appointments");
-  //             const data = await response.json();
-  //             setAppointments(data);
-  //         } catch (error) {
-  //             console.error("Error al cargar los turnos:", error);
-  //         }
-  //     };
-
-  //     fetchAppointments();
-  // }, []);
-
   return (
     <div className="p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-bold">Turnos registrados</h2>
