@@ -4,8 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { loginUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
-// import { CredentialResponse } from "@react-oauth/google";
-// import { GoogleLogin } from "@react-oauth/google";
+import { CredentialResponse } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import Image from "next/image";
 
@@ -28,24 +28,24 @@ export default function LoginForm() {
   } = useForm<LoginFormInputs>();
   const router = useRouter();
 
-  // const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
-  //   console.log("Token de Google:", credentialResponse.credential);
-  //   toast.success("Usuario logueado con éxito", {
-  //     duration: 3000,
-  //     style: {
-  //       color: "#155724",
-  //       background: "#d4edda",
-  //       borderRadius: "8px",
-  //       padding: "16px",
-  //       border: "1px solid #c3e6cb",
-  //     },
-  //   });
-  //   router.push("/");
-  // };
+  const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
+    console.log("Token de Google:", credentialResponse.credential);
+    toast.success("Usuario logueado con éxito", {
+      duration: 3000,
+      style: {
+        color: "#155724",
+        background: "#d4edda",
+        borderRadius: "8px",
+        padding: "16px",
+        border: "1px solid #c3e6cb",
+      },
+    });
+    router.push("/");
+  };
 
-  // const handleGoogleError = () => {
-  //   console.error("Error al iniciar sesión con Google");
-  // };
+  const handleGoogleError = () => {
+    console.error("Error al iniciar sesión con Google");
+  };
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
@@ -150,10 +150,10 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
         <div className="flex justify-evenly text-sm">
-          {/* <GoogleLogin
+          <GoogleLogin
             onSuccess={handleGoogleSuccess}
             onError={handleGoogleError}
-          /> */}
+          />
           <button type="submit" className="customButton">
             Iniciar Sesión
           </button>

@@ -3,7 +3,7 @@ import { Kiwi_Maru, Tenor_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-// import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 // -
 
 import { Toaster } from "sonner";
@@ -34,17 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
-    <html lang="es">
-      <body
-        className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
-      >
-        <Toaster position="top-center" />
-        <Header />
-        <div className="flex flex-col flex-grow">{children}</div>
-        <Footer />
-      </body>
-    </html>
-    // </GoogleOAuthProvider>
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+      <html lang="es">
+        <body
+          className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
+        >
+          <Toaster position="top-center" />
+          <Header />
+          <div className="flex flex-col flex-grow">{children}</div>
+          <Footer />
+        </body>
+      </html>
+    </GoogleOAuthProvider>
   );
 }
