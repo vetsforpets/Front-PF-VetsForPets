@@ -38,6 +38,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableUser, setEditableUser] = useState<IUserData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,9 +46,11 @@ const Profile = () => {
         try {
           const data = await fetchUserData(userData.id, userData.token);
           setUsers([data]);
+          setIsLoading(false);
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
           setUsers([]);
+          setIsLoading(false)
         }
       }
     };
@@ -57,7 +60,21 @@ const Profile = () => {
 
   const user = userData && users.find((u) => u.id === userData.id);
 
-  //Agregar un cargando...
+  if(isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center space-x-4">
+          <p className="mb-4 text-2xl font-bold text-customBrown">Cargando...</p>
+        <Image
+            src="/loading.svg"
+            width={100}
+            height={100}
+            alt="cargando"
+          />
+        </div> 
+      </div>
+    );
+  }
 
   if (!user) return <p>No fue posible obtener los datos del usuario...</p>;
 
