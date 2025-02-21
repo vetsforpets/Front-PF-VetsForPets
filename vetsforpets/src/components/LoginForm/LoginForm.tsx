@@ -2,14 +2,12 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/services/servicesUser";
+import { loginUser, loginUserWithGoogle } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
-// import { CredentialResponse } from "@react-oauth/google";
-// import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "sonner";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface LoginFormInputs {
@@ -27,25 +25,6 @@ export default function LoginForm() {
     reset,
   } = useForm<LoginFormInputs>();
   const router = useRouter();
-
-  // const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
-  //   console.log("Token de Google:", credentialResponse.credential);
-  //   toast.success("Usuario logueado con éxito", {
-  //     duration: 3000,
-  //     style: {
-  //       color: "#155724",
-  //       background: "#d4edda",
-  //       borderRadius: "8px",
-  //       padding: "16px",
-  //       border: "1px solid #c3e6cb",
-  //     },
-  //   });
-  //   router.push("/");
-  // };
-
-  // const handleGoogleError = () => {
-  //   console.error("Error al iniciar sesión con Google");
-  // };
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
@@ -89,6 +68,37 @@ export default function LoginForm() {
       });
     }
   };
+
+  const handleGoogleLogin = () => {
+    window.location.href =
+      "https://vetsforpets-api.onrender.com/auth/google/signIn";
+  };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    if (code) {
+      loginUserWithGoogle(code).then((data) => {
+        if (data && data.token) {
+          setUserData({
+            token: data.token,
+            id: data.user.id,
+            isVet: data.user.isVet,
+            email: data.user.email,
+          });
+
+          toast.success("¡Inicio de sesión con Google exitoso!", {
+            duration: 3000,
+          });
+
+          router.push("/");
+        } else {
+          toast.error("Error al iniciar sesión con Google");
+        }
+      });
+    }
+  }, [router, setUserData]);
 
   return (
     <div className="w-1/4 mx-auto mt-10 mb-20">
@@ -150,12 +160,22 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
         <div className="flex justify-evenly text-sm">
-          {/* <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleError}
-          /> */}
           <button type="submit" className="customButton">
             Iniciar Sesión
+          </button>
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="customButton"
+          >
+            Iniciar con{" "}
+            <Image
+              src="/images/google-logo.png"
+              width={80}
+              height={80}
+              alt="Google"
+              className="pt-1"
+            />
           </button>
         </div>
       </form>
