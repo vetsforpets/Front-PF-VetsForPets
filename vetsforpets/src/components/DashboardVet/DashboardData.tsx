@@ -51,9 +51,9 @@ const DashboardData = () => {
       if (!userData?.id) {
         router.push("/not-found");
       }
-    }, 1000); // Ajusta el tiempo según sea necesario
+    }, 1000);
 
-    return () => clearTimeout(timeout); // Limpia el timeout al desmontar el componente
+    return () => clearTimeout(timeout);
   }, [userData?.id, router]);
 
   if (loading) return <div>Cargando...</div>;
