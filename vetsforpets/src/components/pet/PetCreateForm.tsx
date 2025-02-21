@@ -5,6 +5,7 @@ import { useUserStore } from "@/store";
 import Image from "next/image";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
+import CloudinaryUploader from "../Cloudinary/Cloudinary";
 
 interface PetFormInputs {
   name: string;
@@ -79,6 +80,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
+      
       <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg w-1/3 mx-auto">
         {addingPet && (
           <button
@@ -89,7 +91,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
             }}
           >
             <Image
-              className="h-4 w-4"
+              className="w-4 h-4"
               width={1920}
               height={500}
               src="/images/cross.png"
@@ -97,15 +99,29 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
             />
           </button>
         )}
+        
         <div className="space-y-4">
-          <Image
-            src="/Dog.svg"
-            alt="user"
-            width={1920}
-            height={500}
-            className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto"
-          />
+        <Controller
+        name="profileImg"
+        control={control}
+        rules={{
+          required: { value: true, message: "Imagen de perfil obligatoria" },
+        }}
+        render={({ field, fieldState: { error } }) => (
+          <div className="flex items-center justify-center gap-4 mb-5">
+            <label className="flex items-center justify-between">
+              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+              <CloudinaryUploader
+                onImageUpload={(url) => field.onChange(url)}
+              />
+            </label>
 
+            {error && (
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
+            )}
+          </div>
+        )}
+      />
           <Controller
             name="name"
             control={control}
@@ -115,12 +131,12 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 <input
                   {...field}
                   id="name"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                   placeholder="Nombre"
                   aria-label="Nombre de la Mascota"
                 />
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -141,7 +157,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   {...field}
                   id="age"
                   type="number"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                   placeholder="Edad"
                   aria-label="Edad de la Mascota"
                   value={value !== undefined ? value : ""} // Evita el error de undefined
@@ -154,7 +170,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   }}
                 />
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -169,7 +185,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 <select
                   {...field}
                   id="animalType"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                   aria-label="Tipo de animal"
                 >
                   <option value="" disabled hidden>
@@ -183,7 +199,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   <option value="Otros">Otros</option>
                 </select>
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -202,13 +218,13 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   {...field}
                   type="date" // Asegura que el input devuelva una fecha válida en formato YYYY-MM-DD
                   id="birthdate"
-                  className="w-full h-12 px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full h-12 px-3 py-2 border-none rounded-2xl bg-customBeige"
                   aria-label="Fecha de nacimiento"
                   value={value ? value.split("T")[0] : ""} // Asegura que se vea en el formato correcto
                   onChange={(e) => onChange(e.target.value)} // Normaliza la salida
                 />
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -223,7 +239,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 id="breed"
                 type="text"
                 placeholder="Raza"
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
               />
             )}
           />
@@ -237,7 +253,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 <select
                   {...field}
                   id="sex"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                   aria-label="Sexo"
                 >
                   <option value="" disabled hidden>
@@ -247,7 +263,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   <option value="Female">Hembra</option>
                 </select>
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -265,7 +281,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 <select
                   {...field}
                   id="isSterilized"
-                  className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                  className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                   aria-label="Esterilización"
                   value={value !== undefined ? String(value) : ""}
                   onChange={(e) => onChange(e.target.value === "true")}
@@ -277,7 +293,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   <option value="false">Esterilizado: No</option>
                 </select>
                 {error && (
-                  <p className="text-red-500 text-xs mt-1">{error.message}</p>
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
                 )}
               </div>
             )}
@@ -290,7 +306,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
               <textarea
                 {...field}
                 id="notes"
-                className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none"
+                className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                 placeholder="Comentarios adicionales"
                 aria-label="Comentarios adicionales"
                 rows={4}
@@ -301,7 +317,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
 
         <button
           type="submit"
-          className="mt-6 self-end bg-customBrown text-white px-6 py-2 rounded-2xl hover:bg-opacity-90 transition"
+          className="self-end px-6 py-2 mt-6 text-white transition bg-customBrown rounded-2xl hover:bg-opacity-90"
         >
           Crear Mascota
         </button>
