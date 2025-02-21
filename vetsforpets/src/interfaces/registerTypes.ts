@@ -136,12 +136,17 @@ export interface dayOpenings {
     close: string;
   };
 }
-
-export interface IVetResponseData {
-  id: string;
-  nombre: string;
-  email: string;
-  rol: string;
-  pets: [];
-  appointments: [];
-}
+  export interface IVetResponseData {
+          id: string,
+          nombre: string,
+          email: string,
+          rol: string,
+          pets: [],
+          appointments: []
+  } 
+  
+  export interface IPostOrder {
+    userId: string,
+    paymentMethod: string,
+    membership: [{id: string}]
+  }

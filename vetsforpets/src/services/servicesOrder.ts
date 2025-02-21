@@ -1,4 +1,4 @@
-import { IMembershipResponse } from "@/interfaces/registerTypes";
+import { IMembershipResponse, IPostOrder } from "@/interfaces/registerTypes";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 export async function fetchOrderData(token: string): Promise<IMembershipResponse[] | void> {
@@ -25,4 +25,32 @@ export async function fetchOrderData(token: string): Promise<IMembershipResponse
           }
           throw new Error("Ocurrió un error desconocido al obtener los datos");
     }
+}
+
+export async function postOrder(
+    postOrder: IPostOrder,
+  token?: string
+) {
+  try {
+    const response = await fetch(`${apiURL}/order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(postOrder),
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al enviar el post de la orden");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error("Ocurrió un error desconocido");
+  }
 }
