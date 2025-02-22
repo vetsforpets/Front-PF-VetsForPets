@@ -134,7 +134,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
+    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 mt-4 xl:grid-cols-2 xl:mt-10 place-items-center">
+
+
+
+
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
         {isEditing ? (
           <div className="flex flex-col items-center">

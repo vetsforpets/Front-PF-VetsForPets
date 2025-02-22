@@ -31,13 +31,13 @@ const CalendlySearch = () => {
 
     return (
         <div className="p-4 App">
-            <h2 className="m-5 text-4xl text-center text-black">Solicitar turno</h2>
+            <h2 className="m-5 text-2xl text-center text-customDarkGreen">Elegí tu veterinaria de confianza y reservá un turno de manera rápida y sencilla</h2>
             <div className="p-10 rounded-2xl">
                 <div className="flex justify-center w-full">
                     <input
                         type="text"
                         placeholder="Lista de veterinarias"
-                        className="border rounded-2xl w-[500px] px-[150px] text-center"
+                        className="border  border-customBrown bg-customBeige  rounded-2xl w-[500px] px-[150px] text-center py-2"
                         value={busqueda}
                         onChange={(e) => setBusqueda(e.target.value)}
                         onFocus={() => setFocus(true)}
