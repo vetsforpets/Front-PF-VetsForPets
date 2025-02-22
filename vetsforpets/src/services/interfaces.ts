@@ -22,7 +22,7 @@ export interface IUserData {
   isPremium: boolean;
   appointments: IAppointment[];
   pets: Pet[];
-  isVet: boolean;
+  role: string;
 }
 
 export interface IUserCredentials {
@@ -34,15 +34,17 @@ export interface IVetCredentials {
   id: string;
   name: string;
   email: string;
+  veterinarian: string;
   password: string;
   phoneNumber: string;
   is24Hours: boolean;
   imgProfile: string;
-  location: string;
   createdAt: string;
-  veterinarian: string;
+  location: string;
+  foundation: string;
+  role: string;
   licenseNumber: number;
-  businessHours: dayOppening;
+  businessHours: null;
 }
 
 export interface dayOppening {
@@ -109,4 +111,21 @@ export interface IPetEditData {
   isSterilized: string;
   profileImg: string;
   userId: string;
+}
+
+
+
+
+export interface IUserStored {
+  token: string;
+  id: string;
+  role: string;
+  email: string;
+  
+}
+
+export interface IUserState {
+  userData: IUserStored | null;
+  setUserData: (data: IUserStored) => void;
+  clearUserData: () => void;
 }
