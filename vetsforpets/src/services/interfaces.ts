@@ -22,7 +22,7 @@ export interface IUserData {
   isPremium: boolean;
   appointments: IAppointment[];
   pets: Pet[];
-  isVet: boolean;
+  role: string;
 }
 
 export interface IUserCredentials {
@@ -43,6 +43,7 @@ export interface IVetCredentials {
   veterinarian: string;
   licenseNumber: number;
   businessHours: dayOppening;
+  role: string;
 }
 
 export interface dayOppening {

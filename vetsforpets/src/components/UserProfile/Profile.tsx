@@ -29,7 +29,7 @@ interface IUserData {
   imgProfile: string;
   isPremium: boolean;
   appointments: IAppointment[];
-  isVet: boolean;
+  role: string;
 }
 
 const Profile = () => {

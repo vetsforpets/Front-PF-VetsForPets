@@ -55,7 +55,7 @@ export default function LoginForm() {
         setUserData({
           token: data.token,
           id: data.user.id,
-          isVet: data.user.isVet,
+          role: data.user.role,
           email: data.user.email,
         });
         console.log(userData, data.token, data.user);

@@ -23,11 +23,12 @@ export function Header() {
   };
 
   useEffect(() => {
-    console.log(userData?.isVet);
+    console.log(userData?.role);
     if (userData) {
-      setIsVet(userData.isVet);
+      setIsVet(userData.role === "PETSHOP");
     }
   }, [userData]);
+  
 
   return (
     <div
