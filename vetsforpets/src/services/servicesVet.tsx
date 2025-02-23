@@ -59,3 +59,33 @@ export async function RegisterVet(
     }
   }
   
+
+
+  export const updatePetshop = async (
+    petshopId: string,
+    updatedData: Partial<IVetCredentials>,
+    token: string
+  ) => {
+    try {
+      const response = await fetch(`${apiURL}/petshop/${petshopId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      if (!response.ok) {
+        const errorMessage = await response.text(); // Obtiene el mensaje de error del backend
+        console.error("Error en la respuesta del servidor:", errorMessage);
+        throw new Error(`Error ${response.status}: ${errorMessage}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Error en updatePetshop:", error);
+      throw new Error("Ocurrió un error desconocido al actualizar los datos");
+    }
+  };
+  

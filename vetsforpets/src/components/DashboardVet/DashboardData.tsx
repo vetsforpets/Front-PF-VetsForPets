@@ -16,7 +16,7 @@ const DashboardData = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (userData?.token) {
+    if (userData?.token && userData?.id) {
       const getVetData = async () => {
         console.log("Buscando veterinaria con ID:", userData.id);
         try {
@@ -44,7 +44,7 @@ const DashboardData = () => {
 
       getVetData();
     }
-  }, [userData?.token]);
+  }, [userData]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -53,16 +53,14 @@ const DashboardData = () => {
       }
     }, 1000);
 
-
     return () => clearTimeout(timeout);
   }, [userData?.id, router]);
-
 
   if (loading) return <div>Cargando...</div>;
   if (error) return <div>Error: {error}</div>;
 
   return veterinaria ? (
-    <DashboardUI veterinaria={veterinaria} />
+    <DashboardUI veterinaria={veterinaria} token={userData?.token || ""} />
   ) : (
     <div>No hay datos disponibles</div>
   );

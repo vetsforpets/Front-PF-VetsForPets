@@ -42,7 +42,7 @@ export interface IVetCredentials {
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
-  businessHours: dayOppening;
+  businessHours: null;
   role: string;
 }
 
