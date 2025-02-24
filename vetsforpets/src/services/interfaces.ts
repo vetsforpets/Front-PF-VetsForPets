@@ -46,7 +46,7 @@ export interface IVetCredentials {
   role: string;
 }
 
-export interface dayOppening {
+export interface dayOpening {
   monday: {
     open: string;
     close: string;
@@ -79,7 +79,7 @@ export interface dayOppening {
 
 export interface IAppointment {
   id: string;
-  date: string; // Puede ser `Date` si lo parseas
+  date: string;
   time: string;
   description: string;
   status: string;
