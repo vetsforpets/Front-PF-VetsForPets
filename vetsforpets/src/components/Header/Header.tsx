@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import Image from "next/image";
@@ -9,10 +9,9 @@ import { LogoutButton } from "../LogoutButton/LogoutButton";
 export function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [isvet, setIsVet] = useState(false);
 
   const { userData } = useUserStore();
-  const isAuthenticated = userData?.isVet || userData?.id;
+  const isAuthenticated = userData?.id;
 
   const pathname = usePathname();
   const headerClass = pathname === "/" ? "absolute" : "relative";
@@ -21,14 +20,6 @@ export function Header() {
     router.push(path);
     setIsOpen(false);
   };
-
-  useEffect(() => {
-    console.log(userData);
-    console.log(userData?.isVet);
-    if (userData) {
-      setIsVet(userData.isVet);
-    }
-  }, [userData?.isVet]);
 
   return (
     <div
@@ -49,19 +40,32 @@ export function Header() {
         </button>
       </div>
       <div>
+        {/* Botón "Veterinarias" visible solo en pantallas grandes */}
         <button
           onClick={() => handleNavigation("/vets")}
-          className="customButton"
+          className="hidden customButton sm:block"
         >
           Veterinarias
         </button>
+
+        {/* Botón "Veterinarias" dentro del menú hamburguesa, visible solo en pantallas pequeñas */}
+        {isOpen && (
+          <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
+            <button
+              onClick={() => handleNavigation("/vets")}
+              className="customButtonDos"
+            >
+              Veterinarias
+            </button>
+          </div>
+        )}
       </div>
       <div>
         <button
           onClick={() => handleNavigation("/register")}
           className="flex flex-col items-center"
         >
-          <img
+          <Image
             src="/images/emergency.png"
             width={1920}
             height={500}
@@ -71,17 +75,17 @@ export function Header() {
           <p className="font-kiwi">URGENCIA</p>
         </button>
       </div>
-      <div className="flex gap-5">
+      <div className="flex gap-5 sm:block">
         <button
           onClick={() => handleNavigation("/aboutUs")}
-          className="customButton"
+          className="hidden customButton sm:block"
         >
           Quienes Somos
         </button>
       </div>
 
-      <button onClick={() => setIsOpen(!isOpen)} className="p-2 z-10">
-        <div className="w-6 h-6 flex flex-col justify-between items-center space-y-1 hover:scale-105 transform transition-all duration-300">
+      <button onClick={() => setIsOpen(!isOpen)} className="z-10 p-2">
+        <div className="flex flex-col items-center justify-between w-6 h-6 space-y-1 transition-all duration-300 transform hover:scale-105">
           <div
             className={`bg-black w-full h-1 transform transition-transform duration-300 ${
               isOpen ? "rotate-45 translate-y-2" : ""
@@ -101,22 +105,22 @@ export function Header() {
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-5 w-[240px] flex-grow">
+        <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] flex-grow">
           {isAuthenticated ? (
             <>
-              {!isvet ? (
-                <button
-                  onClick={() => handleNavigation("/dashboard")}
-                  className="customButtonDos"
-                >
-                  Perfil Usuario
-                </button>
-              ) : (
+              {userData.role === "PETSHOP" ? (
                 <button
                   onClick={() => handleNavigation("/dashboard-vet")}
                   className="customButtonDos"
                 >
                   Perfil Veterinaria
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleNavigation("/dashboard")}
+                  className="customButtonDos"
+                >
+                  Perfil Usuario
                 </button>
               )}
               <LogoutButton />
@@ -135,6 +139,22 @@ export function Header() {
               >
                 Crear Cuenta
               </button>
+
+              {/* Botones adicionales para pantallas pequeñas */}
+              <div className="sm:hidden">
+                <button
+                  onClick={() => handleNavigation("/vets")}
+                  className="mt-0 mb-2 customButtonDos"
+                >
+                  Veterinarias
+                </button>
+                <button
+                  onClick={() => handleNavigation("/aboutUs")}
+                  className="mt-2 mb-2 customButtonDos"
+                >
+                  Quienes Somos
+                </button>
+              </div>
             </>
           )}
         </div>
