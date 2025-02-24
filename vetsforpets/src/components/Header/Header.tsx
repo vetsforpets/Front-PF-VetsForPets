@@ -113,6 +113,7 @@ export function Header() {
         </div>
       </button>
 
+
       {isOpen && (
         <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] flex-grow">
           {isAuthenticated ? (
