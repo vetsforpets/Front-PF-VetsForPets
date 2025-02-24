@@ -78,6 +78,28 @@ export async function loginUser(
   }
 }
 
+export const loginUserWithGoogle = async (code: string) => {
+  try {
+    const response = await fetch(
+      "https://vetsforpets-api.onrender.com/auth/google/callback",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Error al iniciar sesión con Google");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error en la autenticación con Google:", error);
+    return null;
+  }
+};
+
 export async function RegisterUser(
   userRegisterData: IUserFormData
 ): Promise<IUserResponseData> {
