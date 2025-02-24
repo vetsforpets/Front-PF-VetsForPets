@@ -46,7 +46,7 @@ export interface IVetCredentials {
   role: string;
 }
 
-export interface dayOpening {
+export interface Schedule {
   monday: {
     open: string;
     close: string;
@@ -83,6 +83,7 @@ export interface IAppointment {
   time: string;
   description: string;
   status: string;
+  pet: Pet;
   user: string;
 }
 
