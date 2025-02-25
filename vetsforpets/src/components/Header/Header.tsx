@@ -48,7 +48,7 @@ export function Header() {
           Veterinarias
         </button>
 
-        {/* Botón "Veterinarias" dentro del menú hamburguesa, visible solo en pantallas pequeñas */}
+       
         {isOpen && (
           <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
             <button
@@ -87,19 +87,13 @@ export function Header() {
       <button onClick={() => setIsOpen(!isOpen)} className="z-10 p-2">
         <div className="flex flex-col items-center justify-between w-6 h-6 space-y-1 transition-all duration-300 transform hover:scale-105">
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""}`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "opacity-0" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "opacity-0" : ""}`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
           ></div>
         </div>
       </button>
@@ -123,6 +117,19 @@ export function Header() {
                   Perfil Usuario
                 </button>
               )}
+            
+              <button
+                onClick={() => handleNavigation("/vets")}
+                className="mt-2 mb-2 customButtonDos"
+              >
+                Veterinarias
+              </button>
+              <button
+                onClick={() => handleNavigation("/aboutUs")}
+                className="mt-2 mb-2 customButtonDos"
+              >
+                Quienes Somos
+              </button>
               <LogoutButton />
             </>
           ) : (
@@ -140,7 +147,7 @@ export function Header() {
                 Crear Cuenta
               </button>
 
-              {/* Botones adicionales para pantallas pequeñas */}
+              
               <div className="sm:hidden">
                 <button
                   onClick={() => handleNavigation("/vets")}

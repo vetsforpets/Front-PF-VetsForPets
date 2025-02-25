@@ -5,7 +5,7 @@ const IndexRegister = () => {
 
   return (
     <div className="flex items-center justify-center min-h-80 ">
-      <div className="flex flex-wrap items-center justify-center gap-6 py-6">
+      <div className="flex flex-wrap items-center justify-center gap-8 py-8">
         <Link href={"/pet-owner-form"}>
         <div
           className="flex flex-col items-center justify-center w-64 h-40 transition duration-500 shadow-lg cursor-pointer bg-customLightBrown hover:bg-customHardBrown hover:text-customBeige rounded-2xl hover:shadow-xl"

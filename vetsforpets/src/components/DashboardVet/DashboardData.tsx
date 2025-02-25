@@ -56,13 +56,25 @@ const DashboardData = () => {
     return () => clearTimeout(timeout);
   }, [userData?.id, router]);
 
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen text-xl">
+        Cargando...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="flex items-center justify-center min-h-screen text-xl text-red-500">
+        Error: {error}
+      </div>
+    );
 
   return veterinaria ? (
     <DashboardUI veterinaria={veterinaria} token={userData?.token || ""} />
   ) : (
-    <div>No hay datos disponibles</div>
+    <div className="flex items-center justify-center min-h-screen text-xl">
+      No hay datos disponibles
+    </div>
   );
 };
 

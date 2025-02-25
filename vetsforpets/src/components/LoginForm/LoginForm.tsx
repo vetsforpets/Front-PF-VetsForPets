@@ -101,15 +101,17 @@ export default function LoginForm() {
   }, [router, setUserData]);
 
   return (
-    <div className="w-1/4 mx-auto mb-20 mt-28">
+    <div className="w-2/3 mx-auto mb-20 sm:w-1/2 md:w-1/3 lg:w-1/4 mt-28">
       <Image
         src="/images/logo.png"
         width={100}
         height={80}
         alt="logo"
-        className="justify-self-center"
+        className="mx-auto"
       />
-      <h2 className="mb-4 text-2xl font-bold text-center">Iniciar Sesión</h2>
+      <h2 className="mb-4 text-xl font-bold text-center sm:text-2xl md:text-3xl">
+        Iniciar Sesión
+      </h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Email */}
@@ -123,7 +125,7 @@ export default function LoginForm() {
               },
             })}
             type="email"
-            className="customInput"
+            className="w-2/3 text-sm customInput sm:text-base"
             placeholder="ejemplo@email.com"
           />
           {errors.email && (
@@ -143,7 +145,7 @@ export default function LoginForm() {
             })}
             type={showPassword ? "text" : "password"}
             placeholder="Contraseña"
-            className="customInput"
+            className="w-2/3 text-sm customInput sm:text-base"
           />
           {/* Icono de visibilidad */}
           <button
@@ -160,7 +162,7 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
 
-        <div className="flex justify-evenly text-sm">
+        <div className="flex text-sm justify-evenly">
           <button type="submit" className="customButton">
             Iniciar Sesión
           </button>

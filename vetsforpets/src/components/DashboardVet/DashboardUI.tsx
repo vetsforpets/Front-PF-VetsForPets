@@ -222,4 +222,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   );
 };
 
+
+
 export default VetProfile;
