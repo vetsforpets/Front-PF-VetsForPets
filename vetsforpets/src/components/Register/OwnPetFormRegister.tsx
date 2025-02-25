@@ -42,18 +42,31 @@ function OwnPetFormRegister() {
     console.log("====================================");
     console.log(data);
     console.log("====================================");
-    await RegisterUser(data);
-    toast.success("Usuario registrado con éxito", {
-      duration: 3000,
-      style: {
-        color: "#155724",
-        background: "#d4edda",
-        borderRadius: "8px",
-        padding: "16px",
-        border: "1px solid #c3e6cb",
-      },
-    });
-    router.push("/login");
+    try {
+      await RegisterUser(data);
+      toast.success("Usuario registrado con éxito", {
+        duration: 3000,
+        style: {
+          color: "#155724",
+          background: "#d4edda",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #c3e6cb",
+        },
+      });
+      router.push("/login");
+    } catch (error) {
+      toast.error(`${error}`, {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
+    }
   };
 
   useEffect(() => {

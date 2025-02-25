@@ -24,15 +24,15 @@ h6 {
 /* ----- Clases reutilizables ----- */
 
 .customButton {
-  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customLightBrown hover:bg-customBrown dark:bg-customBeige dark:hover:bg-customBrown shadow-lg;
+  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customBeige hover:bg-customLightBrown  dark:hover:bg-customLightBrown shadow-lg;
 }
 
 .customButtonDos {
-  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customLightBrown hover:bg-customBrown dark:bg-customBeige dark:hover:bg-customBrown shadow-lg w-full;
+  @apply text-black focus:outline-none rounded-full px-5 py-2.5 text-center bg-customBeige hover:bg-customLightBrown dark:bg-customBeige dark:hover:bg-customLightBrown shadow-lg w-full;
 }
 
 .customInput {
-  @apply block w-full p-3 mt-2 text-sm border border-gray-300 rounded-lg focus:ring-0 text-customDarkGreen bg-gray-50 focus:border-customBrown dark:placeholder-gray-400 dark:focus:border-customBrown;
+  @apply block w-full p-3 mt-2 text-sm border border-gray-300 rounded-lg focus:ring-0 text-customDarkGreen bg-gray-50 focus:border-customBrown;
 }
 
 

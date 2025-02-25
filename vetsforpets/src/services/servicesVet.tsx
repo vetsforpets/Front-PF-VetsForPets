@@ -46,7 +46,8 @@ export async function RegisterVet(
       console.log(response);
       console.log("====================================");
       if (!response.ok) {
-        throw new Error("Error al enviar formulario de registro de veterinaria");
+        const error = await response.json()
+        throw new Error(`${error.message}`);
       }
   
       const data: IVetResponseData = await response.json();
@@ -58,4 +59,34 @@ export async function RegisterVet(
       throw new Error("Ocurrió un error desconocido");
     }
   }
+  
+
+
+  export const updatePetshop = async (
+    petshopId: string,
+    updatedData: Partial<IVetCredentials>,
+    token: string
+  ) => {
+    try {
+      const response = await fetch(`${apiURL}/petshop/${petshopId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      if (!response.ok) {
+        const errorMessage = await response.text(); // Obtiene el mensaje de error del backend
+        console.error("Error en la respuesta del servidor:", errorMessage);
+        throw new Error(`Error ${response.status}: ${errorMessage}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error("Error en updatePetshop:", error);
+      throw new Error("Ocurrió un error desconocido al actualizar los datos");
+    }
+  };
   

@@ -1,8 +1,9 @@
 export interface IUserStored {
   token: string;
   id: string;
-  isVet: boolean;
+  role: string;
   email: string;
+  
 }
 
 export interface IUserState {

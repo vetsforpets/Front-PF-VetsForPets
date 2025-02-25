@@ -22,12 +22,14 @@ interface petCreateFormProps {
   setAddingPet?: React.Dispatch<React.SetStateAction<boolean>>;
   addingPet: boolean;
   setReloadPets: React.Dispatch<React.SetStateAction<boolean>>;
+  onPetCreated: () => void
 }
 
 const PetCreateForm: React.FC<petCreateFormProps> = ({
   setAddingPet,
   addingPet,
   setReloadPets,
+  onPetCreated,
 }) => {
   const { userData } = useUserStore();
 
@@ -62,6 +64,8 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
 
       setReloadPets((prev) => !prev);
       if (setAddingPet) setAddingPet(false);
+      onPetCreated();
+      
     } catch (error) {
       console.error("Error al crear mascota:", error);
       toast.error("Error al crear la mascota", {
@@ -81,7 +85,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       
-      <div className="bg-[#deb887] rounded-2xl p-4 shadow-lg mx-auto">
+      <div className="bg-[#deb887] rounded-2xl shadow-lg mx-auto p-14">
         {addingPet && (
           <button
             onClick={() => {
