@@ -37,14 +37,11 @@ function VetFormRegister() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
-    // if (data.businessHours === "is24Hours") {
-    //   data.is24Hours = true
-    // }
+    try {
 
-    // const { businessHours, ...submmitData } = data
     await RegisterVet(data);
 
-    toast.success("Usuario registrado con éxito", {
+    toast.success("Veterinaria registrado con éxito", {
       duration: 3000,
       style: {
         color: "#155724",
@@ -55,6 +52,18 @@ function VetFormRegister() {
       },
     });
     router.push("/login");
+    } catch (error) {
+      toast.error(`${error}`, {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
+    }
   };
 
   return (

@@ -91,7 +91,8 @@ export async function RegisterUser(
     });
 
     if (!response.ok) {
-      throw new Error("Error al enviar formulario de registro de usuario");
+      const error = await response.json()
+      throw new Error(`${error.message}`);
     }
 
     const data: IUserResponseData = await response.json();
