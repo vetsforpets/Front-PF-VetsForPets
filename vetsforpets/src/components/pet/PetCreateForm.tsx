@@ -85,7 +85,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       
-      <div className="bg-[#deb887] rounded-2xl shadow-lg mx-auto p-10">
+      <div className="bg-[#deb887] rounded-2xl shadow-lg mx-auto p-14">
         {addingPet && (
           <button
             onClick={() => {
