@@ -46,7 +46,8 @@ export async function RegisterVet(
       console.log(response);
       console.log("====================================");
       if (!response.ok) {
-        throw new Error("Error al enviar formulario de registro de veterinaria");
+        const error = await response.json()
+        throw new Error(`${error.message}`);
       }
   
       const data: IVetResponseData = await response.json();

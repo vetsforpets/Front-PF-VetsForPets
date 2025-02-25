@@ -8,17 +8,18 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 const MembershipCard = () => {
-const [membership, setmembership] = useState<IMembershipResponse | void>()
+const [memberships, setmembership] = useState<IMembershipResponse[] | void>()
+const [idSelected, setIdSelected] = useState("")
 const userData = useUserStore((state)=>state.userData)
 const router = useRouter()
 
 const postOrderButton = async ()=>{
-  if(userData?.id && membership?.id){
+  if(userData?.id && memberships?.length){
 try {
   const order = await postOrder({
     userId: userData?.id,
     paymentMethod: "Credit Card",
-    membership:[{id: membership?.id}]
+    membership:[{id: idSelected}]
   }, userData.token)
   toast.success("orden realizada con exito", {
     duration: 3000,
@@ -52,7 +53,7 @@ useEffect(()=>{
       if(userData?.token){
         const membershipData:IMembershipResponse[] | void = await fetchOrderData(userData?.token)
         if(membershipData){
-          const newMembership = membershipData[1]
+          const newMembership = membershipData
           console.log('====================================');
           console.log(newMembership);
           console.log('====================================');
@@ -65,7 +66,9 @@ fetchMembership()
 },[userData?.token])
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 min-h-scree">
+    <>
+    {memberships?.map((membership, index)=>{
+    <div onSelect={()=> setIdSelected(index.toString())} key={membership.id} className="flex flex-col items-center justify-center p-6 min-h-scree">
       <div className="max-w-md p-8 text-center bg-white shadow-lg rounded-2xl">
         <h2 className="mb-10 text-2xl font-semibold text-customDarkGreen">Membresía {membership?.name}</h2>
         {membership?.benefits.map((benefit, index) => <p key={index} className="mt-2 text-gray-600">- {benefit}.</p>)}
@@ -78,6 +81,8 @@ fetchMembership()
         </button>
       </div>
     </div>
+    })}
+    </>
   );
 };
 export default MembershipCard;
