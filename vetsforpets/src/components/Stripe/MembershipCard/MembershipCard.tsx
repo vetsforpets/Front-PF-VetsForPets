@@ -56,11 +56,10 @@ useEffect(()=>{
       if(userData?.token){
         const membershipData:IMembershipResponse[] | void = await fetchOrderData(userData?.token)
         if(membershipData){
-          const newMembership = membershipData
           console.log('====================================');
-          console.log(newMembership);
+          console.log(membershipData);
           console.log('====================================');
-          setmembership(newMembership)
+          setmembership(membershipData)
 
         }
       }
