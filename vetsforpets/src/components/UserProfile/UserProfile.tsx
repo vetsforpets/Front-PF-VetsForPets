@@ -93,48 +93,88 @@ export default function ProfileView() {
   } else {
     return (
       <div className="p-5 md:flex">
-        <ul className="flex flex-col w-full py-2 space-y-4 text-sm font-medium text-gray-500 pl-14 md:w-2/4 lg:w-1/3 xl:w-1/4">
+        <ul className="flex flex-col w-full py-2 space-y-4 text-sm font-medium text-gray-500 ml-14 p-5 md:w-2/4 lg:w-1/3 xl:w-1/4">
           <li className="p-3">
-            <a href="#" className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active" onClick={handleProfileClick}>
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handleProfileClick}
+            >
               <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
               Mi Perfil
             </a>
           </li>
           <li className="p-3">
-            <a href="#" className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active" onClick={handlePetsClick}>
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handlePetsClick}
+            >
               <img src="/pets.svg" alt="Calendly" className="w-12 h-12 me-2" />
               Mis Mascotas
             </a>
           </li>
           <li className="p-3">
-            <a href="#" className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active" onClick={handleAddPetsClick}>
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handleAddPetsClick}
+            >
               <img src="/pets.svg" alt="Calendly" className="w-12 h-12 me-2" />
               Agregar Mascota
             </a>
           </li>
           <li className="p-3">
-            <a href="#" className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active" onClick={handleCalendlyClick}>
-              <img src="/calendar.svg" alt="Calendly" className="w-12 h-12 me-2" />
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handleCalendlyClick}
+            >
+              <img
+                src="/calendar.svg"
+                alt="Calendly"
+                className="w-12 h-12 me-2"
+              />
               Solicitar Turno
             </a>
           </li>
         </ul>
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
-            {showProfile && <div className="flex justify-center"><Profile /></div>}
+            {showProfile && (
+              <div className="flex justify-center">
+                <Profile />
+              </div>
+            )}
             {showPets && (
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-14">
                 <div className="space-y-4">
                   {(user?.pets ?? []).map((pet: Pet, index: number) => (
-                    <div key={index} className="bg-[#deb887] rounded-2xl pl-4 shadow-lg">
-                      <PetPreview pet={pet} onSelectPet={handleSelectPet} setReloadPets={setReloadPets} />
+                    <div
+                      key={index}
+                      className="bg-[#deb887] rounded-2xl pl-4 shadow-lg"
+                    >
+                      <PetPreview
+                        pet={pet}
+                        onSelectPet={handleSelectPet}
+                        setReloadPets={setReloadPets}
+                      />
                     </div>
                   ))}
                 </div>
-                {selectedPet && <PetDetails pet={selectedPet} token={userData.token} />}
+                {selectedPet && (
+                  <PetDetails pet={selectedPet} token={userData.token} />
+                )}
               </div>
             )}
-            {showAddPets && <PetCreateForm setAddingPet={setAddingPet} addingPet={addingPet} setReloadPets={setReloadPets} onPetCreated={handleRedirectToPets} />}
+            {showAddPets && (
+              <PetCreateForm
+                setAddingPet={setAddingPet}
+                addingPet={addingPet}
+                setReloadPets={setReloadPets}
+                onPetCreated={handleRedirectToPets}
+              />
+            )}
             {showCalendly && <CalendlySearch />}
           </div>
         </div>

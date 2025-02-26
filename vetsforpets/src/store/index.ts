@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { IUserStored, IUserState } from "./interfaces";
+import { IUserStored, IUserState, IVetState } from "./interfaces";
 
 // USERS
 
@@ -27,3 +27,25 @@ export const useUserStore = create<IUserState>()(
 );
 
 // VETS
+
+export const useVetStore = create<IVetState>()(
+  devtools(
+    persist(
+      (set) => ({
+        vetId: null,
+
+        setVetId: (data: string) => {
+          set({ vetId: data });
+        },
+
+        clearVetId: () => {
+          set({ vetId: null });
+        },
+      }),
+      {
+        name: "vet-ID",
+        storage: createJSONStorage(() => localStorage),
+      }
+    )
+  )
+);
