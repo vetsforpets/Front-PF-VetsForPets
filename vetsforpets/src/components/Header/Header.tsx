@@ -53,7 +53,7 @@ export function Header() {
           <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
             <button
               onClick={() => handleNavigation("/vets")}
-              className="customButtonDos"
+              className="customButton"
             >
               Veterinarias
             </button>
@@ -105,14 +105,14 @@ export function Header() {
               {userData.role === "PETSHOP" ? (
                 <button
                   onClick={() => handleNavigation("/dashboard-vet")}
-                  className="customButtonDos"
+                  className="customButton"
                 >
                   Perfil Veterinaria
                 </button>
               ) : (
                 <button
                   onClick={() => handleNavigation("/dashboard")}
-                  className="customButtonDos"
+                  className="customButton"
                 >
                   Perfil Usuario
                 </button>
@@ -136,13 +136,13 @@ export function Header() {
             <>
               <button
                 onClick={() => handleNavigation("/login")}
-                className="customButtonDos"
+                className="customButton"
               >
                 Iniciar Sesión
               </button>
               <button
                 onClick={() => handleNavigation("/register")}
-                className="customButtonDos"
+                className="customButton"
               >
                 Crear Cuenta
               </button>
@@ -151,13 +151,13 @@ export function Header() {
               <div className="sm:hidden">
                 <button
                   onClick={() => handleNavigation("/vets")}
-                  className="mt-0 mb-2 customButtonDos"
+                  className="mt-0 mb-2 customButton"
                 >
                   Veterinarias
                 </button>
                 <button
                   onClick={() => handleNavigation("/aboutUs")}
-                  className="mt-2 mb-2 customButtonDos"
+                  className="mt-2 mb-2 customButton"
                 >
                   Quienes Somos
                 </button>
