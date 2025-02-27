@@ -22,7 +22,7 @@ export interface IUserData {
   isPremium: boolean;
   appointments: IAppointment[];
   pets: Pet[];
-  isVet: boolean;
+  role: string;
 }
 
 export interface IUserCredentials {
@@ -42,10 +42,17 @@ export interface IVetCredentials {
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
-  businessHours: dayOppening;
+  businessHours: null;
+  emergencies: IEmergency[];
+  role: string;
 }
 
-export interface dayOppening {
+export interface IEmergency {
+  userId: string;
+  petName: string;
+}
+
+export interface IDayOpening {
   monday: {
     open: string;
     close: string;
@@ -78,7 +85,7 @@ export interface dayOppening {
 
 export interface IAppointment {
   id: string;
-  date: string; // Puede ser `Date` si lo parseas
+  date: string;
   time: string;
   description: string;
   status: string;

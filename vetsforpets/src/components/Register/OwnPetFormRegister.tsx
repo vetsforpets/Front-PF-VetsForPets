@@ -42,18 +42,31 @@ function OwnPetFormRegister() {
     console.log("====================================");
     console.log(data);
     console.log("====================================");
-    await RegisterUser(data);
-    toast.success("Usuario registrado con éxito", {
-      duration: 3000,
-      style: {
-        color: "#155724",
-        background: "#d4edda",
-        borderRadius: "8px",
-        padding: "16px",
-        border: "1px solid #c3e6cb",
-      },
-    });
-    router.push("/login");
+    try {
+      await RegisterUser(data);
+      toast.success("Usuario registrado con éxito", {
+        duration: 3000,
+        style: {
+          color: "#155724",
+          background: "#d4edda",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #c3e6cb",
+        },
+      });
+      router.push("/login");
+    } catch (error) {
+      toast.error(`${error}`, {
+        duration: 3000,
+        style: {
+          color: "#dc3545",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -74,7 +87,7 @@ function OwnPetFormRegister() {
 
   return (
     <form
-      className="border-none rounded-lg sm:w-1/2 mx-auto my-20 pb-10 px-12 sm:px-5 z-10"
+      className="z-10 px-12 pb-10 mx-auto my-20 border-none rounded-lg sm:w-1/2 sm:px-5"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h1 className="text-3xl text-customBrown">Registro dueño de mascota</h1>
@@ -95,18 +108,15 @@ function OwnPetFormRegister() {
           required: { value: true, message: "Imagen de perfil obligatoria" },
         }}
         render={({ field, fieldState: { error } }) => (
-          <div className="flex gap-4 items-center justify-center">
-            <label className="flex items-center justify-between">
-              <p className="mr-4 whitespace-nowrap">Imagen de perfil </p>
+          <div className="flex items-center justify-center gap-4">
+            <label className="flex items-center justify-between m-4">
+              <p className="p-3 mr-4 border border-gray-300 rounded-lg bg-gray-50 text-customDarkGreen whitespace-nowra">Imagen de perfil </p>
               <CloudinaryUploader
                 onImageUpload={(url) => field.onChange(url)}
               />
             </label>
-
-            {/* <input {...field} type="file" className="customInput" /> */}
-
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -135,7 +145,7 @@ function OwnPetFormRegister() {
               placeholder="Nombre"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -164,7 +174,7 @@ function OwnPetFormRegister() {
               placeholder="Apellido"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -189,7 +199,7 @@ function OwnPetFormRegister() {
               placeholder="email@ejemplo.com"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -215,7 +225,7 @@ function OwnPetFormRegister() {
               placeholder="Teléfono"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -235,7 +245,7 @@ function OwnPetFormRegister() {
               placeholder="Edad:"
             />
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -260,17 +270,17 @@ function OwnPetFormRegister() {
             <input
               {...field}
               type={showPassword ? "text" : "password"}
-              className="customInput w-full pr-10" // Agregamos padding derecho para el ícono
+              className="w-full pr-10 customInput" // Agregamos padding derecho para el ícono
               placeholder="Contraseña"
             />
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 cursor-pointer text-gray-600"
+              className="absolute text-gray-600 cursor-pointer right-3 top-3"
             >
               {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
             </span>
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
@@ -290,12 +300,12 @@ function OwnPetFormRegister() {
             <input
               {...field}
               type={showConfirmPassword ? "text" : "password"}
-              className="customInput w-full pr-10"
+              className="w-full pr-10 customInput"
               placeholder="Confirmar Contraseña"
             />
             <span
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3 top-3 cursor-pointer text-gray-600"
+              className="absolute text-gray-600 cursor-pointer right-3 top-3"
             >
               {showConfirmPassword ? (
                 <FaEyeSlash size={20} />
@@ -304,13 +314,13 @@ function OwnPetFormRegister() {
               )}
             </span>
             {error && (
-              <p className="text-red-500 text-xs mt-1">{error.message}</p>
+              <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
           </div>
         )}
       />
 
-      <button type="submit" className="customButton mt-6">
+      <button type="submit" className="mt-6 customButton">
         Registrarse
       </button>
     </form>

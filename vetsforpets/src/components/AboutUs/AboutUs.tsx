@@ -16,25 +16,25 @@ export default function AboutUs() {
   return (
     <div className="min-h-screen p-6 flex flex-col items-center justify-center w-[90%] mx-auto">
       <h1 
-        className="text-l sm:text-xl md:text-3xl lg:text-4xl font-bold mb-8 font-poppins text-customBrown text-center"
+        className="mb-8 text-2xl font-bold text-center sm:text-4xl md:text-5xl lg:text-5xl font-poppins text-customBrown"
         data-aos="fade-up" 
       >
         QUIENES SOMOS
       </h1>
 
-      <div className="flex flex-col md:flex-row w-full mb-12">
-        <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-0">
+      <div className="flex flex-col w-full mb-12 md:flex-row">
+        <div className="flex items-center justify-center mb-4 md:w-1/2 md:mb-0">
           <Image
-            src="/AboutUsPet.svg"
+            src="/vfp.svg"
             alt="Imagen de nosotros"
-            width={500}  
-            height={300}
-            className="w-full md:w-2/3 max-w-full object-contain"
+            width={600}  
+            height={400}
+            className="object-contain w-full max-w-full md:w-2/3"
             data-aos="fade-up" 
           />
         </div>
 
-        <div className="md:w-1/2 flex justify-center items-center">
+        <div className="flex items-center justify-center md:w-1/2">
           <p 
             className="text-s sm:text-m md:text-xl lg:text-2xl text-[#283618] text-center font-kiwi-maru"
             data-aos="fade-left" 
@@ -51,12 +51,12 @@ export default function AboutUs() {
         alt="Imagen de huellas"
         width={500}  
         height={300} 
-        className="w-full md:w-2/3 max-w-full object-contain mt-8 mb-12"
+        className="object-contain w-full max-w-full mt-8 mb-12 md:w-2/3"
         // data-aos="fade-up" // Animación de desvanecimiento hacia arriba
       />
 
-      <div className="flex flex-col md:flex-row w-full mb-8 ml-auto">
-        <div className="md:w-1/2 flex justify-center items-center">
+      <div className="flex flex-col w-full mb-8 ml-auto md:flex-row">
+        <div className="flex items-center justify-center md:w-1/2">
           <p 
             className="text-s sm:text-m md:text-xl lg:text-2xl text-[#283618] text-center font-kiwi-maru pr-4"
             data-aos="fade-right" 
@@ -67,31 +67,31 @@ export default function AboutUs() {
           </p>
         </div>
 
-        <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-8 mt-8 md:mt-0 ml-auto">
+        <div className="flex items-center justify-center mt-8 mb-4 ml-auto md:w-1/2 md:mb-8 md:mt-0">
           <Image
-            src="/AboutUsDogCat.svg"
+            src="/dogandcat1.svg"
             alt="Imagen de nosotros"
             width={500} 
             height={300} 
-            className="w-full md:w-2/3 max-w-full object-contain"
+            className="object-contain w-full max-w-full md:w-2/3"
             data-aos="fade-left" 
           />
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row w-full">
-        <div className="md:w-1/2 flex justify-center items-center mb-4 md:mb-8 ml-8">
+      <div className="flex flex-col w-full md:flex-row">
+        <div className="flex items-center justify-center mb-4 ml-8 md:w-1/2 md:mb-8">
           <Image
             src="/AboutUsPerro2.svg"
             alt="Imagen de nosotros"
             width={600}  
             height={400} 
-            className="w-full md:w-2/3 max-w-full object-contain"
+            className="object-contain w-full max-w-full md:w-2/3"
             data-aos="zoom-in" 
           />
         </div>
 
-        <div className="md:w-1/2 flex justify-center items-center">
+        <div className="flex items-center justify-center md:w-1/2">
           <p
             className="text-s sm:text-m md:text-xl lg:text-2xl text-[#283618] text-center font-kiwi-maru"
             data-aos="fade-up" 
@@ -107,12 +107,12 @@ export default function AboutUs() {
         alt="Imagen de huellas"
         width={500}  
         height={300} 
-        className="w-full md:w-2/3 max-w-full object-contain mt-8 mb-12"
+        className="object-contain w-full max-w-full mt-8 mb-12 md:w-2/3"
         
       />
 
       <h2 
-        className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 font-poppins text-customBrown text-center"
+        className="mb-8 text-2xl font-bold text-center sm:text-4xl md:text-5xl lg:text-5xl font-poppins text-customBrown"
         data-aos="fade-up"
       >
         Cuidamos a Quienes Amas
