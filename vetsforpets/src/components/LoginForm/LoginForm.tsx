@@ -74,29 +74,64 @@ export default function LoginForm() {
       "https://vetsforpets-api.onrender.com/auth/google/signIn";
   };
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const code = params.get("code");
+
+  //   if (code) {
+  //     loginUserWithGoogle(code).then((data) => {
+  //       if (data && data.token) {
+  //         setUserData({
+  //           token: data.token,
+  //           id: data.user.id,
+  //           role: data.user.role,
+  //           email: data.user.email,
+  //         });
+
+  //         toast.success("¡Inicio de sesión con Google exitoso!", {
+  //           duration: 3000,
+  //         });
+
+  //         router.push("/");
+  //       } else {
+  //         toast.error("Error al iniciar sesión con Google");
+  //       }
+  //     });
+  //   }
+  // }, [router, setUserData]);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
 
     if (code) {
-      loginUserWithGoogle(code).then((data) => {
-        if (data && data.token) {
-          setUserData({
-            token: data.token,
-            id: data.user.id,
-            role: data.user.role,
-            email: data.user.email,
-          });
+      (async () => {
+        try {
+          const data = await loginUserWithGoogle(code);
 
-          toast.success("¡Inicio de sesión con Google exitoso!", {
-            duration: 3000,
-          });
+          if (data && data.token) {
+            setUserData({
+              token: data.token,
+              id: data.user.id,
+              role: data.user.role,
+              email: data.user.email,
+            });
 
-          router.push("/");
-        } else {
+            toast.success("¡Inicio de sesión con Google exitoso!", {
+              duration: 3000,
+            });
+
+            setTimeout(() => {
+              router.push("/");
+            }, 500);
+          } else {
+            toast.error("Error al iniciar sesión con Google");
+          }
+        } catch (error) {
+          console.error("Error en login con Google:", error);
           toast.error("Error al iniciar sesión con Google");
         }
-      });
+      })();
     }
   }, [router, setUserData]);
 
