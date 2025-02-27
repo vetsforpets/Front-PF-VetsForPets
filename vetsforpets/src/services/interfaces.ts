@@ -43,11 +43,16 @@ export interface IVetCredentials {
   veterinarian: string;
   licenseNumber: number;
   businessHours: null;
-  emergencies: [];
+  emergencies: IEmergency[];
   role: string;
 }
 
-export interface dayOpening {
+export interface IEmergency {
+  userId: string;
+  petName: string;
+}
+
+export interface IDayOpening {
   monday: {
     open: string;
     close: string;
