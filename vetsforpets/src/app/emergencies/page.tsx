@@ -13,7 +13,7 @@ export default function Emergencies() {
   return (
     <>
       {
-        userData?.role === "PETSHOP" ? VetEmergencies : null
+        userData?.role === "PETSHOP" ? <VetEmergencies /> : null
         // <Map />
         // <ChatComponent userId={userData?.id} vetId={vetId} />
       }

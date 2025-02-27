@@ -7,6 +7,8 @@ export async function getVetById(
   token: string,
   id: string
 ): Promise<IVetCredentials | null> {
+  console.log(id);
+
   try {
     const response = await fetch(`${apiURL}/petshop/${id}`, {
       method: "GET",
@@ -17,7 +19,7 @@ export async function getVetById(
     });
 
     if (!response.ok) {
-      throw new Error("Error al obtener los datos de veterinarias");
+      throw new Error(`Error en la API: ${response.statusText}`);
     }
 
     const data: IVetCredentials = await response.json();

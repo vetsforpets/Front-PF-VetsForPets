@@ -34,7 +34,7 @@ export function LogoutButton() {
   if (!userData) return null;
 
   return (
-    <button onClick={handleLogout} className="customButton">
+    <button onClick={handleLogout} className="customButton w-full">
       Cerrar Sesión
     </button>
   );
