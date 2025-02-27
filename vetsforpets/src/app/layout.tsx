@@ -35,7 +35,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
     <html lang="es">
       <body
         className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
@@ -50,6 +49,5 @@ export default function RootLayout({
        
       </body>
     </html>
-    // </GoogleOAuthProvider>
   );
 }
