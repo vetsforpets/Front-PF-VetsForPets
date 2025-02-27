@@ -2,21 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
 export function LogoutButton() {
   const router = useRouter();
   const { clearUserData, userData } = useUserStore();
 
   const handleLogout = () => {
-    const confirmed = window.confirm('¿Está seguro que desea cerrar sesión?');
+    const confirmed = window.confirm("¿Está seguro que desea cerrar sesión?");
 
     if (confirmed) {
       clearUserData();
-      console.log('Sesión cerrada con éxito');
-      router.push("/login"); 
-      
-      toast.success('Sesión cerrada con éxito', {
+      console.log("Sesión cerrada con éxito");
+      router.push("/login");
+
+      toast.success("Sesión cerrada con éxito", {
         style: {
           color: "#0c5460",
           background: "#d1ecf1",
@@ -27,14 +27,14 @@ export function LogoutButton() {
         duration: 3000,
       });
     } else {
-      console.log('Cancelado');
+      console.log("Cancelado");
     }
   };
 
   if (!userData) return null;
 
   return (
-    <button onClick={handleLogout} className="customButtonDos">
+    <button onClick={handleLogout} className="customButton w-full">
       Cerrar Sesión
     </button>
   );

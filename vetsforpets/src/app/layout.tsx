@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/Footer";
 // -
 
 import { Toaster } from "sonner";
+import StripeProvider from "./StripeProvider";
 
 const kiwiMaru = Kiwi_Maru({
   variable: "--font-kiwi-maru",
@@ -34,17 +35,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
     <html lang="es">
       <body
         className={`flex flex-col min-h-scree ${kiwiMaru.variable} ${tenorSans.variable} antialiased`}
       >
         <Toaster position="top-center" />
+
+       <StripeProvider>
         <Header />
         <div className="flex flex-col flex-grow">{children}</div>
         <Footer />
+       </StripeProvider>
+       
       </body>
     </html>
-    // </GoogleOAuthProvider>
   );
 }
