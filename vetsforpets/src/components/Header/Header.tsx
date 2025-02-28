@@ -43,17 +43,21 @@ export function Header() {
         {/* Botón "Veterinarias" visible solo en pantallas grandes */}
         <button
           onClick={() => handleNavigation("/vets")}
+
           className="hidden sm:block customButton"
-        >
+
+    >
           Veterinarias
         </button>
 
+
       
+
         {isOpen && (
           <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
             <button
               onClick={() => handleNavigation("/vets")}
-              className="customButtonDos"
+              className="customButton"
             >
               Veterinarias
             </button>
@@ -62,7 +66,7 @@ export function Header() {
       </div>
       <div>
         <button
-          onClick={() => handleNavigation("/register")}
+          onClick={() => handleNavigation("/emergencies")}
           className="flex flex-col items-center"
         >
           <Image
@@ -87,13 +91,19 @@ export function Header() {
       <button onClick={() => setIsOpen(!isOpen)} className="z-10 p-2">
         <div className="flex flex-col items-center justify-between w-6 h-6 space-y-1 transition-all duration-300 transform hover:scale-105">
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""}`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "rotate-45 translate-y-2" : ""
+            }`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "opacity-0" : ""}`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "opacity-0" : ""
+            }`}
           ></div>
           <div
-            className={`bg-black w-full h-1 transform transition-transform duration-300 ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            className={`bg-black w-full h-1 transform transition-transform duration-300 ${
+              isOpen ? "-rotate-45 -translate-y-2" : ""
+            }`}
           ></div>
         </div>
       </button>
@@ -105,18 +115,19 @@ export function Header() {
               {userData.role === "PETSHOP" ? (
                 <button
                   onClick={() => handleNavigation("/dashboard-vet")}
-                  className="customButtonDos"
+                  className="customButton w-full"
                 >
                   Perfil Veterinaria
                 </button>
               ) : (
                 <button
                   onClick={() => handleNavigation("/dashboard")}
-                  className="customButtonDos"
+                  className="customButton w-full"
                 >
                   Perfil Usuario
                 </button>
               )}
+
 
              
               <button
@@ -134,22 +145,24 @@ export function Header() {
                 Quienes Somos
               </button>
 
+
               <LogoutButton />
             </>
           ) : (
             <>
               <button
                 onClick={() => handleNavigation("/login")}
-                className="customButtonDos"
+                className="customButton w-full"
               >
                 Iniciar Sesión
               </button>
               <button
                 onClick={() => handleNavigation("/register")}
-                className="customButtonDos"
+                className="customButton w-full"
               >
                 Crear Cuenta
               </button>
+
 
               <button
                 onClick={() => handleNavigation("/vets")}
@@ -164,6 +177,8 @@ export function Header() {
               >
                 Quienes Somos
               </button>
+
+           
             </>
           )}
         </div>

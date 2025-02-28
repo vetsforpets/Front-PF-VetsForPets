@@ -42,7 +42,8 @@ export async function postOrder(
     });
 
     if (!response.ok) {
-      throw new Error("Error al enviar el post de la orden");
+      const error = await response.json()
+      throw new Error(`${error.message}`);
     }
 
     const data = await response.json();
@@ -54,3 +55,6 @@ export async function postOrder(
     throw new Error("Ocurrió un error desconocido");
   }
 }
+
+
+

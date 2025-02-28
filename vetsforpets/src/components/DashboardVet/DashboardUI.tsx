@@ -5,7 +5,7 @@ import ScheduledAppointments from "../Calendar/ScheduledAppointments";
 import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -30,8 +30,13 @@ const VetDetail = ({
   handleChange,
 }: VetDetailProps) => {
   const sanitizedValue =
-    typeof editableVet?.[field] === 'boolean' ? (editableVet?.[field] ? 'true' : 'false') :
-      editableVet?.[field] ?? '';
+    typeof editableVet?.[field] === "boolean"
+      ? editableVet?.[field]
+        ? "true"
+        : "false"
+      : Array.isArray(editableVet?.[field])
+      ? JSON.stringify(editableVet?.[field])
+      : editableVet?.[field] ?? "";
 
   return (
     <div>
@@ -44,7 +49,9 @@ const VetDetail = ({
           onChange={(e) => handleChange(field, e.target.value)}
         />
       ) : (
-        <p className="py-3 pl-4 text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96">{value}</p>
+        <p className="py-3 pl-4 text-customDarkGreen bg-customLightBrown rounded-2xl min-w-96">
+          {value}
+        </p>
       )}
     </div>
   );
@@ -54,7 +61,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableVet, setEditableVet] = useState<IVetCredentials | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [veterinariaState, setVeterinaria] = useState<IVetCredentials>(veterinaria);
+  const [veterinariaState, setVeterinaria] =
+    useState<IVetCredentials>(veterinaria);
 
   useEffect(() => {
     setEditableVet(veterinaria);
@@ -102,7 +110,10 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     }
   };
 
-  const handleChange = (field: keyof IVetCredentials, value: string | number) => {
+  const handleChange = (
+    field: keyof IVetCredentials,
+    value: string | number
+  ) => {
     if (editableVet) {
       setEditableVet((prev) => ({
         ...prev!,
@@ -221,7 +232,5 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     </div>
   );
 };
-
-
 
 export default VetProfile;
