@@ -11,13 +11,14 @@ import { toast } from "sonner";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importar los íconos
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { useUserStore } from "@/store";
+import LocationSearch from "../Maps/Search";
 
 function OwnPetFormRegister() {
   const router = useRouter();
 
   const { userData } = useUserStore();
 
-  const { handleSubmit, control, watch } = useForm<IUserFormData>({
+  const { handleSubmit, control, watch, setValue } = useForm<IUserFormData>({
     defaultValues: {
       name: "",
       lastName: "",
@@ -27,6 +28,12 @@ function OwnPetFormRegister() {
       confirmPassword: "",
       phoneNumber: "",
       imgProfile: "",
+      location: [
+        {
+          latitude: -37.9900,
+          longitude: -57.5500,
+        }
+      ],
       isVet: false,
     },
     mode: "onChange",
@@ -84,6 +91,12 @@ function OwnPetFormRegister() {
       redirect("/");
     }
   }, [userData?.token]);
+
+
+  const handleLocationSelect = (lat: number, lon: number) => {
+    setValue("location", [{ latitude: lat, longitude: lon }]);
+  };
+  
 
   return (
     <form
@@ -201,6 +214,30 @@ function OwnPetFormRegister() {
             {error && (
               <p className="mt-1 text-xs text-red-500">{error.message}</p>
             )}
+          </div>
+        )}
+      />
+
+<Controller
+        name="location"
+        control={control}
+        rules={{
+          required: { value: true, message: "La ubicación es obligatoria" },
+        }}
+        render={({ }) => (
+          <div>
+            
+            <LocationSearch
+              onSelect={(lat, lon, ) => {
+                handleLocationSelect(lat, lon);
+              }}
+              onReset={() => setValue("location", [{ latitude: 0, longitude: 0 }])}
+              onSubmit={(e, resetSearch) => {
+                e.preventDefault();
+                resetSearch();
+              }}
+            />
+            
           </div>
         )}
       />

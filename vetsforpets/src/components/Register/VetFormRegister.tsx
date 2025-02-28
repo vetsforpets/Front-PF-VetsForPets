@@ -10,11 +10,12 @@ import { toast } from "sonner";
 
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
+import LocationSearch from "../Maps/Search";
 
 function VetFormRegister() {
   const router = useRouter();
 
-  const { handleSubmit, control, watch } = useForm<IVetFormData>({
+  const { handleSubmit, control, watch, setValue } = useForm<IVetFormData>({
     defaultValues: {
       name: "",
       veterinarian: "",
@@ -24,7 +25,12 @@ function VetFormRegister() {
       phoneNumber: "",
       imgProfile: "",
       is24Hours: false,
-      location: "anything",
+      location: [
+        {
+          latitude: -37.9900,
+          longitude: -57.5500,
+        }
+      ],
       licenseNumber: "",
       foundation: "",
       businessHours: { open: "", close: "" },
@@ -37,8 +43,10 @@ function VetFormRegister() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
+    
+    console.log("📤 Datos enviados:", data);
+    
     try {
-
     await RegisterVet(data);
 
     toast.success("Veterinaria registrado con éxito", {
@@ -51,6 +59,7 @@ function VetFormRegister() {
         border: "1px solid #c3e6cb",
       },
     });
+    
     router.push("/login");
     } catch (error) {
       toast.error(`${error}`, {
@@ -64,6 +73,10 @@ function VetFormRegister() {
         },
       });
     }
+  };
+
+  const handleLocationSelect = (lat: number, lon: number) => {
+    setValue("location", [{ latitude: lat, longitude: lon }]);
   };
 
   return (
@@ -238,6 +251,32 @@ function VetFormRegister() {
           </div>
         )}
       />
+
+
+<Controller
+        name="location"
+        control={control}
+        rules={{
+          required: { value: true, message: "La ubicación es obligatoria" },
+        }}
+        render={({ }) => (
+          <div>
+            
+            <LocationSearch
+              onSelect={(lat, lon, ) => {
+                handleLocationSelect(lat, lon);
+              }}
+              onReset={() => setValue("location", [{ latitude: 0, longitude: 0 }])}
+              onSubmit={(e, resetSearch) => {
+                e.preventDefault();
+                resetSearch();
+              }}
+            />
+            
+          </div>
+        )}
+      />
+      
 
       <Controller
         name="phoneNumber"

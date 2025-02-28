@@ -9,6 +9,11 @@ export interface IUserRegisterData {
   repeatPassword: string;
 }
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
 export interface IUserData {
   id: string;
   name: string;
@@ -20,6 +25,7 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isPremium: boolean;
+  location: ILocation[]
   appointments: IAppointment[];
   pets: Pet[];
   role: string;

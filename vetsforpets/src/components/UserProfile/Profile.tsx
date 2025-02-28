@@ -7,6 +7,7 @@ import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { toast } from "sonner";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
 import Image from "next/image";
+import LocationSearch from "../Maps/Search";
 
 interface IAppointment {
   id: string;
@@ -15,6 +16,11 @@ interface IAppointment {
   description: string;
   status: string;
   user: string;
+}
+
+interface ILocation {
+  latitude: number;
+  longitude: number;
 }
 
 interface IUserData {
@@ -28,6 +34,7 @@ interface IUserData {
   createdAt: string;
   imgProfile: string;
   isPremium: boolean;
+  location: ILocation[];
   appointments: IAppointment[];
   role: string;
 }
@@ -112,12 +119,17 @@ const Profile = () => {
     }
   };
 
-  const handleChange = (field: keyof IUserData, value: string | number) => {
+  const handleChange = (field: keyof IUserData,  value: string | number | { latitude: number; longitude: number })  => {
     if (!editableUser) return;
+    
     setEditableUser((prev) => ({
       ...prev!,
       [field]: field === "age" ? Number(value) : value,
     }));
+  };
+
+  const handleLocationSelect = (lat: number, lon: number) => {
+    handleChange("location", { latitude: lat, longitude: lon });
   };
 
   const handleImageUpload = (url: string) => {
@@ -133,11 +145,9 @@ const Profile = () => {
     handleCloseModal();
   };
 
+
   return (
     <div className="grid w-full max-w-4xl grid-cols-1 gap-8 mt-4 xl:grid-cols-2 xl:mt-10 place-items-center">
-
-
-
 
       <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
         {isEditing ? (
@@ -223,6 +233,23 @@ const Profile = () => {
               />
             </div>
 
+
+
+
+
+            <div className="mt-4">
+  <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
+  <LocationSearch
+    onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+    onReset={() => handleChange("location", { latitude: 0, longitude: 0 })}
+    onSubmit={(e, resetSearch) => {
+      e.preventDefault();
+      resetSearch();
+    }}
+  />
+</div>
+            
+
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Teléfono:
@@ -251,6 +278,16 @@ const Profile = () => {
           <>
             <UserDetail label="Edad:" value={user.age.toString()} />
             <UserDetail label="Correo Electrónico:" value={user.email} />
+            
+            <UserDetail
+  label="Ubicación:"
+  value={
+    user.location && user.location.length > 0
+      ? user.location.map((loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`).join(" | ")
+      : "No disponible"
+  }
+/>
+    
             <UserDetail label="Teléfono:" value={user.phoneNumber} />
             <UserDetail
               label="Fecha de Registro:"
