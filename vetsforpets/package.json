@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.9.4",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.7.0",
     "aos": "^2.3.4",
     "jwt-decode": "^4.0.0",
     "next": "15.1.6",
