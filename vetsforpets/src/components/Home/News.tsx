@@ -143,7 +143,7 @@ const News = () => {
                         <p className="mb-4 text-gray-700">{modalContent.detalles}</p>
                         <button
                             onClick={closeModal}
-                            className="px-4 py-2 text-white bg-red-600 rounded-md hover:bg-red-700"
+                            className="px-4 py-2 text-white customButton"
                         >
                             Cerrar
                         </button>
