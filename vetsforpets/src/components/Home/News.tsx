@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import perroacostado from "@/../../public/images/perroacostado.jpg";
 
 interface Noticia {
     id: number;
@@ -28,7 +27,7 @@ const MostrarNoticia = () => {
             titulo: "Control de Peso en Mascotas",
             descripcion:
                 "El sobrepeso en mascotas puede causar diversos problemas de salud...",
-            imagenUrl: perroacostado,
+            imagenUrl: "/images/perroacostado.jpg",
             detalles:
                 "El sobrepeso en perros y gatos puede generar una serie de problemas de salud que afectan su bienestar y calidad de vida. Entre las principales complicaciones se encuentran enfermedades cardiovasculares, ya que el exceso de peso obliga al corazón a trabajar más, aumentando el riesgo de insuficiencia cardíaca. Además, la diabetes es una de las afecciones más comunes en mascotas con sobrepeso, especialmente en los gatos, ya que el exceso de grasa puede generar resistencia a la insulina. Otros problemas incluyen trastornos articulares y óseos, como artritis y displasia de cadera, que pueden dificultar el movimiento y causar dolor crónico.  Por último, las visitas periódicas al veterinario permiten llevar un control del peso de la mascota y detectar a tiempo cualquier problema de salud asociado. Un plan de alimentación supervisado por un profesional y un estilo de vida activo contribuirán a que la mascota tenga una vida más larga, saludable y feliz.",
         },
