@@ -2,10 +2,10 @@ import { IMembershipResponse, IPostOrder } from "@/interfaces/registerTypes";
 import { fetchUserData } from "./servicesUser";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
-export async function fetchOrderData(token: string, id:string): Promise<IMembershipResponse[] | void> {
+export async function fetchOrderData(id:string, token: string ): Promise<IMembershipResponse[] | void> {
     try {
         const userPremium = await fetchUserData(id, token)
-        if(userPremium.isPremium){
+        if(!userPremium.isPremium){
         const response = await fetch(`${apiURL}/membership`, {
           method: "GET",
           headers: {
