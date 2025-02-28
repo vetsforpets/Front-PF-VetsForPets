@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { RegisterUser } from "@/services/servicesUser";
 import { toast } from "sonner";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importar los íconos
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { useUserStore } from "@/store";
 import LocationSearch from "../Maps/Search";
@@ -103,7 +103,7 @@ function OwnPetFormRegister() {
       className="z-10 px-12 pb-10 mx-auto my-20 border-none rounded-lg sm:w-1/2 sm:px-5"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h1 className="text-3xl text-customBrown">Registro dueño de mascota</h1>
+      <h1 className="text-3xl text-customBrown">Registro Tutor de Mascota</h1>
       <p className="mt-4 mb-3">
         ¿Ya tienes cuenta?{" "}
         <Link
@@ -307,7 +307,7 @@ function OwnPetFormRegister() {
             <input
               {...field}
               type={showPassword ? "text" : "password"}
-              className="w-full pr-10 customInput" // Agregamos padding derecho para el ícono
+              className="w-full pr-10 customInput" 
               placeholder="Contraseña"
             />
             <span
@@ -323,7 +323,6 @@ function OwnPetFormRegister() {
         )}
       />
 
-      {/* Confirm Password */}
       <Controller
         name="confirmPassword"
         control={control}
