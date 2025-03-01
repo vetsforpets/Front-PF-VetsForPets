@@ -2,10 +2,9 @@ import { IMembershipResponse, IPostOrder } from "@/interfaces/registerTypes";
 import { fetchUserData } from "./servicesUser";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
-export async function fetchOrderData(id:string, token: string ): Promise<IMembershipResponse[] | void> {
+export async function fetchOrderData(token: string ): Promise<IMembershipResponse[] | void> {
     try {
-        const userPremium = await fetchUserData(id, token)
-        if(!userPremium.isPremium){
+       
         const response = await fetch(`${apiURL}/membership`, {
           method: "GET",
           headers: {
@@ -20,10 +19,7 @@ export async function fetchOrderData(id:string, token: string ): Promise<IMember
           
           const data: IMembershipResponse[] = await response.json();
           console.log("Datos de membresias:", data); 
-          return data;
-        } else {
-          throw new Error("El usuario ya adquirio una membresia");
-        }
+          return data; 
         } catch (error) {
           if (error instanceof Error) {
             console.error("Error al traer membresisa:", error);
@@ -35,9 +31,12 @@ export async function fetchOrderData(id:string, token: string ): Promise<IMember
 
 export async function postOrder(
     postOrder: IPostOrder,
-  token?: string
+  token: string,  
+  id: string, 
 ) {
   try {
+    const userPremium = await fetchUserData(id, token)
+    if(!userPremium.isPremium){
     const response = await fetch(`${apiURL}/order`, {
       method: "POST",
       headers: {
@@ -54,6 +53,10 @@ export async function postOrder(
 
     const data = await response.json();
     return data;
+  }
+    else {
+      throw new Error("El usuario ya adquirio una membresia");
+    }
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
