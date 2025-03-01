@@ -6,6 +6,7 @@ import { IEmergency } from "@/services/interfaces";
 import { getVetById } from "@/services/servicesVet";
 import { fetchUserData } from "@/services/servicesUser";
 import { Pet } from "../pet/PetPreview";
+import PetDetails from "../pet/petDetails";
 
 interface EmergencyData {
   userName: string;
@@ -63,17 +64,6 @@ export function VetEmergencies() {
         const vetData = await getVetById(userData.token, userData.id);
         console.log("aca vetData!", vetData);
 
-        if (vetData) {
-          vetData.emergencies = [
-            {
-              userId:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzYTEwNmNjYy02YTdjLTRiNTEtYjVkNC0xZTc2MmIxMjkzYTYiLCJlbWFpbCI6InNhbmpvcmdlc2ViYXN0aWFuQGdtYWlsLmNvbSIsInVzZXJUeXBlIjoidXNlciIsInJvbGUiOiJVU0VSIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTc0MDYxNjg1MCwiZXhwIjoxNzQwNjIwNDUwfQ.trK6x7TFBHoGHwg0Y9HijbHDeL1SnNgLAq0ZWL-bHcI",
-              petId: "Molly",
-            },
-          ];
-        }
-
-        // 🔹 Validar que `vetData` existe antes de usar `emergencies`
         if (!vetData) {
           console.error("⚠️ La veterinaria no fue encontrada.");
           return;
@@ -173,7 +163,7 @@ export function VetEmergencies() {
       {/* Modal */}
       {selectedPet && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          {/* <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-bold mb-2">{selectedPet.name}</h2>
             <img
               src={selectedPet.profileImg}
@@ -208,7 +198,14 @@ export function VetEmergencies() {
             >
               Cerrar
             </button>
-          </div>
+          </div> */}
+          <PetDetails pet={selectedPet} token={userData?.token} />
+          <button
+            onClick={closeModal}
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 w-full"
+          >
+            Cerrar
+          </button>
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import PetDetails from "@/components/pet/petDetails";
 import { VetEmergencies } from "@/components/VetEmergencies/VetEmergencies";
 // import { ChatComponent } from "@/components/Chat/ChatComponent";
 // import { useUserStore, useVetStore } from "@/store";
@@ -12,6 +13,8 @@ export default function Emergencies() {
 
   return (
     <>
+      <VetEmergencies />
+
       {
         userData?.role === "PETSHOP" ? <VetEmergencies /> : null
         // <Map />
