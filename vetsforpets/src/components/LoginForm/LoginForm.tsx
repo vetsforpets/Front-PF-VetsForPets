@@ -2,12 +2,12 @@
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { loginUser, loginUserWithGoogle } from "@/services/servicesUser";
+import { loginUser } from "@/services/servicesUser";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface LoginFormInputs {
@@ -25,82 +25,6 @@ export default function LoginForm() {
     reset,
   } = useForm<LoginFormInputs>();
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const code = params.get("code");
-
-  //   if (code) {
-  //     (async () => {
-  //       try {
-  //         const data = await loginUserWithGoogle(code);
-
-  //         if (data && data.token) {
-  //           setUserData({
-  //             token: data.token,
-  //             id: data.user.id,
-  //             role: data.user.role,
-  //             email: data.user.email,
-  //           });
-
-  //           toast.success("¡Inicio de sesión con Google exitoso!", {
-  //             duration: 3000,
-  //           });
-
-  //           setTimeout(() => {
-  //             router.push("/");
-  //           }, 500);
-  //         } else {
-  //           toast.error("Error al iniciar sesión con Google");
-  //         }
-  //       } catch (error) {
-  //         console.error("Error en login con Google:", error);
-  //         toast.error("Error al iniciar sesión con Google");
-  //       }
-  //     })();
-  //   }
-  // }, [router, setUserData]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-
-    if (code) {
-      (async () => {
-        try {
-          const data = await loginUserWithGoogle(code);
-          console.log(data);
-          if (data && data.token && data.user) {
-            setUserData({
-              token: data.token,
-              id: data.user.id,
-              role: data.user.role,
-              email: data.user.email,
-            });
-
-            toast.success("¡Inicio de sesión con Google exitoso!", {
-              duration: 3000,
-            });
-
-            setTimeout(() => {
-              router.push("/");
-            }, 500);
-          } else {
-            toast.error("Error al iniciar sesión con Google");
-          }
-        } catch (error) {
-          console.error("Error en login con Google:", error);
-          toast.error("Error al iniciar sesión con Google");
-        }
-      })();
-    }
-  }, [router, setUserData]);
-
-  useEffect(() => {
-    if (userData?.id && userData?.token) {
-      console.log("Usuario autenticado:", userData);
-    }
-  }, [userData]);
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
