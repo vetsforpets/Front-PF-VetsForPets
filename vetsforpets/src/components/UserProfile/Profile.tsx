@@ -92,44 +92,78 @@ const Profile = () => {
     }
   };
 
+  // const handleSave = async () => {
+  //   if (editableUser) {
+  //     console.log("datos actualizados enviados.... ", editableUser)
+  //     try {
+  //       const updatedUser = await updateUser(
+  //         userData.id,
+  //         editableUser,
+  //         userData.token
+  //       );
+  //       console.log("Usuario actualizado:", updatedUser);
+  //       setUsers([updatedUser]);
+  //       toast.success("Perfil editado con éxito", {
+  //         duration: 3000,
+  //         style: {
+  //           color: "#155724",
+  //           background: "#d4edda",
+  //           borderRadius: "8px",
+  //           padding: "16px",
+  //           border: "1px solid #c3e6cb",
+  //         },
+  //       });
+  //       setIsEditing(false);
+  //     } catch (error) {
+  //       console.error("Error al guardar los cambios:", error);
+  //     }
+  //   }
+  // };
+
+
+
   const handleSave = async () => {
     if (editableUser) {
+      // Verificamos si location está definido y en el formato correcto
+      const updatedUser = {
+        ...editableUser,
+        location: Array.isArray(editableUser.location) && editableUser.location.length > 0
+          ? editableUser.location.map((loc) => ({
+              latitude: Number(loc.latitude),
+              longitude: Number(loc.longitude),
+            }))
+          : [{ latitude: 0, longitude: 0 }], // 🔹 Si no tiene ubicación, enviamos un valor por defecto
+      };
+  
+      console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
+  
       try {
-        const updatedUser = await updateUser(
-          userData.id,
-          editableUser,
-          userData.token
-        );
-        console.log("Usuario actualizado:", updatedUser);
-        setUsers([updatedUser]);
-        toast.success("Perfil editado con éxito", {
-          duration: 3000,
-          style: {
-            color: "#155724",
-            background: "#d4edda",
-            borderRadius: "8px",
-            padding: "16px",
-            border: "1px solid #c3e6cb",
-          },
-        });
+        const response = await updateUser(userData.id, updatedUser, userData.token);
+        console.log("Usuario actualizado:", response);
+        setUsers([response]);
+        toast.success("Perfil editado con éxito", { duration: 3000 });
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
       }
     }
   };
+  
 
   const handleChange = (field: keyof IUserData,  value: string | number | { latitude: number; longitude: number })  => {
     if (!editableUser) return;
     
     setEditableUser((prev) => ({
       ...prev!,
-      [field]: field === "age" ? Number(value) : value,
+      [field]: field === "age" ? String(value) : value,
     }));
   };
 
   const handleLocationSelect = (lat: number, lon: number) => {
-    handleChange("location", { latitude: lat, longitude: lon });
+    setEditableUser((prev) => ({
+      ...prev!,
+      location: [{ latitude: Number(lat), longitude: Number(lon) }], 
+    }));
   };
 
   const handleImageUpload = (url: string) => {

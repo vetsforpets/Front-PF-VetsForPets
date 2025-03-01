@@ -44,7 +44,7 @@ export interface IVetCredentials {
   phoneNumber: string;
   is24Hours: boolean;
   imgProfile: string;
-  location: string;
+  location: ILocation[];
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;

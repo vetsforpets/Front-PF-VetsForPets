@@ -6,6 +6,7 @@ import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
 import { toast } from "sonner";
+import LocationSearch from "../Maps/Search";
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -69,6 +70,9 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     setVeterinaria(veterinaria);
   }, [veterinaria]);
 
+  console.log("Ubicación en veterinariaState:", veterinariaState.location);
+  console.log("Ubicación en veterinariaState:", veterinariaState);
+
   const handleEdit = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
@@ -84,6 +88,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           : veterinaria.licenseNumber;
 
       const updatedVet = { ...editableVet, licenseNumber: validLicenseNumber };
+
+      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
 
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
@@ -135,6 +141,24 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
+  const handleLocationSelect = (lat: number, lon: number) => {
+    if (editableVet) {
+      setEditableVet((prev) => ({
+        ...prev!,
+        location: [{ latitude: lat, longitude: lon }],
+      }));
+    }
+  };
+
+  useEffect(() => {
+    console.log("Datos recibidos en veterinaria:", veterinaria);
+    setEditableVet(veterinaria);
+    setVeterinaria(veterinaria);
+  }, [veterinaria]);
+  
+
+
+  
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="mt-6 mb-6 text-3xl font-bold text-center">
@@ -198,6 +222,44 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             editableVet={editableVet}
             handleChange={handleChange}
           />
+
+
+
+           {/* 🔹 Agregamos LocationSearch SOLO cuando se está editando */}
+        {isEditing ? (
+          <div>
+            <label className="block py-1 pl-4 font-semibold text-customBrown">
+              Ubicación:
+            </label>
+            <LocationSearch
+              onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+              onReset={() => setEditableVet((prev) => ({
+                ...prev!,
+                location: [{ latitude: 0, longitude: 0 }],
+              }))}
+              onSubmit={(e, resetSearch) => {
+                e.preventDefault();
+                resetSearch();
+              }}
+            />
+          </div>
+        ) : (
+          <VetDetail
+            label="Ubicación:"
+            value={
+              veterinariaState.location && veterinariaState.location.length > 0
+                ? veterinariaState.location.map((loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`).join(" | ")
+                : "No disponible"
+            }
+            field="location"
+            isEditing={isEditing}
+            editableVet={editableVet}
+            handleChange={handleChange}
+          />
+        )}
+
+
+          
           <VetDetail
             label="Teléfono:"
             value={veterinariaState.phoneNumber}
