@@ -21,6 +21,8 @@ export async function fetchOrderData(id:string, token: string ): Promise<IMember
           const data: IMembershipResponse[] = await response.json();
           console.log("Datos de membresias:", data); 
           return data;
+        } else {
+          throw new Error("El usuario ya adquirio una membresia");
         }
         } catch (error) {
           if (error instanceof Error) {
