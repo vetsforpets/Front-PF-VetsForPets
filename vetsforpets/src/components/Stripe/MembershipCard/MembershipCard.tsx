@@ -20,7 +20,7 @@ try {
     userId: userData?.id,
     paymentMethod: "Credit Card",
     membership:[{id: membershipId}]
-  }, userData.token)
+  }, userData.token, userData.id)
   toast.success("orden realizada con exito", {
     duration: 3000,
     style: {
@@ -54,7 +54,7 @@ router.push(`${order.checkoutSessionUrl}`)
 useEffect(()=>{
   const fetchMembership = async () =>{
       if(userData?.token){
-        const membershipData:IMembershipResponse[] | void = await fetchOrderData(userData?.token)
+        const membershipData:IMembershipResponse[] | void = await fetchOrderData( userData?.token)
         if(membershipData){
           console.log('====================================');
           console.log(membershipData);

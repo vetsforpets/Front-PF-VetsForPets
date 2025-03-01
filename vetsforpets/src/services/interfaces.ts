@@ -55,7 +55,7 @@ export interface IVetCredentials {
 
 export interface IEmergency {
   userId: string;
-  petName: string;
+  petId: string;
 }
 
 export interface IDayOpening {
