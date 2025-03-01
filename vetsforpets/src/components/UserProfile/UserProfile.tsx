@@ -26,9 +26,13 @@ export default function ProfileView() {
   const [showAddPets, setShowAddPets] = useState(false);
 
   useEffect(() => {
-    if (!userData?.id) {
-      router.push("/");
-    }
+    const timeout = setTimeout(() => {
+      if (!userData?.id) {
+        router.push("/");
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [userData, router]);
 
   useEffect(() => {
@@ -161,29 +165,46 @@ export default function ProfileView() {
             )}
             {showPets && (
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-14">
-                <div className="space-y-4">
-                  {(user?.pets ?? []).map((pet: Pet, index: number) => (
-                    <div
-                      key={index}
-                      className="bg-[#deb887] rounded-2xl pl-4 shadow-lg"
-                    >
-                      <PetPreview
-                        pet={pet}
-                        onSelectPet={handleSelectPet}
-                        setReloadPets={setReloadPets}
-                      />
+                {user?.pets && user.pets.length > 0 ? (
+                  <>
+                    <div className="space-y-4">
+                      {user.pets.map((pet: Pet, index: number) => (
+                        <div
+                          key={index}
+                          className="bg-[#deb887] rounded-2xl pl-4 shadow-lg"
+                        >
+                          <PetPreview
+                            pet={pet}
+                            onSelectPet={handleSelectPet}
+                            setReloadPets={setReloadPets}
+                          />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                {selectedPet && (
-                  <PetDetails
-                    pet={selectedPet}
-                    token={userData.token}
-                    onUpdatePet={handleUpdatePet}
-                  />
+                    {selectedPet && (
+                      <PetDetails
+                        pet={selectedPet}
+                        token={userData.token}
+                        onUpdatePet={handleUpdatePet}
+                      />
+                    )}
+                  </>
+                ) : (
+                  <div className="flex flex-col mx-auto items-center justify-center w-full text-center">
+                    <p className="text-lg text-gray-600 font-semibold mb-4">
+                      No tienes mascotas registradas aún.
+                    </p>
+                    <button
+                      onClick={handleAddPetsClick}
+                      className="px-6 py-3 text-white bg-customBrown rounded-2xl hover:bg-opacity-90"
+                    >
+                      Agregar Mascota
+                    </button>
+                  </div>
                 )}
               </div>
             )}
+
             {showAddPets && (
               <PetCreateForm
                 setAddingPet={setAddingPet}
