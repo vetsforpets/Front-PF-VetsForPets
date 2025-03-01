@@ -54,7 +54,7 @@ router.push(`${order.checkoutSessionUrl}`)
 useEffect(()=>{
   const fetchMembership = async () =>{
       if(userData?.token){
-        const membershipData:IMembershipResponse[] | void = await fetchOrderData(userData?.token)
+        const membershipData:IMembershipResponse[] | void = await fetchOrderData(userData?.id, userData?.token)
         if(membershipData){
           console.log('====================================');
           console.log(membershipData);

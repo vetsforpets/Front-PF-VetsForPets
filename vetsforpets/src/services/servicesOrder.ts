@@ -1,30 +1,34 @@
 import { IMembershipResponse, IPostOrder } from "@/interfaces/registerTypes";
+import { fetchUserData } from "./servicesUser";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
-export async function fetchOrderData(token: string): Promise<IMembershipResponse[] | void> {
+export async function fetchOrderData(token: string, id:string): Promise<IMembershipResponse[] | void> {
     try {
+        const userPremium = await fetchUserData(id, token)
+        if(userPremium.isPremium){
         const response = await fetch(`${apiURL}/membership`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`
-            },
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
         });
-
+        
         if (!response.ok) {
             throw new Error("Error al obtener los datos de la membresia");
+          }
+          
+          const data: IMembershipResponse[] = await response.json();
+          console.log("Datos de membresias:", data); 
+          return data;
         }
-
-        const data: IMembershipResponse[] = await response.json();
-        console.log("Datos de membresias:", data); 
-        return data;
-    } catch (error) {
-        if (error instanceof Error) {
-          console.error("Error al traer membresisa:", error);
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error("Error al traer membresisa:", error);
             throw new Error(error.message);
           }
           throw new Error("Ocurrió un error desconocido al obtener los datos");
-    }
+        }
 }
 
 export async function postOrder(
@@ -42,7 +46,8 @@ export async function postOrder(
     });
 
     if (!response.ok) {
-      throw new Error("Error al enviar el post de la orden");
+      const error = await response.json()
+      throw new Error(`${error.message}`);
     }
 
     const data = await response.json();
@@ -54,3 +59,6 @@ export async function postOrder(
     throw new Error("Ocurrió un error desconocido");
   }
 }
+
+
+

@@ -26,6 +26,82 @@ export default function LoginForm() {
   } = useForm<LoginFormInputs>();
   const router = useRouter();
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const code = params.get("code");
+
+  //   if (code) {
+  //     (async () => {
+  //       try {
+  //         const data = await loginUserWithGoogle(code);
+
+  //         if (data && data.token) {
+  //           setUserData({
+  //             token: data.token,
+  //             id: data.user.id,
+  //             role: data.user.role,
+  //             email: data.user.email,
+  //           });
+
+  //           toast.success("¡Inicio de sesión con Google exitoso!", {
+  //             duration: 3000,
+  //           });
+
+  //           setTimeout(() => {
+  //             router.push("/");
+  //           }, 500);
+  //         } else {
+  //           toast.error("Error al iniciar sesión con Google");
+  //         }
+  //       } catch (error) {
+  //         console.error("Error en login con Google:", error);
+  //         toast.error("Error al iniciar sesión con Google");
+  //       }
+  //     })();
+  //   }
+  // }, [router, setUserData]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    if (code) {
+      (async () => {
+        try {
+          const data = await loginUserWithGoogle(code);
+
+          if (data && data.token && data.user) {
+            setUserData({
+              token: data.token,
+              id: data.user.id,
+              role: data.user.role,
+              email: data.user.email,
+            });
+
+            toast.success("¡Inicio de sesión con Google exitoso!", {
+              duration: 3000,
+            });
+
+            setTimeout(() => {
+              router.push("/");
+            }, 500);
+          } else {
+            toast.error("Error al iniciar sesión con Google");
+          }
+        } catch (error) {
+          console.error("Error en login con Google:", error);
+          toast.error("Error al iniciar sesión con Google");
+        }
+      })();
+    }
+  }, [router, setUserData]);
+
+  useEffect(() => {
+    if (userData?.id && userData?.token) {
+      console.log("Usuario autenticado:", userData);
+    }
+  }, [userData]);
+
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
       const data = await loginUser(userCredentials);
@@ -73,32 +149,6 @@ export default function LoginForm() {
     window.location.href =
       "https://vetsforpets-api.onrender.com/auth/google/signIn";
   };
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-
-    if (code) {
-      loginUserWithGoogle(code).then((data) => {
-        if (data && data.token) {
-          setUserData({
-            token: data.token,
-            id: data.user.id,
-            role: data.user.role,
-            email: data.user.email,
-          });
-
-          toast.success("¡Inicio de sesión con Google exitoso!", {
-            duration: 3000,
-          });
-
-          router.push("/");
-        } else {
-          toast.error("Error al iniciar sesión con Google");
-        }
-      });
-    }
-  }, [router, setUserData]);
 
   return (
     <div className="w-2/3 mx-auto mb-20 sm:w-1/2 md:w-1/3 lg:w-1/4 mt-28">
