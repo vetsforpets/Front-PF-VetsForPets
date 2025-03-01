@@ -25,23 +25,23 @@ interface PetFormInputs {
 interface PetDetailsProps {
   pet: Pet;
   token?: string;
+  onUpdatePet: (updatedPet: Pet) => void;
 }
 
-const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
+const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [petData, setPetData] =useState<Pet>(pet)
+  const [petData, setPetData] = useState<Pet>(pet);
 
-  const { handleSubmit, control, reset, setValue} = useForm<PetFormInputs>({
+  const { handleSubmit, control, reset, setValue } = useForm<PetFormInputs>({
     defaultValues: pet,
     mode: "onChange",
   });
 
   useEffect(() => {
     setPetData(pet);
-  }, [pet]
-)
+  }, [pet]);
 
   useEffect(() => {
     if (pet) {
@@ -49,11 +49,9 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
     }
   }, [pet, reset]);
 
-
   const handleImageUpload = (imageUrl: string) => {
     setValue("profileImg", imageUrl);
   };
-
 
   const onSubmit: SubmitHandler<PetFormInputs> = async (updatedPet) => {
     setLoading(true);
@@ -64,6 +62,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
         const updatedPetWithId = { ...updatedPet, id: pet.id };
         setPetData(updatedPetWithId);
         reset(updatedPetWithId);
+        onUpdatePet(updatedPetWithId);
         toast.success("Mascota actualizada", {
           duration: 3000,
           style: {
@@ -99,22 +98,19 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
       <div className="bg-[#deb887] rounded-2xl p-5 px-10 shadow-lg mx-5">
         <div className="space-y-4">
-
-
-{isEditing ? (
-            
-          <div className="flex flex-col items-center">
-            <CloudinaryUploader onImageUpload={handleImageUpload} />
-          </div>
-        ) : (
-          <Image
-            src={petData.profileImg || "/Cat.svg"}
-            alt="Perfil"
-            width={1920}
-            height={500}
-            className="object-cover w-40 h-40 mx-auto rounded-full shadow-lg"
-          />
-        )}
+          {isEditing ? (
+            <div className="flex flex-col items-center">
+              <CloudinaryUploader onImageUpload={handleImageUpload} />
+            </div>
+          ) : (
+            <Image
+              src={petData.profileImg || "/Cat.svg"}
+              alt="Perfil"
+              width={1920}
+              height={500}
+              className="object-cover w-40 h-40 mx-auto rounded-full shadow-lg"
+            />
+          )}
           <Controller
             name="name"
             control={control}
@@ -237,7 +233,6 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           />
         </div>
 
-
         <div className="flex justify-between mt-6">
           <button
             type="button"
@@ -247,7 +242,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
           >
             {isEditing ? "Cancelar" : "Editar"}
           </button>
-          
+
           {isEditing && (
             <button
               type="button"
@@ -257,15 +252,15 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token }) => {
               Guardar Cambios
             </button>
           )}
-          
+
           <ConfirmModal
-  isOpen={isModalOpen}
-  onConfirm={() => {
-    setIsModalOpen(false);
-    handleSubmit(onSubmit)();
-  }}
-  onClose={() => setIsModalOpen(false)}
-/>
+            isOpen={isModalOpen}
+            onConfirm={() => {
+              setIsModalOpen(false);
+              handleSubmit(onSubmit)();
+            }}
+            onClose={() => setIsModalOpen(false)}
+          />
         </div>
       </div>
     </form>

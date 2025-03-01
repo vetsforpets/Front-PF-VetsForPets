@@ -88,6 +88,19 @@ export default function ProfileView() {
     setShowAddPets(false);
   };
 
+  const handleUpdatePet = (updatedPet: Pet) => {
+    setSelectedPet(updatedPet); // Actualiza el estado del pet seleccionado
+    setUser((prevUser) => {
+      if (!prevUser) return prevUser;
+      return {
+        ...prevUser,
+        pets: prevUser.pets.map((pet) =>
+          pet.id === updatedPet.id ? updatedPet : pet
+        ),
+      };
+    });
+  };
+
   if (userData?.id === undefined) {
     return <div>Cargando....</div>;
   } else {
@@ -163,7 +176,11 @@ export default function ProfileView() {
                   ))}
                 </div>
                 {selectedPet && (
-                  <PetDetails pet={selectedPet} token={userData.token} />
+                  <PetDetails
+                    pet={selectedPet}
+                    token={userData.token}
+                    onUpdatePet={handleUpdatePet}
+                  />
                 )}
               </div>
             )}

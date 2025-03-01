@@ -100,7 +100,7 @@ export interface IPetRegisterData {
   breed: string;
   sex: string;
   notes: string;
-  isSterilized: string;
+  isSterilized: boolean;
   profileImg: string;
 }
 
