@@ -69,7 +69,7 @@ export default function LoginForm() {
       (async () => {
         try {
           const data = await loginUserWithGoogle(code);
-
+          console.log(data);
           if (data && data.token && data.user) {
             setUserData({
               token: data.token,
