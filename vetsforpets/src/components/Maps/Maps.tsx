@@ -1,15 +1,22 @@
 "use client";
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl } from "react-leaflet";
+
+import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { useState, useEffect } from "react";
 import L from "leaflet";
-import "leaflet-routing-machine";
 import Formulario from "./Form";
-import RoutingControl from "./RoutingControl";
 import { fetchUserData } from "@/services/servicesUser";
-import { getAllVets } from "@/services/servicesVet"; // Importamos el servicio para obtener veterinarias
+import { getAllVets } from "@/services/servicesVet"; 
 import { useUserStore } from "@/store";
+
+// 🔹 Importa react-leaflet dinámicamente para evitar errores en SSR
+const MapContainer = dynamic(() => import("react-leaflet").then(mod => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import("react-leaflet").then(mod => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import("react-leaflet").then(mod => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import("react-leaflet").then(mod => mod.Popup), { ssr: false });
+const ZoomControl = dynamic(() => import("react-leaflet").then(mod => mod.ZoomControl), { ssr: false });
+const RoutingControl = dynamic(() => import("./RoutingControl"), { ssr: false });
 
 interface Vet {
   lat: number;
@@ -92,7 +99,7 @@ const Map = () => {
               }
               return null; 
             })
-            .filter(vet => vet !== null);
+            .filter((vet): vet is Vet => vet !== null);
   
           if (filteredVets.length === 0) {
             setErrorVets("No se encontraron veterinarias con ubicaciones válidas.");
