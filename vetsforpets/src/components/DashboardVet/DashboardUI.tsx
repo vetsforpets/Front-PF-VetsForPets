@@ -4,7 +4,7 @@ import Image from "next/image";
 import ScheduledAppointments from "../Calendar/ScheduledAppointments";
 import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { toast } from "sonner";
 import LocationSearch from "../Maps/Search";
 
@@ -164,7 +164,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
       <h1 className="mt-6 mb-6 text-3xl font-bold text-center">
         Perfil de Veterinaria
       </h1>
-
       <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
         <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
           {isEditing ? (

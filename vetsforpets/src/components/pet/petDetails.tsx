@@ -7,7 +7,7 @@ import { editPet } from "@/services/servicesPets";
 import { toast } from "sonner";
 import Image from "next/image";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 interface PetFormInputs {
   name: string;

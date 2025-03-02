@@ -5,7 +5,7 @@ import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { toast } from "sonner";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import Image from "next/image";
 import LocationSearch from "../Maps/Search";
 
