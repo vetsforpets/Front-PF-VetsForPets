@@ -37,8 +37,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-        ? JSON.stringify(editableVet?.[field])
-        : editableVet?.[field] ?? "";
+      ? JSON.stringify(editableVet?.[field])
+      : editableVet?.[field] ?? "";
 
   return (
     <div>
@@ -73,6 +73,9 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     setVeterinaria(veterinaria);
   }, [veterinaria]);
 
+  console.log("Ubicación en veterinariaState:", veterinariaState.location);
+  console.log("Ubicación en veterinariaState:", veterinariaState);
+
   const handleEdit = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
@@ -88,6 +91,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           : veterinaria.licenseNumber;
 
       const updatedVet = { ...editableVet, licenseNumber: validLicenseNumber };
+
+      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
 
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
@@ -139,16 +144,29 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
+  const handleLocationSelect = (lat: number, lon: number) => {
+    if (editableVet) {
+      setEditableVet((prev) => ({
+        ...prev!,
+        location: [{ latitude: lat, longitude: lon }],
+      }));
+    }
+  };
+
+  useEffect(() => {
+    console.log("Datos recibidos en veterinaria:", veterinaria);
+    setEditableVet(veterinaria);
+    setVeterinaria(veterinaria);
+  }, [veterinaria]);
+
   const handleProfileClick = () => {
     setShowProfile(true);
     setShowCalendly(false);
-
   };
 
   const handleCalendlyClick = () => {
     setShowCalendly(true);
     setShowProfile(false);
-
   };
 
   if (userData?.id === undefined) {
@@ -160,7 +178,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           Perfil de Veterinaria
         </h1>
         <div className="flex items-start space-x-8">
-
           <div className="p-5 md:flex w-full max-w-sm md:w-[300px] lg:w-2/5 xl:w-1/4">
             <ul className="flex flex-col p-5 py-2 space-y-4 text-sm font-medium text-gray-500 ml-14 md:w-full">
               <li className="p-3">
@@ -191,11 +208,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           </div>
 
           <div className="w-full max-w-4xl mx-auto md:w-2/3 lg:w-3/5 xl:w-3/4">
-          {showProfile && (
-          <div>
-            <h2 className="mt-5 ml-3 text-2xl font-bold text-gray-800 ">Mi Perfil</h2>
-          </div>
-          )}
+            {showProfile && (
+              <div>
+                <h2 className="mt-5 ml-3 text-2xl font-bold text-gray-800">
+                  Mi Perfil
+                </h2>
+              </div>
+            )}
             <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
               {showProfile && (
                 <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-[350px] h-auto relative">
@@ -263,6 +282,44 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     editableVet={editableVet}
                     handleChange={handleChange}
                   />
+                  {isEditing ? (
+                    <div>
+                      <label className="block py-1 pl-4 font-semibold text-customBrown">
+                        Ubicación:
+                      </label>
+                      <LocationSearch
+                        onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+                        onReset={() =>
+                          setEditableVet((prev) => ({
+                            ...prev!,
+                            location: [{ latitude: 0, longitude: 0 }],
+                          }))
+                        }
+                        onSubmit={(e, resetSearch) => {
+                          e.preventDefault();
+                          resetSearch();
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <VetDetail
+                      label="Ubicación:"
+                      value={
+                        veterinariaState.location && veterinariaState.location.length > 0
+                          ? veterinariaState.location
+                              .map(
+                                (loc) =>
+                                  `Lat: ${loc.latitude}, Lon: ${loc.longitude}`
+                              )
+                              .join(" | ")
+                          : "No disponible"
+                      }
+                      field="location"
+                      isEditing={isEditing}
+                      editableVet={editableVet}
+                      handleChange={handleChange}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -291,7 +348,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
       </>
     );
   }
-
-}
+};
 
 export default VetProfile;
