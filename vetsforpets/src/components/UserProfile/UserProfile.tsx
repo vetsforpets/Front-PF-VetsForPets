@@ -10,6 +10,7 @@ import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
 import CalendlySearch from "../Calendar/CalendlySearch";
+import AppointmentsUser from "../Calendar/AppointmentsUser";
 
 export default function ProfileView() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function ProfileView() {
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showAddPets, setShowAddPets] = useState(false);
+  const [showAppointments, setShowAppointments ] = useState(false);
 
   useEffect(() => {
     if (!userData?.id) {
@@ -57,6 +59,7 @@ export default function ProfileView() {
     setShowPets(false);
     setShowCalendly(false);
     setShowAddPets(false);
+    setShowAppointments(false);
   };
 
   const handlePetsClick = () => {
@@ -64,6 +67,7 @@ export default function ProfileView() {
     setShowProfile(false);
     setShowCalendly(false);
     setShowAddPets(false);
+    setShowAppointments(false);
   };
 
   const handleAddPetsClick = () => {
@@ -71,6 +75,7 @@ export default function ProfileView() {
     setShowProfile(false);
     setShowPets(false);
     setShowCalendly(false);
+    setShowAppointments(false);
   };
 
   const handleRedirectToPets = () => {
@@ -78,6 +83,7 @@ export default function ProfileView() {
     setShowProfile(false);
     setShowCalendly(false);
     setShowAddPets(false);
+    setShowAppointments(false);
     router.push("/dashboard");
   };
 
@@ -86,6 +92,16 @@ export default function ProfileView() {
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
+    setShowAppointments(false);
+  };
+  
+  const handleAppointmentsClick = () => {
+    setShowAppointments(true);
+    setShowCalendly(false);
+    setShowProfile(false);
+    setShowPets(false);
+    setShowAddPets(false);
+    
   };
 
   if (userData?.id === undefined) {
@@ -93,7 +109,7 @@ export default function ProfileView() {
   } else {
     return (
       <div className="p-5 md:flex">
-        <ul className="flex flex-col w-full py-2 space-y-4 text-sm font-medium text-gray-500 ml-14 p-5 md:w-2/4 lg:w-1/3 xl:w-1/4">
+        <ul className="flex flex-col w-full p-5 py-2 space-y-4 text-sm font-medium text-gray-500 ml-14 md:w-2/4 lg:w-1/3 xl:w-1/4">
           <li className="p-3">
             <a
               href="#"
@@ -138,6 +154,20 @@ export default function ProfileView() {
               Solicitar Turno
             </a>
           </li>
+          <li className="p-3">
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handleAppointmentsClick}
+            >
+              <img
+                src="/calendar.svg"
+                alt="Calendly"
+                className="w-12 h-12 me-2"
+              />
+              Mostrar Turnos
+            </a>
+          </li>
         </ul>
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
@@ -176,6 +206,7 @@ export default function ProfileView() {
               />
             )}
             {showCalendly && <CalendlySearch />}
+            {showAppointments && <AppointmentsUser/>}
           </div>
         </div>
       </div>
