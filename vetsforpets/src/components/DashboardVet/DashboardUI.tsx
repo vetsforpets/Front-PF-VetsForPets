@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
-import ScheduledAppointments from "../Calendar/ScheduledAppointments";
 import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
