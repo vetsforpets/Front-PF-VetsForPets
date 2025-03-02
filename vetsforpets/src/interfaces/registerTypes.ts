@@ -35,6 +35,11 @@ export interface IPetResponseData {
   profileImg: string;
 }
 
+export interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
 export interface IUserFormData {
   name: string;
   lastName: string;
@@ -44,6 +49,7 @@ export interface IUserFormData {
   confirmPassword?: string;
   phoneNumber: string;
   imgProfile: string;
+  location: ILocation [];
   isVet: boolean;
 }
 
@@ -87,7 +93,7 @@ export interface IVetFormData {
   phoneNumber: string;
   imgProfile: string;
   is24Hours: boolean;
-  location: string;
+  location: ILocation[];
   licenseNumber?: string;
   foundation?: string;
   businessHours?: IBusinessHours;
@@ -103,7 +109,7 @@ export interface IVetFormDataPrev {
   phoneNumber: string;
   imgProfile: string;
   is24Hours: boolean;
-  location: string;
+  location: ILocation[];
   licenseNumber?: string | number;
 }
 export interface dayOpenings {
