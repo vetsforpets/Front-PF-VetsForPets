@@ -68,7 +68,7 @@ export function VetEmergencies() {
             {
               userId:
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzYTEwNmNjYy02YTdjLTRiNTEtYjVkNC0xZTc2MmIxMjkzYTYiLCJlbWFpbCI6InNhbmpvcmdlc2ViYXN0aWFuQGdtYWlsLmNvbSIsInVzZXJUeXBlIjoidXNlciIsInJvbGUiOiJVU0VSIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTc0MDYxNjg1MCwiZXhwIjoxNzQwNjIwNDUwfQ.trK6x7TFBHoGHwg0Y9HijbHDeL1SnNgLAq0ZWL-bHcI",
-              petName: "Molly",
+              petId: "Molly",
             },
           ];
         }
@@ -108,9 +108,8 @@ export function VetEmergencies() {
                 }
 
                 const petData =
-                  petOwnerData.pets.find(
-                    (pet) => pet.name === emergency.petName
-                  ) || null;
+                  petOwnerData.pets.find((pet) => pet.id === emergency.petId) ||
+                  null;
 
                 return {
                   userName: petOwnerData.name,
