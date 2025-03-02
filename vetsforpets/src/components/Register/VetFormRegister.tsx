@@ -123,8 +123,8 @@ function VetFormRegister() {
         rules={{
           required: { value: true, message: "Nombre obligatorio." },
           minLength: {
-            value: 5,
-            message: "El nombre debe tener al menos 5 caracteres.",
+            value: 3,
+            message: "El nombre debe tener al menos 3 caracteres.",
           },
           maxLength: {
             value: 50,
@@ -152,12 +152,12 @@ function VetFormRegister() {
         rules={{
           required: { value: true, message: "Nombre obligatorio." },
           minLength: {
-            value: 5,
-            message: "El nombre debe tener al menos 5 caracteres.",
+            value: 3,
+            message: "El nombre debe tener al menos 3 caracteres.",
           },
           maxLength: {
-            value: 20,
-            message: "El nombre no puede superar los 20 caracteres.",
+            value: 50,
+            message: "El nombre no puede superar los 50 caracteres.",
           },
         }}
         render={({ field, fieldState: { error } }) => (

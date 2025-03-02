@@ -141,8 +141,8 @@ function OwnPetFormRegister() {
         rules={{
           required: { value: true, message: "Nombre obligatorio." },
           minLength: {
-            value: 5,
-            message: "El nombre debe tener al menos 5 caracteres.",
+            value: 3,
+            message: "El nombre debe tener al menos 3 caracteres.",
           },
           maxLength: {
             value: 50,
@@ -170,8 +170,8 @@ function OwnPetFormRegister() {
         rules={{
           required: { value: true, message: "Apellido obligatorio." },
           minLength: {
-            value: 10,
-            message: "El apellido debe tener al menos 10 caracteres.",
+            value: 3,
+            message: "El apellido debe tener al menos 3 caracteres.",
           },
           maxLength: {
             value: 50,
