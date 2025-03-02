@@ -3,6 +3,37 @@ import { IVetCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
+
+export const getAllVets = async (token: string) => {
+  try {
+    const response = await fetch(`${apiURL}/petshop`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Respuesta de la API:", response);
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error en la API: ${response.status} - ${response.statusText} - ${errorMessage}`);
+    }
+
+    const data = await response.json();
+    console.log("Datos de veterinarias recibidos:", data);
+    return data;
+  } catch (error) {
+    console.error("Error al obtener la lista de veterinarias:", error);
+    throw new Error("Ocurrió un error al obtener los datos de las veterinarias");
+  }
+};
+
+
+
+
+
 export async function getVetById(
   token: string,
   id: string
@@ -25,6 +56,7 @@ export async function getVetById(
     const data: IVetCredentials = await response.json();
     console.log("Datos de veterinarias:", data);
     return data;
+
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error al buscar veterinaria por ID:", error);
@@ -71,6 +103,7 @@ export const updatePetshop = async (
   token: string
 ) => {
   try {
+    console.log("Enviando datos a la API para actualizar la veterinaria:", updatedData);
     const response = await fetch(`${apiURL}/petshop/${petshopId}`, {
       method: "PUT",
       headers: {
@@ -79,6 +112,7 @@ export const updatePetshop = async (
       },
       body: JSON.stringify(updatedData),
     });
+    console.log("Respuesta completa del servidor:", response);
 
     if (!response.ok) {
       const errorMessage = await response.text(); // Obtiene el mensaje de error del backend
