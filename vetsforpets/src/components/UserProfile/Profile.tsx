@@ -57,7 +57,7 @@ const Profile = () => {
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
           setUsers([]);
-          setIsLoading(false)
+          setIsLoading(false);
         }
       }
     };
@@ -67,18 +67,15 @@ const Profile = () => {
 
   const user = userData && users.find((u) => u.id === userData.id);
 
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="flex items-center space-x-4">
-          <p className="mb-4 text-2xl font-bold text-customBrown">Cargando...</p>
-        <Image
-            src="/loading.svg"
-            width={100}
-            height={100}
-            alt="cargando"
-          />
-        </div> 
+          <p className="mb-4 text-2xl font-bold text-customBrown">
+            Cargando...
+          </p>
+          <Image src="/loading.svg" width={100} height={100} alt="cargando" />
+        </div>
       </div>
     );
   }
@@ -181,14 +178,13 @@ const Profile = () => {
 
 
   return (
-    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 mt-4 xl:grid-cols-2 xl:mt-10 place-items-center">
+    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 xl:grid-cols-2 place-items-center">
+      <div className="bg-customLightBrown flex flex-col items-center justify-center px-6 py-20 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 min-h-80 relative">
 
-      <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
         {isEditing ? (
           <div className="flex flex-col items-center">
             <CloudinaryUploader onImageUpload={handleImageUpload} />
           </div>
-          
         ) : (
           <Image
             src={user?.imgProfile || "/Generic avatar.png"}

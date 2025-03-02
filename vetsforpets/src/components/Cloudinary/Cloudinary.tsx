@@ -40,7 +40,7 @@ function CloudinaryUploader({ onImageUpload }: CloudinaryUploaderProps) {
     <div className="mb-4">
       <label
         htmlFor="file-input"
-        className="inline-flex items-center justify-center w-full max-w-full px-4 py-2 mx-auto my-3 text-sm text-center transition-all rounded-md shadow-md xs:text-xs sm:text-sm md:text-base lg:text-lg customButton hover: bg-customBrown"
+        className="inline-flex cursor-pointer items-center justify-center w-full max-w-full px-4 py-2 mx-auto my-3 text-sm text-center transition-all rounded-md shadow-md xs:text-xs sm:text-sm md:text-base lg:text-lg customButton hover: bg-customBrown"
       >
         Seleccionar archivo
       </label>
@@ -166,8 +166,6 @@ export default CloudinaryUploader;
 
 // export default CloudinaryUploader;
 
-
-
 // "use client";
 // import { useState, useEffect } from "react";
 // import { uploadImageToCloudinary } from "@/services/servicesImage";
@@ -225,12 +223,12 @@ export default CloudinaryUploader;
 //       {imageUrl && (
 //         <div className="flex items-center justify-center mt-5">
 //           {isImage(imageUrl) ? (
-//             <Image 
-//               src={imageUrl} 
-//               alt="Imagen subida" 
-//               width={160} 
-//               height={160} 
-//               className="object-cover w-40 h-40 mt-4 rounded-full shadow-md" 
+//             <Image
+//               src={imageUrl}
+//               alt="Imagen subida"
+//               width={160}
+//               height={160}
+//               className="object-cover w-40 h-40 mt-4 rounded-full shadow-md"
 //             />
 //           ) : isPDF(imageUrl) ? (
 //             <a href={imageUrl} target="_blank" rel="noopener noreferrer">
@@ -246,4 +244,3 @@ export default CloudinaryUploader;
 // }
 
 // export default CloudinaryUploader;
-
