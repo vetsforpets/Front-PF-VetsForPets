@@ -7,6 +7,7 @@ import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import ConfirmModal from "../ConfirnModal/ConfirmModal";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
+import AppointmentsVet from "../Calendar/AppointmentsVet";
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -284,7 +285,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                 onClose={handleCloseModal}
               />
             )}
-            {showCalendly && <ScheduledAppointments />}
+            {showCalendly && <AppointmentsVet />}
           </div>
         </div>
       </>
