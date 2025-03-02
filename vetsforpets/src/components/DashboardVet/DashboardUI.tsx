@@ -183,7 +183,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     alt="Calendly"
                     className="w-12 h-12 me-2"
                   />
-                  Solicitar Turno
+                  Mostrar Turnos
                 </a>
               </li>
             </ul>
