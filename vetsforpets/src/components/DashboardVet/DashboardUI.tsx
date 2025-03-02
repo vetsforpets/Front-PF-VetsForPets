@@ -3,9 +3,9 @@ import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
 import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
-import { useUserStore } from "@/store";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { toast } from "sonner";
+import LocationSearch from "../Maps/Search";
 import AppointmentsVet from "../Calendar/AppointmentsVet";
 
 interface DashboardUIProps {
@@ -36,8 +36,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-        ? JSON.stringify(editableVet?.[field])
-        : editableVet?.[field] ?? "";
+      ? JSON.stringify(editableVet?.[field])
+      : editableVet?.[field] ?? "";
 
   return (
     <div>
@@ -62,15 +62,16 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableVet, setEditableVet] = useState<IVetCredentials | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [veterinariaState, setVeterinaria] = useState<IVetCredentials>(veterinaria);
-  const userData = useUserStore((state) => state.userData);
-  const [showProfile, setShowProfile] = useState(true);
-  const [showCalendly, setShowCalendly] = useState(false);
+  const [veterinariaState, setVeterinaria] =
+    useState<IVetCredentials>(veterinaria);
 
   useEffect(() => {
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
   }, [veterinaria]);
+
+  console.log("Ubicación en veterinariaState:", veterinariaState.location);
+  console.log("Ubicación en veterinariaState:", veterinariaState);
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -87,6 +88,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           : veterinaria.licenseNumber;
 
       const updatedVet = { ...editableVet, licenseNumber: validLicenseNumber };
+
+      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
 
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
@@ -183,7 +186,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     alt="Calendly"
                     className="w-12 h-12 me-2"
                   />
-                  Mostrar Turnos
+                  Solicitar Turno
                 </a>
               </li>
             </ul>
@@ -266,16 +269,16 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
               )}
             </div>
 
-            {showProfile && isEditing && (
-              <div className="mt-4 text-center">
-                <button
-                  className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700"
-                  onClick={handleOpenModal}
-                >
-                  Guardar cambios
-                </button>
-              </div>
-            )}
+      {isEditing && (
+        <div className="mt-4 text-center">
+          <button
+            className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700"
+            onClick={handleOpenModal}
+          >
+            Guardar cambios
+          </button>
+        </div>
+      )}
 
             {isModalOpen && (
               <ConfirmModal
@@ -284,7 +287,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                 onClose={handleCloseModal}
               />
             )}
-            {showCalendly && <AppointmentsVet />}
+            {showCalendly && <ScheduledAppointments />}
           </div>
         </div>
       </>
