@@ -10,10 +10,13 @@ import RoutingControl from "./RoutingControl";
 import { fetchUserData } from "@/services/servicesUser";
 import { getAllVets } from "@/services/servicesVet"; 
 import { useUserStore } from "@/store";
+import RecenterAutomatically from "./RecenterAutomatically";
+import Image from "next/image";
 
 interface Vet {
   lat: number;
   lon: number;
+  imgProfile: string;
   nombre: string;
   nroDeTelefono: string;
   veterinarian: string;
@@ -22,10 +25,10 @@ interface Vet {
 interface VetWithDistance extends Vet {
   distance: number;
 }
+
 interface LeafletHTMLElement extends HTMLElement {
   _leaflet_id?: number;
 }
-
 
 const Maps = () => {
   const { userData } = useUserStore();
@@ -35,6 +38,11 @@ const Maps = () => {
   const [selectedVet, setSelectedVet] = useState<Vet | null>(null);
   const [loadingVets, setLoadingVets] = useState(true);
   const [errorVets, setErrorVets] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    console.log("Datos del usuario desde zustand:", userData);
+  }, [userData]);
 
   // Obtener ubicación del usuario
   useEffect(() => {
@@ -87,6 +95,7 @@ const Maps = () => {
                 return {
                   lat: parseFloat(vet.location[0].latitude),
                   lon: parseFloat(vet.location[0].longitude),
+                  imgProfile: vet.imgProfile || "",
                   nombre: vet.name || "Veterinaria sin nombre",
                   nroDeTelefono: vet.phoneNumber || "No disponible",
                   veterinarian: vet.veterinarian ? vet.veterinarian : "Veterinario no especificado",
@@ -177,14 +186,16 @@ const Maps = () => {
   return (
     <div>
       <div className="flex justify-center">
+     
         <MapContainer
           id="map-container"
-          key={userPosition.join(",")}
+          // key={userPosition.join(",")}
           center={userPosition || [-38.0, -57.55]}
           zoom={12.4}
           style={{ width: "70%", height: "600px" }}
           zoomControl={false}
         >
+          <RecenterAutomatically lat={userPosition[0]} lng={userPosition[1]} />
           <ZoomControl position="topright" />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -202,6 +213,14 @@ const Maps = () => {
               >
                 <Popup>
                   <strong>🏥 Clínica:</strong> {vet.nombre} <br />
+                  <Image
+                    src={vet.imgProfile}
+                    alt={`Imagen de ${vet.nombre}`}
+                    width={50}  
+                    height={50}
+                    className="object-cover w-32 h-32 mx-auto mb-4"
+                  />
+
                   <strong>👩‍⚕️ Veterinario/a:</strong>{" "}
                   {vet.veterinarian || "Veterinario no especificado"} <br />
                   <strong>📞 Teléfono:</strong> {vet.nroDeTelefono}
@@ -219,7 +238,7 @@ const Maps = () => {
             </Marker>
           )}
 
-          {userPosition && destinationVet && (
+          {userPosition && destinationVet && userData?.role === "USER" && (
             <RoutingControl origin={userPosition} destination={[destinationVet.lat, destinationVet.lon]} />
           )}
         </MapContainer>
@@ -228,8 +247,16 @@ const Maps = () => {
           <Formulario onUbicacionSeleccionada={actualizarUbicacionUsuario} />
           {destinationVet && (
             <div className="customInput">
+              
               <h3 className="m-3 text-lg">Ruta hacia: {destinationVet.nombre}</h3>
-              <p className="m-3 text-lg">📞 Veterinario/a: {destinationVet.veterinarian}</p>
+              <Image
+                src={destinationVet.imgProfile}
+                alt={`Imagen de ${destinationVet.nombre}`}
+                width={50}  
+                height={50}
+                className="object-cover w-32 h-32 mx-auto mb-4"
+              />
+              <p className="m-3 text-lg">👩‍⚕️ Veterinario/a: {destinationVet.veterinarian}</p>
               <p className="m-3 text-lg">📞 Teléfono: {destinationVet.nroDeTelefono}</p>
               {userPosition && (
                 <p className="m-3 text-lg">
@@ -242,6 +269,15 @@ const Maps = () => {
                   km
                 </p>
               )}
+              <button>
+                <Image
+                  src="pulse-3 (1).svg"
+                  alt="Botón de Emergencia"
+                  width={50}
+                  height={50}
+                  className="object-contain cursor-pointer"
+                />
+</button>
             </div>
           )}
         </div>
