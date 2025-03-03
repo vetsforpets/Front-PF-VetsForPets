@@ -38,7 +38,7 @@ const PetImageSection: React.FC = () => {
           <img
             src="/woman-growing-plants-home-holding-cat 8.11.37 p. m..jpg"
             alt="Imagen 1"
-            className="object-cover w-full h-full transition-all duration-500 ease-out rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl filter blur-none md:blur-sm saturate-60 group-hover:saturate-100 group-hover:blur-none"
+            className="object-cover w-full h-full transition-all duration-500 ease-out rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl filter blur-sm saturate-60 group-hover:saturate-100 group-hover:blur-none"
           />
           <h1 className="absolute text-5xl font-bold text-white transform -translate-y-1/2 top-1/2 right-10 text-shadow">
             Dueño
@@ -53,7 +53,7 @@ const PetImageSection: React.FC = () => {
           <img
             src="/veterinarian-taking-care-pet-dog.jpg 20-10-39-116.jpg"
             alt="Imagen 2"
-            className="object-cover w-full h-full transition-all duration-500 ease-out rounded-bl-3xl md:rounded-tr-3xl rounded-br-3xl filter md:blur-sm blur-none saturate-60 group-hover:saturate-100 group-hover:blur-none"
+            className="object-cover w-full h-full transition-all duration-500 ease-out rounded-bl-3xl md:rounded-tr-3xl rounded-br-3xl filter blur-sm saturate-60 group-hover:saturate-100 group-hover:blur-none"
           />
           <h1 className="absolute text-5xl font-bold text-white transform -translate-y-1/2 top-1/2 left-4 md:left-4 lg:left-10 text-shadow">
             Veterinaria
