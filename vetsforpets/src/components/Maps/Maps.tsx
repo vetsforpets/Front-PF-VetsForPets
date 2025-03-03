@@ -12,6 +12,7 @@ import { getAllVets } from "@/services/servicesVet";
 import { useUserStore } from "@/store";
 import RecenterAutomatically from "./RecenterAutomatically";
 import Image from "next/image";
+import { getVetById } from "@/services/servicesVet";
 
 interface Vet {
   lat: number;
@@ -44,47 +45,66 @@ const Maps = () => {
     console.log("Datos del usuario desde zustand:", userData);
   }, [userData]);
 
-  // Obtener ubicación del usuario
   useEffect(() => {
     const getUserLocation = async () => {
       if (!userData?.id || !userData?.token) return;
+  
       try {
-        console.log("Obteniendo datos del usuario...");
-        const userResponse = await fetchUserData(userData.id, userData.token);
-        console.log("Datos obtenidos:", userResponse);
-  
-        if (userResponse?.location?.length > 0) {
-          const lat = userResponse.location[0].latitude;
-          const lon = userResponse.location[0].longitude;
-  
-          if (lat !== undefined && lon !== undefined) {
-            setUserPosition([lat, lon]);
-            console.log("Ubicación establecida:", [lat, lon]);
+        if (userData.role === "PETSHOP") {
+          
+          // Para veterinarias: se obtiene la ubicación usando getVetById
+          console.log("Obteniendo datos de la vet...");
+          const vetResponse = await getVetById(userData.id, userData.token);
+          console.log("Datos obtenidos (vet):", vetResponse);
+          if (vetResponse && Array.isArray(vetResponse.location) && vetResponse.location.length > 0) {
+            const lat = vetResponse.location[0].latitude;
+            const lon = vetResponse.location[0].longitude;
+            if (lat !== undefined && lon !== undefined) {
+              setUserPosition([lat, lon]);
+              console.log("Ubicación de la vet establecida:", [lat, lon]);
+            } else {
+              console.warn("La ubicación de la vet es undefined.");
+            }
           } else {
-            console.warn("La ubicación del usuario es undefined.");
+            console.warn("No se encontró ubicación para la vet.");
           }
         } else {
-          console.warn("No se encontró ubicación para el usuario.");
+          
+          // Para usuarios: se obtiene la ubicación usando fetchUserData
+          console.log("Obteniendo datos del usuario...");
+          const userResponse = await fetchUserData(userData.id, userData.token);
+          console.log("Datos obtenidos (user):", userResponse);
+          if (userResponse?.location?.length > 0) {
+            const lat = userResponse.location[0].latitude;
+            const lon = userResponse.location[0].longitude;
+            if (lat !== undefined && lon !== undefined) {
+              setUserPosition([lat, lon]);
+              console.log("Ubicación del usuario establecida:", [lat, lon]);
+            } else {
+              console.warn("La ubicación del usuario es undefined.");
+            }
+          } else {
+            console.warn("No se encontró ubicación para el usuario.");
+          }
         }
       } catch (error) {
         console.error("Error al obtener ubicación:", error);
       }
     };
-    getUserLocation();
-  }, [userData?.id, userData?.token]);
   
-  // Obtener veterinarias del backend
+    getUserLocation();
+  }, [userData?.id, userData?.token, userData?.role]);
+  
+  
+  // Obtener veterinarias
   useEffect(() => {
     const fetchVets = async () => {
       if (!userData?.token) {
-        console.warn("No hay token disponible.");
         return;
       }
       try {
         setLoadingVets(true);
         setErrorVets(null);
-  
-        console.log("Obteniendo veterinarias...");
         const vetData = await getAllVets(userData.token);
         console.log("Veterinarias obtenidas:", vetData);
   
@@ -218,9 +238,8 @@ const Maps = () => {
                     alt={`Imagen de ${vet.nombre}`}
                     width={50}  
                     height={50}
-                    className="object-cover w-32 h-32 mx-auto mb-4"
+                    className="object-cover w-32 h-32 mx-auto mt-3 mb-3"
                   />
-
                   <strong>👩‍⚕️ Veterinario/a:</strong>{" "}
                   {vet.veterinarian || "Veterinario no especificado"} <br />
                   <strong>📞 Teléfono:</strong> {vet.nroDeTelefono}
