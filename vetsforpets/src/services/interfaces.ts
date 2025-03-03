@@ -48,7 +48,7 @@ export interface IVetCredentials {
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
-  businessHours: IDayOpening;
+  businessHours: null;
   emergencies: IEmergency[];
   role: string;
 }
