@@ -31,14 +31,14 @@ import Link from 'next/link';
 
 const PetImageSection: React.FC = () => {
   return (
-    <div className="flex flex-col h-screen md:flex-row">
+    <div className="flex flex-col h-screen my-10 md:flex-row">
       {/* Imagen izquierda */}
       <Link href="/pet-owner-form">
-        <div className="relative w-1/2 overflow-hidden md:w-full h-1/2 md:h-full group">
+        <div className="relative w-full h-full overflow-hidden group">
           <img
             src="/woman-growing-plants-home-holding-cat 8.11.37 p. m..jpg"
             alt="Imagen 1"
-            className="object-cover w-full h-full transition-all duration-300 filter blur-none md:blur-sm saturate-60 group-hover:saturate-100 group-hover:blur-none"
+            className="object-cover w-full h-full transition-all duration-500 ease-out md:rounded-tl-3xl md:rounded-bl-3xl filter blur-none md:blur-sm saturate-60 group-hover:saturate-100 group-hover:blur-none"
           />
           <h1 className="absolute text-5xl font-bold text-white transform -translate-y-1/2 top-1/2 right-10 text-shadow">
             Dueño
@@ -49,11 +49,11 @@ const PetImageSection: React.FC = () => {
 
       {/* Imagen derecha */}
       <Link href="/vet-form">
-        <div className="relative w-1/2 overflow-hidden md:w-full h-1/2 md:h-full group">
+        <div className="relative w-full h-full overflow-hidden group">
           <img
             src="/veterinarian-taking-care-pet-dog.jpg 20-10-39-116.jpg"
             alt="Imagen 2"
-            className="object-cover w-full h-full transition-all duration-300 filter md:blur-sm blur-none saturate-60 group-hover:saturate-100 group-hover:blur-none"
+            className="object-cover w-full h-full transition-all duration-300 md:rounded-tr-3xl md:rounded-br-3xl filter md:blur-sm blur-none saturate-60 group-hover:saturate-100 group-hover:blur-none"
           />
           <h1 className="absolute text-5xl font-bold text-white transform -translate-y-1/2 top-1/2 left-10 text-shadow">
             Veterinaria
