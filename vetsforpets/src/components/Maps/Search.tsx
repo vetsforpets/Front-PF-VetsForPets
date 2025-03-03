@@ -20,7 +20,7 @@ const LocationSearch = ({
 }: // onReset,
 // onSubmit
 {
-  onSelect: (lat: number, lon: number) => void;
+  onSelect: (lat: number, lon: number ) => void;
   onReset: () => void;
   onSubmit: (e: React.FormEvent, resetSearch: () => void) => void;
 }) => {
@@ -137,65 +137,3 @@ const LocationSearch = ({
 };
 
 export default LocationSearch;
-
-// import { useState } from "react";
-
-// const LocationSearch = ({ onSelect }: { onSelect: (lat: number, lon: number) => void }) => {
-//   const [query, setQuery] = useState("");
-//   const [suggestions, setSuggestions] = useState<{ display_name: string; lat: string; lon: string }[]>([]);
-
-//   const buscarUbicaciones = async (input: string) => {
-//     if (input.length < 3) {
-//       setSuggestions([]);
-//       return;
-//     }
-
-//     try {
-//         const response = await fetch(
-//             `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(input)}&format=json&addressdetails=1&limit=5&countrycodes=AR&viewbox=-57.6356,-37.8324,-57.4616,-38.1052&bounded=1`
-//           );
-
-//       if (!response.ok) throw new Error("Error al obtener los datos");
-
-//       const data = await response.json();
-//       setSuggestions(data);
-//     } catch (error) {
-//       console.error("Error obteniendo sugerencias:", error);
-//     }
-//   };
-
-//   const manejarCambio = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const valor = e.target.value;
-//     setQuery(valor);
-//     buscarUbicaciones(valor);
-//   };
-
-//   const manejarSeleccion = (direccion: string, lat: string, lon: string) => {
-//     setQuery(direccion);
-//     setSuggestions([]);
-//     onSelect(parseFloat(lat), parseFloat(lon)); // Envía las coordenadas al padre
-//   };
-
-//   return (
-//     <div>
-//       <input
-//         type="text"
-//         value={query}
-//         onChange={manejarCambio}
-//         placeholder="Escribe una ubicación..."
-//         className="customInput"
-//       />
-//       {suggestions.length > 0 && (
-//         <ul className="suggestions">
-//           {suggestions.map((item, index) => (
-//             <li key={index} onClick={() => manejarSeleccion(item.display_name, item.lat, item.lon)}>
-//               {item.display_name}
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default LocationSearch;

@@ -9,7 +9,7 @@ export const fetchUserData = async (id: string, token: string) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // 🔹 Agrega el token en los headers
+        Authorization: `Bearer ${token}`, 
       },
     });
 
