@@ -25,7 +25,7 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isPremium: boolean;
-  location: ILocation[]
+  location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
@@ -55,13 +55,13 @@ export interface IVetCredentials {
 
 export interface IEmergency {
   userId: string;
-  petId: string;
+  pet: Pet;
 }
 
 export interface IDayOpening {
   monday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   tuesday: {
     open: string;
