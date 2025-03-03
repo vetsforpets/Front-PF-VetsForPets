@@ -63,16 +63,6 @@ export function VetEmergencies() {
         const vetData = await getVetById(userData.token, userData.id);
         console.log("aca vetData!", vetData);
 
-        if (vetData) {
-          vetData.emergencies = [
-            {
-              userId:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzYTEwNmNjYy02YTdjLTRiNTEtYjVkNC0xZTc2MmIxMjkzYTYiLCJlbWFpbCI6InNhbmpvcmdlc2ViYXN0aWFuQGdtYWlsLmNvbSIsInVzZXJUeXBlIjoidXNlciIsInJvbGUiOiJVU0VSIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTc0MDYxNjg1MCwiZXhwIjoxNzQwNjIwNDUwfQ.trK6x7TFBHoGHwg0Y9HijbHDeL1SnNgLAq0ZWL-bHcI",
-              petId: "Molly",
-            },
-          ];
-        }
-
         // 🔹 Validar que `vetData` existe antes de usar `emergencies`
         if (!vetData) {
           console.error("⚠️ La veterinaria no fue encontrada.");
@@ -108,8 +98,9 @@ export function VetEmergencies() {
                 }
 
                 const petData =
-                  petOwnerData.pets.find((pet) => pet.id === emergency.petId) ||
-                  null;
+                  petOwnerData.pets.find(
+                    (pet) => pet.id === emergency.pet.id
+                  ) || null;
 
                 return {
                   userName: petOwnerData.name,
