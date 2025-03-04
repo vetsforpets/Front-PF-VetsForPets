@@ -29,7 +29,7 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
       const data = await loginUser(userCredentials);
-
+      console.log(data);
       if (data.user) {
         setUserData({
           token: data.token,
@@ -136,8 +136,8 @@ export default function LoginForm() {
 
         {/* Botón de envío */}
 
-        <div className="flex text-sm justify-evenly">
-          <button type="submit" className="customButton">
+        <div className="flex text-sm justify-evenly items-center">
+          <button type="submit" className="customButton h-fit">
             Iniciar Sesión
           </button>
           <button
@@ -151,7 +151,7 @@ export default function LoginForm() {
               width={80}
               height={80}
               alt="Google"
-              className="pt-1"
+              className="mt-2 py-1 px-2 bg-slate-100 rounded-full"
             />
           </button>
         </div>
