@@ -18,9 +18,18 @@ const CalendlySearch = () => {
 
     useEffect(() => {
         const data: Veterinaria[] = [
-            { id: 1, nombre: "Veterinaria Alfredo", url: "https://calendly.com/hugooeseverri?primary_color=DDA15E" },
-            { id: 2, nombre: "Veterinaria Maria Paz", url: "https://calendly.com/pazroscianorivas?primary_color=DDA15E" },
-            {id: 3, nombre: "Veterinaria Layus", url: "https://calendly.com/layusclinicaveterinaria/veterinaria-layus?primary_color=DDA15E"}
+            { id: 1, nombre: "Veterinaria Layus", url: "https://calendly.com/veterinarialayus?primary_color=DDA15E" },
+            { id: 2, nombre: "Veterinaria Dr.Paso", url: "https://calendly.com/veterinariapaso65?primary_color=DDA15E" },
+            {id: 3, nombre: "Veterinaria Crena", url: "https://calendly.com/veterinariacrena8?primary_color=DDA15E"},
+            { id: 4, nombre: "Veterinaria Copello", url: "https://calendly.com/veterinariacopello2?primary_color=DDA15E" },
+            { id: 5, nombre: "Veterinaria Animal House", url: "https://calendly.com/veterinariaanimalhousemdq?primary_color=DDA15E" },
+            { id: 6, nombre: "Veterinaria Antartida Argentina", url: "https://calendly.com/veterinariaantartidaargentina?primary_color=DDA15E" },
+            { id: 7, nombre: "Veterinaria Alberti", url: "https://calendly.com/veterinariaalberti95?primary_color=DDA15E" },
+            { id: 8, nombre: "Veterinaria Sigismondi", url: "https://calendly.com/veterinariasigismondi19?primary_color=DDA15E" },
+            { id: 9, nombre: "Veterinaria Los Corrales", url: "https://calendly.com/veterinarialoscorrales9?primary_color=DDA15E" },
+            { id: 10, nombre: "Veterinaria La Rinconada", url: "https://calendly.com/veterinarialarinconada28?primary_color=DDA15E" },
+
+
         ];
         setVeterinarias(data);
     }, []);
