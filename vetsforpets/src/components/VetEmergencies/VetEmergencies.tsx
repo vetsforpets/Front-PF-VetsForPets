@@ -60,7 +60,7 @@ export function VetEmergencies() {
       }
 
       try {
-        const vetData = await getVetById(userData.token, userData.id);
+        const vetData = await getVetById(userData.id, userData.token);
         console.log("aca vetData!", vetData);
 
         // 🔹 Validar que `vetData` existe antes de usar `emergencies`

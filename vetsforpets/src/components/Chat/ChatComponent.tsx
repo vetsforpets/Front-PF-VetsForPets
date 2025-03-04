@@ -28,7 +28,8 @@ export function ChatComponent({ userId, vetId }: ChatProps) {
 
     // Inicializa la conexión solo si no está creada
     if (!socketRef.current) {
-      const socket = io("https://vetsforpets-api.onrender.com", {
+      const socket = io("wss://vetsforpets-api.onrender.com", {
+        path: "/socket.io/",
         auth: { token },
       });
 

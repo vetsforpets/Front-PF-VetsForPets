@@ -63,7 +63,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableVet, setEditableVet] = useState<IVetCredentials | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [veterinariaState, setVeterinaria] = useState<IVetCredentials>(veterinaria);
+  const [veterinariaState, setVeterinaria] =
+    useState<IVetCredentials>(veterinaria);
   const userData = useUserStore((state) => state.userData);
   const [showProfile, setShowProfile] = useState(true);
   const [showCalendly, setShowCalendly] = useState(false);
@@ -186,7 +187,11 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleProfileClick}
                 >
-                  <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
+                  <img
+                    src="/user.svg"
+                    alt="Calendly"
+                    className="w-12 h-12 me-2"
+                  />
                   Mi Perfil
                 </a>
               </li>
@@ -217,14 +222,16 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             )}
             <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
               {showProfile && (
-                <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-[350px] h-auto relative">
+                <div className="min-h-80 bg-customLightBrown flex flex-col items-center justify-center px-6 py-14 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-[350px] h-auto relative">
                   {isEditing ? (
                     <div className="flex flex-col items-center">
                       <CloudinaryUploader onImageUpload={handleImageUpload} />
                     </div>
                   ) : (
                     <Image
-                      src={veterinariaState?.imgProfile || "/Generic avatar.png"}
+                      src={
+                        veterinariaState?.imgProfile || "/Generic avatar.png"
+                      }
                       alt="Perfil"
                       width={1920}
                       height={500}
@@ -305,7 +312,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     <VetDetail
                       label="Ubicación:"
                       value={
-                        veterinariaState.location && veterinariaState.location.length > 0
+                        veterinariaState.location &&
+                        veterinariaState.location.length > 0
                           ? veterinariaState.location
                               .map(
                                 (loc) =>
