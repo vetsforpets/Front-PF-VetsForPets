@@ -1,5 +1,4 @@
 import { IMembershipResponse, IPostOrder } from "@/interfaces/registerTypes";
-import { fetchUserData } from "./servicesUser";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 export async function fetchOrderData(token: string ): Promise<IMembershipResponse[] | void> {
@@ -31,12 +30,9 @@ export async function fetchOrderData(token: string ): Promise<IMembershipRespons
 
 export async function postOrder(
     postOrder: IPostOrder,
-  token: string,  
-  id: string, 
+  token: string, 
 ) {
   try {
-    const userPremium = await fetchUserData(id, token)
-    if(!userPremium.isPremium){
     const response = await fetch(`${apiURL}/order`, {
       method: "POST",
       headers: {
@@ -53,10 +49,6 @@ export async function postOrder(
 
     const data = await response.json();
     return data;
-  }
-    else {
-      throw new Error("El usuario ya adquirio una membresia");
-    }
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
