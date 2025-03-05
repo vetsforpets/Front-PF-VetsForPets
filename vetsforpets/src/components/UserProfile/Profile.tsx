@@ -263,10 +263,6 @@ const Profile = () => {
               />
             </div>
 
-
-
-
-
             <div className="mt-4">
   <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
   <LocationSearch
@@ -277,8 +273,7 @@ const Profile = () => {
       resetSearch();
     }}
   />
-</div>
-            
+</div>            
 
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">

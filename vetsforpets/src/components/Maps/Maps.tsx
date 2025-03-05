@@ -10,10 +10,14 @@ import RoutingControl from "./RoutingControl";
 import { fetchUserData } from "@/services/servicesUser";
 import { getAllVets } from "@/services/servicesVet"; 
 import { useUserStore } from "@/store";
+import RecenterAutomatically from "./RecenterAutomatically";
+import Image from "next/image";
+import { getVetById } from "@/services/servicesVet";
 
 interface Vet {
   lat: number;
   lon: number;
+  imgProfile: string;
   nombre: string;
   nroDeTelefono: string;
   veterinarian: string;
@@ -22,10 +26,10 @@ interface Vet {
 interface VetWithDistance extends Vet {
   distance: number;
 }
+
 interface LeafletHTMLElement extends HTMLElement {
   _leaflet_id?: number;
 }
-
 
 const Maps = () => {
   const { userData } = useUserStore();
@@ -36,47 +40,71 @@ const Maps = () => {
   const [loadingVets, setLoadingVets] = useState(true);
   const [errorVets, setErrorVets] = useState<string | null>(null);
 
-  // Obtener ubicación del usuario
+
+  useEffect(() => {
+    console.log("Datos del usuario desde zustand:", userData);
+  }, [userData]);
+
   useEffect(() => {
     const getUserLocation = async () => {
       if (!userData?.id || !userData?.token) return;
+  
       try {
-        console.log("Obteniendo datos del usuario...");
-        const userResponse = await fetchUserData(userData.id, userData.token);
-        console.log("Datos obtenidos:", userResponse);
-  
-        if (userResponse?.location?.length > 0) {
-          const lat = userResponse.location[0].latitude;
-          const lon = userResponse.location[0].longitude;
-  
-          if (lat !== undefined && lon !== undefined) {
-            setUserPosition([lat, lon]);
-            console.log("Ubicación establecida:", [lat, lon]);
+        if (userData.role === "PETSHOP") {
+          
+          // Para veterinarias: se obtiene la ubicación usando getVetById
+          console.log("Obteniendo datos de la vet...");
+          const vetResponse = await getVetById(userData.id, userData.token);
+          console.log("Datos obtenidos (vet):", vetResponse);
+          if (vetResponse && Array.isArray(vetResponse.location) && vetResponse.location.length > 0) {
+            const lat = vetResponse.location[0].latitude;
+            const lon = vetResponse.location[0].longitude;
+            if (lat !== undefined && lon !== undefined) {
+              setUserPosition([lat, lon]);
+              console.log("Ubicación de la vet establecida:", [lat, lon]);
+            } else {
+              console.warn("La ubicación de la vet es undefined.");
+            }
           } else {
-            console.warn("La ubicación del usuario es undefined.");
+            console.warn("No se encontró ubicación para la vet.");
           }
         } else {
-          console.warn("No se encontró ubicación para el usuario.");
+          
+          // Para usuarios: se obtiene la ubicación usando fetchUserData
+          console.log("Obteniendo datos del usuario...");
+          const userResponse = await fetchUserData(userData.id, userData.token);
+          console.log("Datos obtenidos (user):", userResponse);
+          if (userResponse?.location?.length > 0) {
+            const lat = userResponse.location[0].latitude;
+            const lon = userResponse.location[0].longitude;
+            if (lat !== undefined && lon !== undefined) {
+              setUserPosition([lat, lon]);
+              console.log("Ubicación del usuario establecida:", [lat, lon]);
+            } else {
+              console.warn("La ubicación del usuario es undefined.");
+            }
+          } else {
+            console.warn("No se encontró ubicación para el usuario.");
+          }
         }
       } catch (error) {
         console.error("Error al obtener ubicación:", error);
       }
     };
-    getUserLocation();
-  }, [userData?.id, userData?.token]);
   
-  // Obtener veterinarias del backend
+    getUserLocation();
+  }, [userData?.id, userData?.token, userData?.role]);
+  
+  
+  // Obtener veterinarias
   useEffect(() => {
     const fetchVets = async () => {
       if (!userData?.token) {
-        console.warn("No hay token disponible.");
         return;
       }
       try {
         setLoadingVets(true);
         setErrorVets(null);
-  
-        console.log("Obteniendo veterinarias...");
         const vetData = await getAllVets(userData.token);
         console.log("Veterinarias obtenidas:", vetData);
   
@@ -87,6 +115,7 @@ const Maps = () => {
                 return {
                   lat: parseFloat(vet.location[0].latitude),
                   lon: parseFloat(vet.location[0].longitude),
+                  imgProfile: vet.imgProfile || "",
                   nombre: vet.name || "Veterinaria sin nombre",
                   nroDeTelefono: vet.phoneNumber || "No disponible",
                   veterinarian: vet.veterinarian ? vet.veterinarian : "Veterinario no especificado",
@@ -177,14 +206,16 @@ const Maps = () => {
   return (
     <div>
       <div className="flex justify-center">
+     
         <MapContainer
           id="map-container"
-          key={userPosition.join(",")}
+          // key={userPosition.join(",")}
           center={userPosition || [-38.0, -57.55]}
           zoom={12.4}
           style={{ width: "70%", height: "600px" }}
           zoomControl={false}
         >
+          <RecenterAutomatically lat={userPosition[0]} lng={userPosition[1]} />
           <ZoomControl position="topright" />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
@@ -202,6 +233,13 @@ const Maps = () => {
               >
                 <Popup>
                   <strong>🏥 Clínica:</strong> {vet.nombre} <br />
+                  <Image
+                    src={vet.imgProfile}
+                    alt={`Imagen de ${vet.nombre}`}
+                    width={50}  
+                    height={50}
+                    className="object-cover w-32 h-32 mx-auto mt-3 mb-3"
+                  />
                   <strong>👩‍⚕️ Veterinario/a:</strong>{" "}
                   {vet.veterinarian || "Veterinario no especificado"} <br />
                   <strong>📞 Teléfono:</strong> {vet.nroDeTelefono}
@@ -219,7 +257,7 @@ const Maps = () => {
             </Marker>
           )}
 
-          {userPosition && destinationVet && (
+          {userPosition && destinationVet && userData?.role === "USER" && (
             <RoutingControl origin={userPosition} destination={[destinationVet.lat, destinationVet.lon]} />
           )}
         </MapContainer>
@@ -228,8 +266,16 @@ const Maps = () => {
           <Formulario onUbicacionSeleccionada={actualizarUbicacionUsuario} />
           {destinationVet && (
             <div className="customInput">
+              
               <h3 className="m-3 text-lg">Ruta hacia: {destinationVet.nombre}</h3>
-              <p className="m-3 text-lg">📞 Veterinario/a: {destinationVet.veterinarian}</p>
+              <Image
+                src={destinationVet.imgProfile}
+                alt={`Imagen de ${destinationVet.nombre}`}
+                width={50}  
+                height={50}
+                className="object-cover w-32 h-32 mx-auto mb-4"
+              />
+              <p className="m-3 text-lg">👩‍⚕️ Veterinario/a: {destinationVet.veterinarian}</p>
               <p className="m-3 text-lg">📞 Teléfono: {destinationVet.nroDeTelefono}</p>
               {userPosition && (
                 <p className="m-3 text-lg">
@@ -242,6 +288,15 @@ const Maps = () => {
                   km
                 </p>
               )}
+              <button>
+                <Image
+                  src="pulse-3 (1).svg"
+                  alt="Botón de Emergencia"
+                  width={50}
+                  height={50}
+                  className="object-contain cursor-pointer"
+                />
+</button>
             </div>
           )}
         </div>

@@ -31,12 +31,9 @@ export const getAllVets = async (token: string) => {
 };
 
 
-
-
-
 export async function getVetById(
-  token: string,
-  id: string
+  id: string,
+  token: string
 ): Promise<IVetCredentials | null> {
   console.log(id);
 
@@ -65,6 +62,7 @@ export async function getVetById(
     throw new Error("Ocurrió un error desconocido al obtener los datos");
   }
 }
+
 
 export async function RegisterVet(
   vetRegisterData: IVetFormDataPrev

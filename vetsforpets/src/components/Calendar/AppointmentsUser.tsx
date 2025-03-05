@@ -58,36 +58,85 @@ function AppointmentsUser() {
         () => [
             {
                 id: 1,
-                nombre: "Veterinaria Animal House",
-                email: "veterinariaanimalhousemdq@gmail.com",
-                calendlyUserUri:
-                    "https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ANIMAL,
+                nombre: "Veterinaria Layus",
+                email: "veterinarialayus@gmail.com",
+                url: "https://calendly.com/veterinarialayus",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_LAYUS,
             },
             {
                 id: 2,
-                nombre: "Veterinaria Antartida Argentina",
-                email: "veterinariaantartidaargentina@gmail.com",
-                calendlyUserUri:
-                    "https://api.calendly.com/users/82a1b7b9-2490-4e2e-b6bc-fc70431203cb",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ANTARTIDA,
+                nombre: "Veterinaria Dr Paso",
+                email: "veterinariapaso65@gmail.com",
+                url: "https://calendly.com/veterinariapaso65",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/aa1e5196-3a71-4b07-9cb0-3f836fd998df",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_PASO,
             },
             {
                 id: 3,
-                nombre: "Veterinaria Alberti",
-                email: "veterinariaalberti95@gmail.com",
-                calendlyUserUri:
-                    "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ALBERTI,
+                nombre: "Veterinaria Crena",
+                email: "veterinariacrena8@gmail.com",
+                url: "https://calendly.com/veterinariacrena8",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/07708693-e755-4bf3-9092-025e1464b5ec",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_CRENA,
             },
             {
                 id: 4,
-                nombre: "Veterinaria Layus",
-                email: "layusclinicaveterinaria@gmail.com",
-                calendlyUserUri:
-                    "https://api.calendly.com/users/f41e5086-afe3-4db1-84a1-787a3a82139b",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_LAYUS,
+                nombre: "Veterinaria Copello",
+                email: "veterinariacopello2@gmail.com",
+                url: "https://calendly.com/veterinariacopello2",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/9332733b-e30e-4751-9926-cf482899429b",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_COPELLO,
             },
+            {
+                id: 5,
+                nombre: "Veterinaria Animal House",
+                email: "veterinariaanimalhousemdq@gmail.com",
+                url: "https://calendly.com/veterinariaanimalhousemdq",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANIMAL,
+            },
+            {
+                id: 6,
+                nombre: "Veterinaria Antartida Argentina",
+                email: "veterinariaantartidaargentina@gmail.com ",
+                url: "https://calendly.com/veterinariaantartidaargentina",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/82a1b7b9-2490-4e2e-b6bc-fc70431203cb",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANTARTIDA,
+            },
+            {
+                id: 7,
+                nombre: "Veterinaria Alberti",
+                email: "veterinariaalberti95@gmail.com",
+                url: "https://calendly.com/veterinariaalberti95",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ALBERTI,
+            },
+            {
+                id: 8,
+                nombre: "Veterinaria Sigismondi",
+                email: "veterinariasigismondi19@gmail.com",
+                url: "https://calendly.com/veterinariasigismondi19?primary_color=DDA15E",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/bee8bd72-57d2-4aae-b087-17d186ecc9fc",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_SIGISMONDI,
+            },
+            {
+                id: 9,
+                nombre: "Veterinaria Los Corrales",
+                email: "veterinarialoscorrales9@gmail.com",
+                url: "https://calendly.com/veterinarialoscorrales9",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/41172d08-d5a1-407c-b83a-a0579a38eeed",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_CORRALES,
+            },
+            {
+                id: 10,
+                nombre: "Veterinaria La Rinconada",
+                email: "veterinarialarinconada28@gmail.com",
+                url: "https://calendly.com/veterinarialarinconada28",
+                calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/93cdefcb-e388-4596-b598-c0b537631f3b",
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_RINCONADA,
+            },
+
         ],
         []
     );
@@ -219,8 +268,8 @@ function AppointmentsUser() {
                             </p>
                             <p
                                 className={`text-lg font-semibold ${appointment.status === "active"
-                                        ? "text-green-600"
-                                        : "text-red-600 dark:text-red-400"
+                                    ? "text-green-600"
+                                    : "text-red-600 dark:text-red-400"
                                     }`}
                             >
                                 <strong>Estado:</strong>{" "}

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-
-const socket = io("https://vetsforpets-api.onrender.com/sockets");
+import { useUserStore } from "@/store";
+import { useEffect, useState, useRef } from "react";
+import { io, Socket } from "socket.io-client";
 
 interface Message {
-  user: string;
-  text: string;
+  sender: string;
+  message: string;
+  senderType: string;
 }
 
 interface ChatProps {
@@ -18,32 +18,86 @@ interface ChatProps {
 export function ChatComponent({ userId, vetId }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState("");
+  const [roomId, setRoomId] = useState<string | null>(null);
+
+  const token = useUserStore((state) => state.userData?.token);
+  const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    if (!userId || !vetId) return;
+    if (!token) return;
 
-    const roomId = `${userId}-${vetId}`;
-    socket.emit("joinRoom", roomId);
+    // Inicializa la conexión solo si no está creada
+    if (!socketRef.current) {
+      const socket = io("wss://vetsforpets-api.onrender.com", {
+        path: "/socket.io/",
+        auth: { token },
+      });
 
-    const handleChatMessage = (msg: Message) => {
-      setMessages((prev) => [...prev, msg]);
-    };
+      socketRef.current = socket;
 
-    socket.on("chatMessage", handleChatMessage);
+      // Manejo de historial de mensajes
+      const handleMessageHistory = (history: Message[]) => {
+        setMessages(history);
+      };
 
-    return () => {
-      socket.off("chatMessage", handleChatMessage);
-      socket.emit("leaveRoom", roomId);
-    };
+      // Manejo de mensajes en tiempo real
+      const handleMessage = (msg: Message) => {
+        setMessages((prev) => [...prev, msg]);
+      };
+
+      // Manejo de errores de conexión
+      const handleError = (error: unknown) => {
+        if (error instanceof Error) {
+          console.error("Error de conexión al WebSocket:", error.message);
+        } else {
+          console.error("Error desconocido de WebSocket:", error);
+        }
+      };
+
+      socket.on("messageHistory", handleMessageHistory);
+      socket.on("message", handleMessage);
+      socket.on("connect_error", handleError);
+
+      return () => {
+        socket.off("messageHistory", handleMessageHistory);
+        socket.off("message", handleMessage);
+        socket.off("connect_error", handleError);
+        socket.disconnect();
+        socketRef.current = null;
+      };
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (!userId || !vetId || !socketRef.current) return;
+
+    const socket = socketRef.current;
+
+    socket.emit("joinRoom", vetId, (response: { roomId: string }) => {
+      if (response.roomId) {
+        setRoomId(response.roomId);
+      }
+    });
   }, [userId, vetId]);
 
+  useEffect(() => {
+    return () => {
+      if (socketRef.current && roomId) {
+        socketRef.current.emit("leaveRoom", roomId);
+      }
+    };
+  }, [roomId]);
+
   const sendMessage = () => {
-    if (!message.trim() || !userId || !vetId) return;
+    if (!message.trim() || !roomId || !socketRef.current) return;
 
-    const roomId = `${userId}-${vetId}`;
-    const newMessage: Message = { user: userId, text: message };
+    socketRef.current.emit("message", { roomId, message });
 
-    socket.emit("chatMessage", { roomId, ...newMessage });
+    setMessages((prev) => [
+      ...prev,
+      { sender: "Tú", message, senderType: "User" },
+    ]);
+
     setMessage("");
   };
 
@@ -54,7 +108,7 @@ export function ChatComponent({ userId, vetId }: ChatProps) {
           <div>
             {messages.map((msg, index) => (
               <p key={index}>
-                <strong>{msg.user}:</strong> {msg.text}
+                <strong>{msg.sender}:</strong> {msg.message}
               </p>
             ))}
           </div>
@@ -64,10 +118,7 @@ export function ChatComponent({ userId, vetId }: ChatProps) {
             onChange={(e) => setMessage(e.target.value)}
             disabled={!userId || !vetId}
           />
-          <button
-            onClick={sendMessage}
-            disabled={!userId || !vetId || !message.trim()}
-          >
+          <button onClick={sendMessage} disabled={!roomId || !message.trim()}>
             Enviar
           </button>
         </>
