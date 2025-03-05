@@ -5,7 +5,6 @@ const config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
@@ -29,7 +28,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-textshadow'), require("flowbite/plugin")],
+  plugins: [require('tailwindcss-textshadow')],
 };
 
 export default config;
