@@ -3,6 +3,7 @@ import { Kiwi_Maru, Tenor_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import 'flowbite';
 // import { GoogleOAuthProvider } from "@react-oauth/google";
 // -
 

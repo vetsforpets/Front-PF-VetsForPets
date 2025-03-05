@@ -1,15 +1,17 @@
 /** @type {import('tailwindcss').Config} */
+
 const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       textShadow: {
-          default: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-        },
+        default: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -27,7 +29,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-textshadow')],
+  plugins: [require('tailwindcss-textshadow'), require("flowbite/plugin")],
 };
 
 export default config;
