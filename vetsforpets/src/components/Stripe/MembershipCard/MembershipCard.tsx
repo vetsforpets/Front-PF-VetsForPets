@@ -68,33 +68,33 @@ const MembershipCard = () => {
   }, [userData?.token]);
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 px-6 py-10">
+    <div className="flex flex-wrap justify-center px-6 py-10 gap-36">
     {memberships?.map((membership) => (
       <div
         key={membership.id}
-        className="relative flex flex-col items-center justify-between w-full h-screen max-w-sm p-6 transition-all duration-300 transform bg-white shadow-md rounded-3xl hover:shadow-xl"
+        className="relative flex flex-col justify-between w-full h-screen max-w-sm p-6 align-middle transition-all duration-300 transform bg-white shadow-md border-customBrown rounded-3xl hover:shadow-xl"
       >
   
         {/* Contenido de la tarjeta */}
         <div className="text-center">
+          <img className='w-24' src={membership.image} alt="icon" />
           <h2 className="mb-20 text-2xl font-bold text-customDarkGreen">Membresía {membership?.name}</h2>
+          <div className='mb-16'>
+            {membership?.price == "0.00" && <br/>}
           {membership?.benefits.map((benefit, index) => (
             <p key={index} className="mt-2 text-gray-700">- {benefit}.</p>
           ))}
-          <p className="mt-6 text-2xl font-bold text-customDarkGreen">Precio: ${membership?.price}</p>
-  
+          </div>
+          <div>
+
+          <p className="mt-6 text-2xl font-bold text-customDarkGreen">{membership?.price == "0.00" ? "Free" : `Precio: $${membership.price} `}</p>
+          
           {/* Botón de compra */}
           <div className="relative group">
-            {membership.price == "0" ? 
-              <button
-              data-popover-target="popover-default"
-                disabled={true}
-                className={`px-8 py-3 mt-6 text-lg font-semibold transition-all duration-300 rounded-2xl ${
-               "bg-gray-400 cursor-not-allowed"
-                } text-customBeige hover:shadow-lg`}
-              >
-                Free
-              </button> : 
+            {membership.price == "0.00" ? 
+            <div>
+            </div>
+              : 
             <button
             onClick={() => postOrderButton(membership.id)}
             disabled={activeButton}
@@ -102,8 +102,8 @@ const MembershipCard = () => {
               activeButton
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-gradient-to-r from-customHardBrown to-customDarkGreen hover:from-customDarkGreen hover:to-customHardBrown"
-              } text-customBeige hover:shadow-lg`}
-              >
+            } text-customBeige hover:shadow-lg`}
+            >
               Comprar Ahora
             </button>
             }
@@ -114,6 +114,7 @@ const MembershipCard = () => {
             </div>
             )}
           </div>
+            </div>
         </div>
       </div>
     ))}
