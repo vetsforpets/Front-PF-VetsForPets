@@ -129,7 +129,7 @@ const Profile = () => {
               latitude: Number(loc.latitude),
               longitude: Number(loc.longitude),
             }))
-          : [{ latitude: 0, longitude: 0 }], // 🔹 Si no tiene ubicación, enviamos un valor por defecto
+          : [{ latitude: 0, longitude: 0 }], // Si no tiene ubicación, enviamos un valor por defecto
       };
   
       console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
