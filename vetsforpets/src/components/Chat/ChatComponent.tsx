@@ -30,6 +30,7 @@ export function ChatComponent({ userId, vetId }: ChatProps) {
     if (!socketRef.current) {
       const socket = io("wss://vetsforpets-api.onrender.com", {
         path: "/socket.io/",
+        transports: ["websocket"],
         auth: { token },
       });
 
