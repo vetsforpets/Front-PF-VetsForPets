@@ -3,7 +3,7 @@ import { IPetApiResponse } from '@/services/servicesPetPrueba';
 
 type PetCardProps = {
     pet: IPetApiResponse;
-    invitee: any;
+    invitee: unknown;
     pets: IPetApiResponse[];
 };
 

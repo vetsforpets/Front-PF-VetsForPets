@@ -20,9 +20,14 @@ export const useFetchPets = () => {
                 const petsData = await fetchPets(token);
                 setPets(petsData);
                 setError(null);
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.error("Error al obtener las mascotas:", error);
-                setError(error.message || "Error al obtener las mascotas.");
+
+                if (error instanceof Error) {
+                    setError(error.message || "Error al obtener las mascotas.");
+                } else {
+                    setError("Error desconocido al obtener las mascotas.");
+                }
             } finally {
                 setIsLoading(false);
             }
