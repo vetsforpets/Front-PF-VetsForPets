@@ -46,7 +46,6 @@ export const fetchUserData = async (id: string, token: string) => {
     }
 
     const data: IUserData = await response.json();
-    console.log("Datos recibidos del backend:", data, token);
     return data;
   } catch (error) {
     console.error("Error:", error);

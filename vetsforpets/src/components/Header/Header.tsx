@@ -142,7 +142,7 @@ export function Header() {
             <>
               <button
                 onClick={() => handleNavigation("/login")}
-                className="w-full customButton "
+                className="w-full customButton"
               >
                 Iniciar Sesión
               </button>
@@ -155,14 +155,14 @@ export function Header() {
 
               <button
                 onClick={() => handleNavigation("/vets")}
-                className="mt-0 mb-2 customButton sm:hidden"
+                className="mt-0 mb-2 customButton sm:hidden w-full"
               >
                 Veterinarias
               </button>
 
               <button
                 onClick={() => handleNavigation("/aboutUs")}
-                className="mt-2 mb-2 customButton sm:hidden"
+                className="mt-2 mb-2 customButton sm:hidden w-full"
               >
                 Quienes Somos
               </button>

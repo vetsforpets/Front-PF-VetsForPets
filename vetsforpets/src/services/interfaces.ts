@@ -61,7 +61,7 @@ export interface IUserData {
   phoneNumber: string;
   createdAt: string;
   imgProfile: string;
-  isAdmin:boolean;
+  isAdmin: boolean;
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
@@ -94,6 +94,7 @@ export interface IVetCredentials {
 export interface IEmergency {
   userId: string;
   pet: Pet;
+  chatId: string;
 }
 
 export interface IDayOpening {

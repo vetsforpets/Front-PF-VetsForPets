@@ -13,7 +13,38 @@ interface EmergencyData {
 }
 
 export function VetEmergencies() {
-  const [emergencyDetails, setEmergencyDetails] = useState<EmergencyData[]>([]);
+  const [emergencyDetails, setEmergencyDetails] = useState<EmergencyData[]>([
+    {
+      userName: "Juan Pérez",
+      pet: {
+        id: "1a3",
+        name: "Max",
+        age: 3,
+        animalType: "Perro",
+        breed: "Labrador",
+        sex: "Male",
+        profileImg: "/Dog.svg",
+        isSterilized: true,
+        birthdate: "12/05/1999",
+        notes: "aca van las notas",
+      },
+    },
+    {
+      userName: "Ana Lopez",
+      pet: {
+        id: "1b3",
+        name: "Luna",
+        age: 2,
+        animalType: "Gato",
+        breed: "Siamés",
+        sex: "Female",
+        profileImg: "/Cat.svg",
+        isSterilized: false,
+        birthdate: "05/08/2020",
+        notes: "Le encanta dormir al sol.",
+      },
+    },
+  ]);
   const { userData } = useUserStore();
 
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
