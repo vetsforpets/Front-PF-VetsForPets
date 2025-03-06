@@ -14,6 +14,43 @@ interface ILocation {
   longitude: number;
 }
 
+export interface IUserApiResponse {
+  id: string;
+  name: string;
+  lastName: string;
+  age: string;
+  email: string;
+  phoneNumber: string;
+  isAdmin: boolean;
+  createdAt: string;
+  imgProfile: string;
+  isPremium: boolean;
+  isActive: boolean;
+  role: string;
+  userMembership: null | string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  pet?: { id: string; name: string; type: string }; // Ajusta según tu estructura
+}
+export interface IPet {
+  id: string;
+  name: string;
+  age: number;
+  animalType: string;
+  birthdate: string;
+  breed: string;
+  sex: string;
+  isSterilized: boolean;
+  notes?: string;
+  profileImg?: string;
+}
+
+
+
 export interface IUserData {
   id: string;
   name: string;

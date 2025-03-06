@@ -7,7 +7,8 @@ import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
 import AppointmentsVet from "../Calendar/AppointmentsVet";
-import LocationSearch from "../Maps/Search";
+
+
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -37,8 +38,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-      ? JSON.stringify(editableVet?.[field])
-      : editableVet?.[field] ?? "";
+        ? JSON.stringify(editableVet?.[field])
+        : editableVet?.[field] ?? "";
 
   return (
     <div>
@@ -68,7 +69,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const userData = useUserStore((state) => state.userData);
   const [showProfile, setShowProfile] = useState(true);
   const [showCalendly, setShowCalendly] = useState(false);
-
   useEffect(() => {
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
@@ -145,14 +145,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
-  const handleLocationSelect = (lat: number, lon: number) => {
-    if (editableVet) {
-      setEditableVet((prev) => ({
-        ...prev!,
-        location: [{ latitude: lat, longitude: lon }],
-      }));
-    }
-  };
 
   useEffect(() => {
     console.log("Datos recibidos en veterinaria:", veterinaria);
@@ -187,11 +179,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleProfileClick}
                 >
-                  <img
-                    src="/user.svg"
-                    alt="Calendly"
-                    className="w-12 h-12 me-2"
-                  />
+                  <Image
+                  src="/user.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
                   Mi Perfil
                 </a>
               </li>
@@ -201,11 +195,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleCalendlyClick}
                 >
-                  <img
-                    src="/calendar.svg"
-                    alt="Calendly"
-                    className="w-12 h-12 me-2"
-                  />
+                  <Image
+                  src="/calendar.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
                   Mostrar Turnos
                 </a>
               </li>
@@ -289,45 +285,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     editableVet={editableVet}
                     handleChange={handleChange}
                   />
-                  {isEditing ? (
-                    <div>
-                      <label className="block py-1 pl-4 font-semibold text-customBrown">
-                        Ubicación:
-                      </label>
-                      <LocationSearch
-                        onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
-                        onReset={() =>
-                          setEditableVet((prev) => ({
-                            ...prev!,
-                            location: [{ latitude: 0, longitude: 0 }],
-                          }))
-                        }
-                        onSubmit={(e, resetSearch) => {
-                          e.preventDefault();
-                          resetSearch();
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <VetDetail
-                      label="Ubicación:"
-                      value={
-                        veterinariaState.location &&
-                        veterinariaState.location.length > 0
-                          ? veterinariaState.location
-                              .map(
-                                (loc) =>
-                                  `Lat: ${loc.latitude}, Lon: ${loc.longitude}`
-                              )
-                              .join(" | ")
-                          : "No disponible"
-                      }
-                      field="location"
-                      isEditing={isEditing}
-                      editableVet={editableVet}
-                      handleChange={handleChange}
-                    />
-                  )}
+                  
                 </div>
               )}
             </div>
@@ -335,7 +293,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             {showProfile && isEditing && (
               <div className="mt-4 text-center">
                 <button
-                  className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700"
+                  className="px-4 py-2 text-white rounded-md customButton hover: bg-customBrown"
                   onClick={handleOpenModal}
                 >
                   Guardar cambios
@@ -351,6 +309,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
               />
             )}
             {showCalendly && <AppointmentsVet />}
+            
           </div>
         </div>
       </>

@@ -1,7 +1,35 @@
 import { IUserFormData, IUserResponseData } from "@/interfaces/registerTypes";
 import { IUserCredentials, IUserData } from "./interfaces";
-
+import { IUserApiResponse } from "./interfaces";
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
+
+
+export const fetchUsers = async (token: string): Promise<IUserApiResponse[]> => {
+  try {
+    const response = await fetch(`${apiURL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al obtener los usuarios");
+    }
+
+    
+    const data: IUserApiResponse[] = await response.json();
+    
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw new Error("Ocurrió un error desconocido al obtener los datos");
+  }
+};
+
+
 
 export const fetchUserData = async (id: string, token: string) => {
   try {
@@ -9,7 +37,7 @@ export const fetchUserData = async (id: string, token: string) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
 
