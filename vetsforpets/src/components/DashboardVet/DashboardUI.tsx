@@ -90,18 +90,22 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
         editableVet.licenseNumber && !isNaN(Number(editableVet.licenseNumber))
           ? Number(editableVet.licenseNumber)
           : veterinaria.licenseNumber;
-
-      const updatedVet = { ...editableVet, licenseNumber: validLicenseNumber };
-
+  
+      const updatedVet: IVetCredentials = {
+        ...editableVet,
+        licenseNumber: validLicenseNumber,
+        emergencies: editableVet.emergencies ?? [], // Mantiene emergencies pero vacío
+      };
+  
       console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
-
+  
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
         console.log("Veterinaria actualizada:", response);
-
+  
         setVeterinaria(updatedVet);
         setEditableVet(updatedVet);
-
+  
         toast.success("Perfil editado con éxito", {
           duration: 3000,
           style: {
@@ -112,13 +116,15 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             border: "1px solid #c3e6cb",
           },
         });
-
+  
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
       }
     }
   };
+  
+  
 
   const handleChange = (
     field: keyof IVetCredentials,
