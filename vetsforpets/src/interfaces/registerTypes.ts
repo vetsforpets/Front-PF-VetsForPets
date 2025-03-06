@@ -55,6 +55,7 @@ export interface IUserFormData {
 
 export interface IMembershipResponse {
   id: string;
+  image: string;
   name: string;
   price: string;
   benefits: string[];

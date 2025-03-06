@@ -39,7 +39,7 @@ interface IUserData {
   role: string;
 }
 
-const Profile = () => {
+const Admin = () => {
   const { userData } = useUserStore();
   const [users, setUsers] = useState<IUserData[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -129,7 +129,7 @@ const Profile = () => {
               latitude: Number(loc.latitude),
               longitude: Number(loc.longitude),
             }))
-          : [{ latitude: 0, longitude: 0 }], // Si no tiene ubicación, enviamos un valor por defecto
+          : [{ latitude: 0, longitude: 0 }], // 🔹 Si no tiene ubicación, enviamos un valor por defecto
       };
   
       console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
@@ -263,6 +263,10 @@ const Profile = () => {
               />
             </div>
 
+
+
+
+
             <div className="mt-4">
   <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
   <LocationSearch
@@ -273,7 +277,8 @@ const Profile = () => {
       resetSearch();
     }}
   />
-</div>            
+</div>
+            
 
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">
@@ -357,4 +362,4 @@ const UserDetail: React.FC<{ label: string; value: string }> = ({
   </div>
 );
 
-export default Profile;
+export default Admin;

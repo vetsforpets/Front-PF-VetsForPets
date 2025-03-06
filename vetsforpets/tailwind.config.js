@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,6 +8,9 @@ const config = {
   ],
   theme: {
     extend: {
+      textShadow: {
+        default: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -24,7 +28,7 @@ const config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-textshadow')],
 };
 
 export default config;

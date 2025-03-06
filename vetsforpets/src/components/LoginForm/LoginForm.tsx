@@ -29,7 +29,7 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
       const data = await loginUser(userCredentials);
-
+      console.log(data);
       if (data.user) {
         setUserData({
           token: data.token,
@@ -134,8 +134,10 @@ export default function LoginForm() {
           )}
         </div>
 
+
         <div className="flex w-full gap-4">
           <button type="submit" className="w-1/2 ">
+
             Iniciar Sesión
           </button>
           <button
@@ -143,6 +145,7 @@ export default function LoginForm() {
             onClick={handleGoogleLogin}
             className="flex items-center justify-center w-1/2 gap-2"
           >
+
             <span className="flex items-center gap-2">
               Iniciar con{" "}
               <Image
@@ -154,6 +157,7 @@ export default function LoginForm() {
                 className="pt-0"
               />
             </span>
+
           </button>
         </div>
 

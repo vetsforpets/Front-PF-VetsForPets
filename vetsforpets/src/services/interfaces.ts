@@ -14,6 +14,43 @@ interface ILocation {
   longitude: number;
 }
 
+export interface IUserApiResponse {
+  id: string;
+  name: string;
+  lastName: string;
+  age: string;
+  email: string;
+  phoneNumber: string;
+  isAdmin: boolean;
+  createdAt: string;
+  imgProfile: string;
+  isPremium: boolean;
+  isActive: boolean;
+  role: string;
+  userMembership: null | string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  pet?: { id: string; name: string; type: string }; // Ajusta según tu estructura
+}
+export interface IPet {
+  id: string;
+  name: string;
+  age: number;
+  animalType: string;
+  birthdate: string;
+  breed: string;
+  sex: string;
+  isSterilized: boolean;
+  notes?: string;
+  profileImg?: string;
+}
+
+
+
 export interface IUserData {
   id: string;
   name: string;
@@ -24,8 +61,9 @@ export interface IUserData {
   phoneNumber: string;
   createdAt: string;
   imgProfile: string;
+  isAdmin: boolean;
   isPremium: boolean;
-  location: ILocation[]
+  location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
@@ -55,13 +93,14 @@ export interface IVetCredentials {
 
 export interface IEmergency {
   userId: string;
-  petId: string;
+  pet: Pet;
+  chatId: string;
 }
 
 export interface IDayOpening {
   monday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   tuesday: {
     open: string;
