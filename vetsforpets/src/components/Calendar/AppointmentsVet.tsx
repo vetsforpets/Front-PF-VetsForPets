@@ -2,6 +2,9 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useUserStore } from "@/store";
+import { useFetchPets } from "../DashboardVet/PetsButton";
+import PetCard from "../PetAppointment/PetCard";
+
 
 export interface IQuestionAnswer {
     question: string;
@@ -12,7 +15,7 @@ export interface IQuestionAnswer {
 export interface IInvitee {
     email: string;
     name?: string;
-    questions_and_answers?: IQuestionAnswer[];
+    questions_and_answers: IQuestionAnswer[];
 }
 
 export interface IAppointment {
@@ -48,6 +51,8 @@ function AppointmentsVet() {
     const [appointments, setAppointments] = useState<IAppointment[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const { pets, error: petsError, isLoading: petsLoading } = useFetchPets();
+    const [filteredAppointments, setFilteredAppointments] = useState<any[]>([]);
 
     const userData = useUserStore((state) => state.userData);
     const userEmail = userData?.email || null;
@@ -58,7 +63,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Layus",
             email: "veterinarialayus@gmail.com",
             url: "https://calendly.com/veterinarialayus",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
+            calendlyUserUri: "https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_LAYUS,
         },
         {
@@ -66,7 +71,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Dr Paso",
             email: "veterinariapaso65@gmail.com",
             url: "https://calendly.com/veterinariapaso65",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/aa1e5196-3a71-4b07-9cb0-3f836fd998df",
+            calendlyUserUri: "https://api.calendly.com/users/aa1e5196-3a71-4b07-9cb0-3f836fd998df",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_PASO,
         },
         {
@@ -74,7 +79,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Crena",
             email: "veterinariacrena8@gmail.com",
             url: "https://calendly.com/veterinariacrena8",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/07708693-e755-4bf3-9092-025e1464b5ec",
+            calendlyUserUri: "https://api.calendly.com/users/07708693-e755-4bf3-9092-025e1464b5ec",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_CRENA,
         },
         {
@@ -82,7 +87,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Copello",
             email: "veterinariacopello2@gmail.com",
             url: "https://calendly.com/veterinariacopello2",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/9332733b-e30e-4751-9926-cf482899429b",
+            calendlyUserUri: "https://api.calendly.com/users/9332733b-e30e-4751-9926-cf482899429b",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_COPELLO,
         },
         {
@@ -90,23 +95,23 @@ function AppointmentsVet() {
             nombre: "Veterinaria Animal House",
             email: "veterinariaanimalhousemdq@gmail.com",
             url: "https://calendly.com/veterinariaanimalhousemdq",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
+            calendlyUserUri: "https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANIMAL,
         },
         {
             id: 6,
             nombre: "Veterinaria Antartida Argentina",
-            email: "veterinariaantartidaargentina@gmail.com ",
             url: "https://calendly.com/veterinariaantartidaargentina",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/82a1b7b9-2490-4e2e-b6bc-fc70431203cb",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANTARTIDA,
+            email: "veterinariaantartidaargentina@gmail.com",
+            calendlyUserUri: "https://api.calendly.com/users/82a1b7b9-2490-4e2e-b6bc-fc70431203cb",
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ANTARTIDA,
         },
         {
             id: 7,
             nombre: "Veterinaria Alberti",
             email: "veterinariaalberti95@gmail.com",
             url: "https://calendly.com/veterinariaalberti95",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
+            calendlyUserUri: "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ALBERTI,
         },
         {
@@ -114,7 +119,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Sigismondi",
             email: "veterinariasigismondi19@gmail.com",
             url: "https://calendly.com/veterinariasigismondi19?primary_color=DDA15E",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/bee8bd72-57d2-4aae-b087-17d186ecc9fc",
+            calendlyUserUri: "https://api.calendly.com/users/bee8bd72-57d2-4aae-b087-17d186ecc9fc",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_SIGISMONDI,
         },
         {
@@ -122,7 +127,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria Los Corrales",
             email: "veterinarialoscorrales9@gmail.com",
             url: "https://calendly.com/veterinarialoscorrales9",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/41172d08-d5a1-407c-b83a-a0579a38eeed",
+            calendlyUserUri: "https://api.calendly.com/users/41172d08-d5a1-407c-b83a-a0579a38eeed",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_CORRALES,
         },
         {
@@ -130,7 +135,7 @@ function AppointmentsVet() {
             nombre: "Veterinaria La Rinconada",
             email: "veterinarialarinconada28@gmail.com",
             url: "https://calendly.com/veterinarialarinconada28",
-            calendlyUserUri: "https://api.calendly.com/scheduled_events?user=https://api.calendly.com/users/93cdefcb-e388-4596-b598-c0b537631f3b",
+            calendlyUserUri: "https://api.calendly.com/users/93cdefcb-e388-4596-b598-c0b537631f3b",
             calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_RINCONADA,
         },
 
@@ -213,15 +218,31 @@ function AppointmentsVet() {
         };
 
         fetchAppointments();
-    }, [veterinariaUsuario]);
+    }, [veterinariaUsuario, userEmail]);
 
+    useEffect(() => {
+        if (appointments.length > 0 && pets.length > 0) {
+            const filtered = appointments.filter((appointment) => {
+                return appointment.invitees.some((invitee) =>
+                    invitee.questions_and_answers?.some((qa) => {
+                        return pets.some(pet => pet.name === qa.answer);
+                    })
+                );
+            });
+            setFilteredAppointments(filtered);
+        }
+    }, [appointments, pets]);
+
+
+    if (isLoading || petsLoading) return <p>Cargando citas y mascotas...</p>;
+
+    if (error || petsError) return <p>Error: {error || petsError}</p>;
 
     return (
         <div className="container max-w-4xl p-6 mx-auto ">
             <h2 className="mt-5 ml-3 text-2xl font-bold text-gray-800">
                 Turnos Agendados
             </h2>
-
             {isLoading ? (
                 <p className="text-gray-600">Cargando turnos...</p>
             ) : error ? (
@@ -229,61 +250,76 @@ function AppointmentsVet() {
             ) : appointments.length > 0 ? (
                 <ul className="space-y-6">
                     {appointments.map((appointment) => (
-                        <li
-                            key={appointment.id}
-                            className="p-6  border border-gray-200 rounded-lg shadow-lg bg-[#DDA15E] dark:border-gray-700"
-                        >
-                            <p className="text-lg font-medium text-gray-800 ">
+                        <li key={appointment.id} className="p-6 border border-gray-200 rounded-lg shadow-lg bg-[#DDA15E] dark:border-gray-700">
+                            <p className="text-lg font-medium text-gray-800">
                                 <strong>Inicio:</strong> {new Date(appointment.start_time).toLocaleString()}
                             </p>
-                            <p className="text-lg font-medium text-gray-800 ">
+                            <p className="text-lg font-medium text-gray-800">
                                 <strong>Fin:</strong> {new Date(appointment.end_time).toLocaleString()}
                             </p>
-                            <p
-                                className={`text-lg font-semibold ${appointment.status === "active" ? "text-green-600" : "text-red-600 dark:text-red-400"
-                                    }`}
-                            >
+                            <p className={`text-lg font-semibold ${appointment.status === "active" ? "text-green-600" : "text-red-600 dark:text-red-400"}`}>
                                 <strong>Estado:</strong> {appointment.status === "active" ? "Activo" : "Cancelado"}
                             </p>
 
                             {appointment.invitees && appointment.invitees.length > 0 ? (
-                                <div className="p-4 mt-4  rounded-lg bg-[#bc6c25]">
-                                    <h3 className="text-lg font-semibold text-gray-200 ">Datos del Tutor:</h3>
+                                <div className="p-4 mt-4 rounded-lg bg-[#bc6c25]">
+                                    <h3 className="text-lg font-semibold text-gray-200">Datos del Tutor:</h3>
                                     {appointment.invitees.map((invitee, idx) => (
                                         <div key={idx} className="mt-2">
-                                            <p className="pl-4 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200 ">
+                                            <p className="pl-4 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200">
                                                 <strong>Email:</strong> {invitee.email}
                                             </p>
                                             {invitee.name && (
-                                                <p className="pl-4 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200 ">
+                                                <p className="pl-4 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200">
                                                     <strong>Nombre:</strong> {invitee.name}
                                                 </p>
                                             )}
+
                                             {invitee.questions_and_answers && invitee.questions_and_answers.length > 0 && (
                                                 <div className="mt-2 border-gray-400">
-                                                    <h4 className="text-lg font-semibold text-gray-200 ">Nombre de Mascota que se atiende:</h4>
+                                                    <h4 className="text-lg font-semibold text-gray-200">Nombre de Mascota que se atiende:</h4>
                                                     {invitee.questions_and_answers.map((qa, index) => (
-                                                        <p key={index} className="pl-4 mt-2 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200 ">
+                                                        <p key={index} className="pl-4 mt-2 text-gray-800 border-l-4 border-blue-500 dark:text-gray-200">
                                                             {qa.answer}
                                                         </p>
                                                     ))}
+
+                                                    {invitee.questions_and_answers.some((qa) => {
+                                                        return pets.some((pet) => pet.name === qa.answer && pet.user.email === invitee.email);
+                                                    }) && (
+                                                        <div className="mt-2">
+                                                            <p className="text-lg font-semibold text-gray-200">
+                                                                <strong>Datos de la Mascota:</strong>
+                                                            </p>
+                                                            {pets.filter((pet) =>
+                                                                invitee.questions_and_answers.some((qa) => qa.answer === pet.name && pet.user.email === invitee.email)
+                                                            ).map((pet, index) => (
+                                                                <div key={index}>
+                                                                    
+                                                                    <PetCard pet={pet} invitee={invitee} pets={pets} />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <p className="mt-4 text-gray-700 dark:text-gray-300">No hay datos de invitados para este turno.</p>
+                                <p className="text-gray-800">No hay tutores para este turno.</p>
                             )}
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p className="text-gray-700 dark:text-gray-300">No hay turnos disponibles.</p>
+                <p className="text-gray-600">No tienes turnos agendados.</p>
             )}
         </div>
-
     );
-}
+};
+
+
+
 
 export default AppointmentsVet;

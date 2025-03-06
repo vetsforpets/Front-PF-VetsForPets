@@ -7,7 +7,8 @@ import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
 import AppointmentsVet from "../Calendar/AppointmentsVet";
-import LocationSearch from "../Maps/Search";
+import { IPetApiResponse } from "@/services/servicesPetPrueba";
+
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -37,8 +38,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-      ? JSON.stringify(editableVet?.[field])
-      : editableVet?.[field] ?? "";
+        ? JSON.stringify(editableVet?.[field])
+        : editableVet?.[field] ?? "";
 
   return (
     <div>
@@ -68,6 +69,8 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const userData = useUserStore((state) => state.userData);
   const [showProfile, setShowProfile] = useState(true);
   const [showCalendly, setShowCalendly] = useState(false);
+  const [pets, setPets] = useState<IPetApiResponse[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setEditableVet(veterinaria);
@@ -289,45 +292,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     editableVet={editableVet}
                     handleChange={handleChange}
                   />
-                  {isEditing ? (
-                    <div>
-                      <label className="block py-1 pl-4 font-semibold text-customBrown">
-                        Ubicación:
-                      </label>
-                      <LocationSearch
-                        onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
-                        onReset={() =>
-                          setEditableVet((prev) => ({
-                            ...prev!,
-                            location: [{ latitude: 0, longitude: 0 }],
-                          }))
-                        }
-                        onSubmit={(e, resetSearch) => {
-                          e.preventDefault();
-                          resetSearch();
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <VetDetail
-                      label="Ubicación:"
-                      value={
-                        veterinariaState.location &&
-                        veterinariaState.location.length > 0
-                          ? veterinariaState.location
-                              .map(
-                                (loc) =>
-                                  `Lat: ${loc.latitude}, Lon: ${loc.longitude}`
-                              )
-                              .join(" | ")
-                          : "No disponible"
-                      }
-                      field="location"
-                      isEditing={isEditing}
-                      editableVet={editableVet}
-                      handleChange={handleChange}
-                    />
-                  )}
+                  
                 </div>
               )}
             </div>
@@ -335,7 +300,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             {showProfile && isEditing && (
               <div className="mt-4 text-center">
                 <button
-                  className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700"
+                  className="px-4 py-2 text-white rounded-md customButton hover: bg-customBrown"
                   onClick={handleOpenModal}
                 >
                   Guardar cambios
@@ -351,6 +316,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
               />
             )}
             {showCalendly && <AppointmentsVet />}
+            
           </div>
         </div>
       </>
