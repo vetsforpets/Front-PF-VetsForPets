@@ -61,6 +61,7 @@ export interface IUserData {
   phoneNumber: string;
   createdAt: string;
   imgProfile: string;
+  isAdmin:boolean;
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
