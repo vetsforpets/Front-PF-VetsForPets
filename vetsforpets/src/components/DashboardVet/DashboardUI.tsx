@@ -179,11 +179,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleProfileClick}
                 >
-                  <img
-                    src="/user.svg"
-                    alt="Calendly"
-                    className="w-12 h-12 me-2"
-                  />
+                  <Image
+                  src="/user.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
                   Mi Perfil
                 </a>
               </li>
@@ -193,11 +195,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleCalendlyClick}
                 >
-                  <img
-                    src="/calendar.svg"
-                    alt="Calendly"
-                    className="w-12 h-12 me-2"
-                  />
+                  <Image
+                  src="/calendar.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
                   Mostrar Turnos
                 </a>
               </li>
