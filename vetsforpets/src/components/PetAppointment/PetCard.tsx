@@ -7,7 +7,7 @@ type PetCardProps = {
     pets: IPetApiResponse[];
 };
 
-const PetCard: React.FC<PetCardProps> = ({ pet, invitee, pets, }) => {
+const PetCard: React.FC<PetCardProps> = ({ pet}) => {
     const [showModal, setShowModal] = useState(false);
 
     const handleModalToggle = () => {

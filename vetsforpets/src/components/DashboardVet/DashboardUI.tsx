@@ -7,7 +7,7 @@ import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
 import AppointmentsVet from "../Calendar/AppointmentsVet";
-import { IPetApiResponse } from "@/services/servicesPetPrueba";
+
 
 
 interface DashboardUIProps {
@@ -69,9 +69,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const userData = useUserStore((state) => state.userData);
   const [showProfile, setShowProfile] = useState(true);
   const [showCalendly, setShowCalendly] = useState(false);
-  const [pets, setPets] = useState<IPetApiResponse[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
@@ -148,14 +145,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
-  const handleLocationSelect = (lat: number, lon: number) => {
-    if (editableVet) {
-      setEditableVet((prev) => ({
-        ...prev!,
-        location: [{ latitude: lat, longitude: lon }],
-      }));
-    }
-  };
 
   useEffect(() => {
     console.log("Datos recibidos en veterinaria:", veterinaria);

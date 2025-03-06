@@ -52,7 +52,7 @@ function AppointmentsVet() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { pets, error: petsError, isLoading: petsLoading } = useFetchPets();
-    const [filteredAppointments, setFilteredAppointments] = useState<any[]>([]);
+    
 
     const userData = useUserStore((state) => state.userData);
     const userEmail = userData?.email || null;
@@ -220,18 +220,6 @@ function AppointmentsVet() {
         fetchAppointments();
     }, [veterinariaUsuario, userEmail]);
 
-    useEffect(() => {
-        if (appointments.length > 0 && pets.length > 0) {
-            const filtered = appointments.filter((appointment) => {
-                return appointment.invitees.some((invitee) =>
-                    invitee.questions_and_answers?.some((qa) => {
-                        return pets.some(pet => pet.name === qa.answer);
-                    })
-                );
-            });
-            setFilteredAppointments(filtered);
-        }
-    }, [appointments, pets]);
 
 
     if (isLoading || petsLoading) return <p>Cargando citas y mascotas...</p>;
