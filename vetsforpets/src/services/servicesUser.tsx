@@ -9,7 +9,7 @@ export const fetchUserData = async (id: string, token: string) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -18,7 +18,6 @@ export const fetchUserData = async (id: string, token: string) => {
     }
 
     const data: IUserData = await response.json();
-    console.log("Datos recibidos del backend:", data, token);
     return data;
   } catch (error) {
     console.error("Error:", error);
