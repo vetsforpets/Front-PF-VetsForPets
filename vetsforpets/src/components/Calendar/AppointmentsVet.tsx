@@ -52,7 +52,7 @@ function AppointmentsVet() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { pets, error: petsError, isLoading: petsLoading } = useFetchPets();
-    
+
 
     const userData = useUserStore((state) => state.userData);
     const userEmail = userData?.email || null;
@@ -88,7 +88,7 @@ function AppointmentsVet() {
             email: "veterinariacopello2@gmail.com",
             url: "https://calendly.com/veterinariacopello2",
             calendlyUserUri: "https://api.calendly.com/users/9332733b-e30e-4751-9926-cf482899429b",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_COPELLO,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_COPELLO,
         },
         {
             id: 5,
@@ -96,7 +96,7 @@ function AppointmentsVet() {
             email: "veterinariaanimalhousemdq@gmail.com",
             url: "https://calendly.com/veterinariaanimalhousemdq",
             calendlyUserUri: "https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANIMAL,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ANIMAL,
         },
         {
             id: 6,
@@ -112,7 +112,7 @@ function AppointmentsVet() {
             email: "veterinariaalberti95@gmail.com",
             url: "https://calendly.com/veterinariaalberti95",
             calendlyUserUri: "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ALBERTI,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ALBERTI,
         },
         {
             id: 8,
@@ -120,7 +120,7 @@ function AppointmentsVet() {
             email: "veterinariasigismondi19@gmail.com",
             url: "https://calendly.com/veterinariasigismondi19?primary_color=DDA15E",
             calendlyUserUri: "https://api.calendly.com/users/bee8bd72-57d2-4aae-b087-17d186ecc9fc",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_SIGISMONDI,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_SIGISMONDI,
         },
         {
             id: 9,
@@ -128,7 +128,7 @@ function AppointmentsVet() {
             email: "veterinarialoscorrales9@gmail.com",
             url: "https://calendly.com/veterinarialoscorrales9",
             calendlyUserUri: "https://api.calendly.com/users/41172d08-d5a1-407c-b83a-a0579a38eeed",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_CORRALES,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_CORRALES,
         },
         {
             id: 10,
@@ -136,7 +136,7 @@ function AppointmentsVet() {
             email: "veterinarialarinconada28@gmail.com",
             url: "https://calendly.com/veterinarialarinconada28",
             calendlyUserUri: "https://api.calendly.com/users/93cdefcb-e388-4596-b598-c0b537631f3b",
-            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_RINCONADA,
+            calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_RINCONADA,
         },
 
     ], []);
@@ -144,6 +144,9 @@ function AppointmentsVet() {
     const veterinariaUsuario = useMemo(() => {
         return veterinarias.find((vet) => vet.email === userEmail);
     }, [userEmail, veterinarias]);
+
+    console.log("Correo del usuario:", userEmail);
+    console.log("Veterinaria asociada:", veterinariaUsuario);
 
     useEffect(() => {
         const fetchAppointments = async () => {
@@ -275,20 +278,20 @@ function AppointmentsVet() {
                                                     {invitee.questions_and_answers.some((qa) => {
                                                         return pets.some((pet) => pet.name === qa.answer && pet.user.email === invitee.email);
                                                     }) && (
-                                                        <div className="mt-2">
-                                                            <p className="text-lg font-semibold text-gray-200">
-                                                                <strong>Datos de la Mascota:</strong>
-                                                            </p>
-                                                            {pets.filter((pet) =>
-                                                                invitee.questions_and_answers.some((qa) => qa.answer === pet.name && pet.user.email === invitee.email)
-                                                            ).map((pet, index) => (
-                                                                <div key={index}>
-                                                                    
-                                                                    <PetCard pet={pet} invitee={invitee} pets={pets} />
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
+                                                            <div className="mt-2">
+                                                                <p className="text-lg font-semibold text-gray-200">
+                                                                    <strong>Datos de la Mascota:</strong>
+                                                                </p>
+                                                                {pets.filter((pet) =>
+                                                                    invitee.questions_and_answers.some((qa) => qa.answer === pet.name && pet.user.email === invitee.email)
+                                                                ).map((pet, index) => (
+                                                                    <div key={index}>
+
+                                                                        <PetCard pet={pet} invitee={invitee} pets={pets} />
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        )}
                                                 </div>
                                             )}
                                         </div>

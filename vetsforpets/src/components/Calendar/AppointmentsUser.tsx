@@ -61,7 +61,7 @@ function AppointmentsUser() {
                 email: "veterinarialayus@gmail.com",
                 url: "https://calendly.com/veterinarialayus",
                 calendlyUserUri: "https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_LAYUS,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_LAYUS,
             },
             {
                 id: 2,
@@ -85,7 +85,7 @@ function AppointmentsUser() {
                 email: "veterinariacopello2@gmail.com",
                 url: "https://calendly.com/veterinariacopello2",
                 calendlyUserUri: "https://api.calendly.com/users/9332733b-e30e-4751-9926-cf482899429b",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_COPELLO,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_COPELLO,
             },
             {
                 id: 5,
@@ -93,7 +93,7 @@ function AppointmentsUser() {
                 email: "veterinariaanimalhousemdq@gmail.com",
                 url: "https://calendly.com/veterinariaanimalhousemdq",
                 calendlyUserUri: "https://api.calendly.com/users/d4676ecb-4fc5-4272-b0ed-50208e713f81",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ANIMAL,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ANIMAL,
             },
             {
                 id: 6,
@@ -109,7 +109,7 @@ function AppointmentsUser() {
                 email: "veterinariaalberti95@gmail.com",
                 url: "https://calendly.com/veterinariaalberti95",
                 calendlyUserUri: "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_ALBERTI,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ALBERTI,
             },
             {
                 id: 8,
@@ -117,7 +117,7 @@ function AppointmentsUser() {
                 email: "veterinariasigismondi19@gmail.com",
                 url: "https://calendly.com/veterinariasigismondi19?primary_color=DDA15E",
                 calendlyUserUri: "https://api.calendly.com/users/bee8bd72-57d2-4aae-b087-17d186ecc9fc",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_SIGISMONDI,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_SIGISMONDI,
             },
             {
                 id: 9,
@@ -125,7 +125,7 @@ function AppointmentsUser() {
                 email: "veterinarialoscorrales9@gmail.com",
                 url: "https://calendly.com/veterinarialoscorrales9",
                 calendlyUserUri: "https://api.calendly.com/users/41172d08-d5a1-407c-b83a-a0579a38eeed",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_CORRALES,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_CORRALES,
             },
             {
                 id: 10,
@@ -133,7 +133,7 @@ function AppointmentsUser() {
                 email: "veterinarialarinconada28@gmail.com",
                 url: "https://calendly.com/veterinarialarinconada28",
                 calendlyUserUri: "https://api.calendly.com/users/93cdefcb-e388-4596-b598-c0b537631f3b",
-                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_RINCONADA,
+                calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_RINCONADA,
             },
 
         ],
