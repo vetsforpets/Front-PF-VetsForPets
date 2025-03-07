@@ -1,4 +1,5 @@
 import { Pet } from "@/components/pet/PetPreview";
+import { dayOpenings } from "@/interfaces/registerTypes";
 
 export interface IUserRegisterData {
   name: string;
@@ -88,7 +89,7 @@ export interface IVetCredentials {
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
-  businessHours: null;
+  businessHours: dayOpenings;
   emergencies: IEmergency[];
   role: string;
   isActive: boolean;

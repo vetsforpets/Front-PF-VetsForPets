@@ -38,8 +38,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-        ? JSON.stringify(editableVet?.[field])
-        : editableVet?.[field] ?? "";
+        ? JSON.stringify(editableVet?.[field]) // Convierte arrays a string
+        : editableVet?.[field]?.toString() ?? ""; // Convierte otros tipos a string
 
   return (
     <div>
@@ -258,6 +258,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                 </div>
               )}
               {showProfile && (
+                <>
                 <div className="flex flex-col w-full m-6 space-y-2">
                   <VetDetail
                     label="Veterinario a cargo:"
@@ -266,7 +267,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     isEditing={isEditing}
                     editableVet={editableVet}
                     handleChange={handleChange}
-                  />
+                    />
                   <VetDetail
                     label="Número de matrícula:"
                     value={veterinariaState.licenseNumber.toString()}
@@ -274,7 +275,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     isEditing={isEditing}
                     editableVet={editableVet}
                     handleChange={handleChange}
-                  />
+                    />
                   <VetDetail
                     label="Email:"
                     value={veterinariaState.email}
@@ -282,7 +283,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     isEditing={isEditing}
                     editableVet={editableVet}
                     handleChange={handleChange}
-                  />
+                    />
                   <VetDetail
                     label="Teléfono:"
                     value={veterinariaState.phoneNumber}
@@ -290,9 +291,72 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     isEditing={isEditing}
                     editableVet={editableVet}
                     handleChange={handleChange}
-                  />
+                    />
                   
                 </div>
+      <div className="p-6 mt-6 bg-white rounded-lg shadow-md ">
+      <h2 className="mb-6 text-2xl font-bold text-customBrown">
+        Horario de atención
+      </h2>
+      <div className="space-y-4 ">
+        {/* Lunes */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Lunes</span>
+          <span className="text-gray-600">
+            {veterinariaState?.businessHours?.monday?.opening} - {veterinariaState.businessHours.monday.closure}
+          </span>
+        </div>
+
+        {/* Martes */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Martes</span>
+          <span className="text-gray-600 ">
+            {veterinariaState.businessHours.tuesday.opening} - {veterinariaState.businessHours.tuesday.closure}
+          </span>
+        </div>
+
+        {/* Miércoles */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Miércoles</span>
+          <span className="text-gray-600">
+            {veterinariaState.businessHours.wednesday.opening} - {veterinariaState.businessHours.wednesday.closure}
+          </span>
+        </div>
+
+        {/* Jueves */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Jueves</span>
+          <span className="text-gray-600">
+            {veterinariaState.businessHours.thursday.opening} - {veterinariaState.businessHours.thursday.closure}
+          </span>
+        </div>
+
+        {/* Viernes */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Viernes</span>
+          <span className="text-gray-600">
+            {veterinariaState.businessHours.friday.opening} - {veterinariaState.businessHours.friday.closure}
+          </span>
+        </div>
+
+        {/* Sábado */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Sábado</span>
+          <span className="text-gray-600">
+            {veterinariaState.businessHours.saturday.opening} - {veterinariaState.businessHours.saturday.closure}
+          </span>
+        </div>
+
+        {/* Domingo */}
+        <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+          <span className="font-medium text-gray-700">Domingo</span>
+          <span className="text-gray-600">
+            {veterinariaState.businessHours.sunday.opening} - {veterinariaState.businessHours.sunday.closure}
+          </span>
+        </div>
+      </div>
+    </div>
+                   </>
               )}
             </div>
 
