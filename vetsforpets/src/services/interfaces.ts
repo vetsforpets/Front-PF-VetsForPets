@@ -89,6 +89,7 @@ export interface IVetCredentials {
   businessHours: null;
   emergencies: IEmergency[];
   role: string;
+  isActive: boolean;
 }
 
 export interface IEmergency {
@@ -162,3 +163,29 @@ export interface IPetEditData {
   profileImg: string;
   userId: string;
 }
+
+
+export interface IVetLocation {
+  id: string;
+  street: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  latitude: string;
+  longitude: string;
+}
+
+export interface IVet {
+  id: string;
+  name: string;
+  email: string;
+  veterinarian: string;
+  phoneNumber: string;
+  is24Hours: boolean;
+  imgProfile: string;
+  foundation: string;
+  role: string;
+  licenseNumber: string;
+  location: IVetLocation[];
+  isActive: boolean;
+  }
