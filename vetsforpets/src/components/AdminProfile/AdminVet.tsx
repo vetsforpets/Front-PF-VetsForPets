@@ -72,7 +72,7 @@ const AdminVet = () => {
         fetchAppointments();
     }, []);
 
-    const handleVetClick = async (vetName: string, vetUri: string) => {
+    const handleVetClick = async (vetName: string, _vetUri: string) => {
         setSelectedVet(vetName);
         setVetAppointmentsDetails(null);
         const vet = veterinarias.find((v) => v.nombre === vetName);

@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState, useEffect } from "react";
 import { getAllVets, getVetById, deletePetShop } from "@/services/servicesVet";
 import { toast } from "sonner";
@@ -62,7 +64,7 @@ const DeletePetShop = () => {
                     
                     setPetShops(prevPetShops => prevPetShops.filter(petShop => petShop.id !== id));
                 }
-            } catch (error) {
+            } catch {
                 toast.error("Error al eliminar la veterinaria");
             }
         }
