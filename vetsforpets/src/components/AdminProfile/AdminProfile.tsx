@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PetDetails from "../pet/petDetails"; 
 import PetPreview, { Pet } from "../pet/PetPreview";
 import Admin from "./Admin";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
@@ -13,7 +13,7 @@ import AppointmentsUser from "../Calendar/AppointmentsUser";
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
 
 export default function AdminProfile() {
-  // const router = useRouter();
+  const router = useRouter();
   const userData = useUserStore((state) => state.userData);
 
   const [user, setUser] = useState<IUserData>();
@@ -26,15 +26,15 @@ export default function AdminProfile() {
   const [showStripeMetrics, setShowStripeMetrics] = useState(false);
   const [showAppointments, setShowAppointments ] = useState(false);
 
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     if (!user?.isAdmin) {
-  //       router.push("/");
-  //     }
-  //   }, 2000);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!user?.isAdmin) {
+        router.push("/");
+      }
+    }, 1000);
 
-  //   return () => clearTimeout(timeout);
-  // }, [user?.isAdmin]);
+    return () => clearTimeout(timeout);
+  }, [user?.isAdmin]);
 
   useEffect(() => {
     const fetchData = async () => {
