@@ -17,16 +17,14 @@ interface RawMessage {
   content: string;
   senderType: string;
 }
-
-interface UserChatProps {
-  vetId: string;
+interface VetChatProps {
   chatId: string;
 }
 
-export function UserChat({ vetId, chatId }: UserChatProps) {
+export function VetChat({ chatId }: VetChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState("");
-  const [userName, setUserName] = useState<string | null>(null);
+  const [vetName, setVetName] = useState<string | null>(null);
   const { userData } = useUserStore();
   const token = userData?.token;
   const socketRef = useRef<Socket | null>(null);
@@ -34,16 +32,18 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
   useEffect(() => {
     if (!userData?.id || !token) return;
 
-    const fetchUserName = async () => {
+    const fetchVetName = async () => {
       try {
-        const user = await fetchUserData(userData.id, token);
-        setUserName(user.name);
+        const user = await getVetById(userData.id, token);
+        if (user) {
+          setVetName(user.name);
+        }
       } catch (error) {
-        console.error("Error al obtener el nombre del usuario:", error);
+        console.error("Error al obtener el nombre de la veterinaria:", error);
       }
     };
 
-    fetchUserName();
+    fetchVetName();
   }, [userData?.id, token]);
 
   useEffect(() => {
@@ -59,19 +59,19 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
 
     // 📌 Manejadores de eventos
     const handleMessageHistory = async (history: RawMessage[]) => {
+      console.log("📌 Historial de mensajes recibido:", history);
+
       // Mapeamos senderId a nombres
       const updatedMessages = await Promise.all(
         history.map(async (msg) => {
           let senderName = "Desconocido";
 
           if (msg.senderId === userData?.id) {
-            senderName = userName || "Tú";
+            senderName = vetName || "Tú";
           } else {
             try {
-              const senderData = await getVetById(msg.senderId, token);
-              if (senderData) {
-                senderName = senderData.name;
-              }
+              const senderData = await fetchUserData(msg.senderId, token);
+              senderName = senderData.name;
             } catch (error) {
               console.error(
                 `Error al obtener el nombre del sender ${msg.senderId}:`,
@@ -96,7 +96,7 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
         ...prev,
         {
           sender:
-            msg.senderId === userData?.id ? userName || "Tú" : "Desconocido",
+            msg.senderId === userData?.id ? vetName || "Tú" : "Desconocido",
           message: msg.content,
           senderType: msg.senderType,
         },
@@ -113,7 +113,7 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
     socket.on("error", handleError);
 
     // 📌 Unirse a la sala del chat
-    socket.emit("joinRoom", vetId);
+    socket.emit("joinRoomPetshop", chatId);
 
     return () => {
       // 📌 Remover eventos y desconectar al desmontar
@@ -125,15 +125,15 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
       socket.disconnect();
       socketRef.current = null;
     };
-  }, [token, chatId, userName]);
+  }, [token, chatId, vetName]);
 
   const sendMessage = () => {
     if (!message.trim() || !socketRef.current) return;
 
     const newMessage = {
-      sender: userName || "Dueño de Mascota", // ✅ Ahora muestra el nombre del usuario
+      sender: vetName || "Petshop",
       message,
-      senderType: "USER",
+      senderType: "PETSHOP",
     };
 
     socketRef.current.emit("message", { roomId: chatId, message });

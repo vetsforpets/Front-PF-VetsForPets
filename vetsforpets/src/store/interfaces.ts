@@ -11,9 +11,8 @@ export interface IUserState {
   clearUserData: () => void;
 }
 
-export interface IVetState {
-  vetId: string | null;
-  setVetId: (data: string) => void;
-  clearVetId: () => void;
+export interface IEmergencyFlagState {
+  emergencyFlag: boolean;
+  setEmergencyFlag: (data: boolean) => void;
+  clearEmergencyFlag: () => void;
 }
-

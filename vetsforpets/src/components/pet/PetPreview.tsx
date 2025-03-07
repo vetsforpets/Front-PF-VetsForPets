@@ -72,14 +72,14 @@ const PetPreview: React.FC<PetPreviewProps> = ({
     const birthDate = new Date(birthdate);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-  
+
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
       age--;
     }
-  
+
     return age;
   };
 
@@ -111,7 +111,9 @@ const PetPreview: React.FC<PetPreviewProps> = ({
           <input
             disabled
             type="text"
-            value={`${calculateAge(pet.birthdate)} años`}
+            value={`${calculateAge(pet.birthdate)} ${
+              calculateAge(pet.birthdate) === 1 ? "año" : "años"
+            }`}
             className="w-full px-3 py-2 rounded-2xl bg-customBeige border-none focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
           />
         </div>

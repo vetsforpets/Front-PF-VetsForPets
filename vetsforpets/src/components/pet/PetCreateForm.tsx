@@ -249,16 +249,10 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                   id="isSterilized"
                   className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
                   aria-label="Esterilización"
-                  value={value !== undefined ? String(value) : ""}
-                  onChange={(e) =>
-                    onChange(
-                      e.target.value === "true"
-                        ? true
-                        : e.target.value === "false"
-                        ? false
-                        : undefined
-                    )
+                  value={
+                    value === true ? "true" : value === false ? "false" : ""
                   }
+                  onChange={(e) => onChange(e.target.value === "true")}
                 >
                   <option value="" disabled hidden>
                     Esterilizado?
