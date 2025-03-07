@@ -9,8 +9,15 @@ import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
 import CalendlySearch from "../Calendar/CalendlySearch";
-import AppointmentsUser from "../Calendar/AppointmentsUser";
+
+// import AppointmentsUser from "../Calendar/AppointmentsUser";
+import dynamic from "next/dynamic";
+import UserAndVets from "./UsersAndVets";
+
+const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
+
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
+
 
 export default function AdminProfile() {
   // const router = useRouter();
@@ -23,8 +30,14 @@ export default function AdminProfile() {
   const [showProfile, setShowProfile] = useState(true);
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+
+  const [showAddPets, setShowAddPets] = useState(false);
+  const [showMaps, setShowMaps ] = useState(false);
+  const [showUserAndVets, setShowUserAndVets ] = useState(false);
+
   const [showStripeMetrics, setShowStripeMetrics] = useState(false);
   const [showAppointments, setShowAppointments ] = useState(false);
+
 
   // useEffect(() => {
   //   const timeout = setTimeout(() => {
@@ -61,16 +74,28 @@ export default function AdminProfile() {
     setShowProfile(true);
     setShowPets(false);
     setShowCalendly(false);
+
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
+
     setShowStripeMetrics(false);
     setShowAppointments(false);
+
   };
 
   const handlePetsClick = () => {
     setShowPets(true);
     setShowProfile(false);
     setShowCalendly(false);
+
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
+
     setShowStripeMetrics(false);
     setShowAppointments(false);
+
   };
 
   const handleStripeMetricsClick = () => {
@@ -78,25 +103,58 @@ export default function AdminProfile() {
     setShowProfile(false);
     setShowPets(false);
     setShowCalendly(false);
-    setShowAppointments(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
   };
+
+
+  // const handleRedirectToPets = () => {
+  //   setShowPets(true);
+  //   setShowProfile(false);
+  //   setShowCalendly(false);
+  //   setShowAddPets(false);
+  //   setShowMaps(false);
+  //   setShowUserAndVets(false)
+  //   router.push("/dashboard");
+  // };
+
 
   const handleCalendlyClick = () => {
     setShowCalendly(true);
     setShowProfile(false);
     setShowPets(false);
+
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
+
     setShowStripeMetrics(false);
     setShowAppointments(false);
+
   };
   
-  const handleAppointmentsClick = () => {
-    setShowAppointments(true);
+  const handleMapsClick = () => {
+    setShowMaps(true);
     setShowCalendly(false);
     setShowProfile(false);
     setShowPets(false);
-    setShowStripeMetrics(false);
-    
+    setShowAddPets(false);
+    setShowUserAndVets(false)
   };
+
+  const handleUserAndVetsClick = () => {
+    setShowUserAndVets(true)
+    setShowMaps(false);
+    setShowCalendly(false);
+    setShowProfile(false);
+    setShowPets(false);
+
+    setShowAddPets(false);
+
+    setShowStripeMetrics(false);
+
+  };
+  
 
   const handleUpdatePet = (updatedPet: Pet) => {
     setSelectedPet(updatedPet); // Actualiza el estado del pet seleccionado
@@ -165,7 +223,7 @@ export default function AdminProfile() {
             <a
               href="#"
               className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handleAppointmentsClick}
+              onClick={handleMapsClick}
             >
               <img
                 src="/calendar.svg"
@@ -175,7 +233,21 @@ export default function AdminProfile() {
               Mapa
             </a>
           </li>
+          
+
+          <li className="p-3">
+            <a
+              href="#"
+              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
+              onClick={handleUserAndVetsClick}
+            >
+              <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
+              Usuarios y Veterinarias
+            </a>
+          </li>
         </ul>
+
+        
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
@@ -223,7 +295,24 @@ export default function AdminProfile() {
               <StripeMetrics token={userData.token}/>
             )}
             {showCalendly && <CalendlySearch />}
-            {showAppointments && <AppointmentsUser/>}
+            {showMaps && <MapComponent />}
+            {showUserAndVets && <UserAndVets/>}
+
+
+
+            {showAddPets && (
+  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+    Funcionalidad para agregar mascotas próximamente.
+  </div>
+)}
+
+{showAppointments && (
+  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+    Funcionalidad para ver citas próximamente.
+  </div>
+)}
+
+
           </div>
         </div>
       </div>
