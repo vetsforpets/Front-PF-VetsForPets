@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PetCreateForm from "../pet/PetCreateForm";
-import PetDetails from "../pet/petDetails";
+import PetDetails from "../pet/petDetails"; 
 import PetPreview, { Pet } from "../pet/PetPreview";
 import Admin from "./Admin";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
 import CalendlySearch from "../Calendar/CalendlySearch";
+
 // import AppointmentsUser from "../Calendar/AppointmentsUser";
 import dynamic from "next/dynamic";
 import UserAndVets from "./UsersAndVets";
@@ -17,11 +17,14 @@ import UserAndVets from "./UsersAndVets";
 const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
 
+import AppointmentsUser from "../Calendar/AppointmentsUser";
+import StripeMetrics from "../StripeMetrics/StripeMetrics";
+
+
 export default function AdminProfile() {
-  const router = useRouter();
+  // const router = useRouter();
   const userData = useUserStore((state) => state.userData);
 
-  const [addingPet, setAddingPet] = useState(false);
   const [user, setUser] = useState<IUserData>();
   const [selectedPet, setSelectedPet] = useState<Pet>();
   const [reloadPets, setReloadPets] = useState(false);
@@ -29,19 +32,24 @@ export default function AdminProfile() {
   const [showProfile, setShowProfile] = useState(true);
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
+
   const [showAddPets, setShowAddPets] = useState(false);
   const [showMaps, setShowMaps ] = useState(false);
   const [showUserAndVets, setShowUserAndVets ] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!user?.isAdmin) {
-        router.push("/");
-      }
-    }, 1000);
+  const [showStripeMetrics, setShowStripeMetrics] = useState(false);
+  const [showAppointments, setShowAppointments ] = useState(false);
 
-    return () => clearTimeout(timeout);
-  }, [user?.isAdmin]);
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     if (!user?.isAdmin) {
+  //       router.push("/");
+  //     }
+  //   }, 2000);
+
+  //   return () => clearTimeout(timeout);
+  // }, [user?.isAdmin]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,28 +76,39 @@ export default function AdminProfile() {
     setShowProfile(true);
     setShowPets(false);
     setShowCalendly(false);
+
     setShowAddPets(false);
     setShowMaps(false);
     setShowUserAndVets(false)
+
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
+
   };
 
   const handlePetsClick = () => {
     setShowPets(true);
     setShowProfile(false);
     setShowCalendly(false);
+
     setShowAddPets(false);
     setShowMaps(false);
     setShowUserAndVets(false)
+
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
+
   };
 
-  const handleAddPetsClick = () => {
-    setShowAddPets(true);
+  const handleStripeMetricsClick = () => {
+    setShowStripeMetrics(true);
     setShowProfile(false);
     setShowPets(false);
     setShowCalendly(false);
     setShowMaps(false);
     setShowUserAndVets(false)
   };
+
 
   const handleRedirectToPets = () => {
     setShowPets(true);
@@ -101,13 +120,19 @@ export default function AdminProfile() {
     router.push("/dashboard");
   };
 
+
   const handleCalendlyClick = () => {
     setShowCalendly(true);
     setShowProfile(false);
     setShowPets(false);
+
     setShowAddPets(false);
     setShowMaps(false);
     setShowUserAndVets(false)
+
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
+
   };
   
   const handleMapsClick = () => {
@@ -125,7 +150,11 @@ export default function AdminProfile() {
     setShowCalendly(false);
     setShowProfile(false);
     setShowPets(false);
+
     setShowAddPets(false);
+
+    setShowStripeMetrics(false);
+
   };
   
 
@@ -172,10 +201,10 @@ export default function AdminProfile() {
             <a
               href="#"
               className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handleAddPetsClick}
+              onClick={handleStripeMetricsClick}
             >
               <img src="/pets.svg" alt="Calendly" className="w-12 h-12 me-2" />
-              Turnos
+              Membresias
             </a>
           </li>
           <li className="p-3">
@@ -259,24 +288,13 @@ export default function AdminProfile() {
                     <p className="mb-4 text-lg font-semibold text-gray-600">
                       No tienes mascotas registradas aún.
                     </p>
-                    <button
-                      onClick={handleAddPetsClick}
-                      className="px-6 py-3 text-white bg-customBrown rounded-2xl hover:bg-opacity-90"
-                    >
-                      Agregar Mascota
-                    </button>
                   </div>
                 )}
               </div>
             )}
 
-            {showAddPets && (
-              <PetCreateForm
-                setAddingPet={setAddingPet}
-                addingPet={addingPet}
-                setReloadPets={setReloadPets}
-                onPetCreated={handleRedirectToPets}
-              />
+            {showStripeMetrics && (
+              <StripeMetrics token={userData.token}/>
             )}
             {showCalendly && <CalendlySearch />}
             {showMaps && <MapComponent />}

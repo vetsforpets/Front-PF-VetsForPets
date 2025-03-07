@@ -158,3 +158,4 @@ export interface dayOpenings {
     paymentMethod: string,
     membership: [{id: string}]
   }
+
