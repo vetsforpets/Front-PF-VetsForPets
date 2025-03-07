@@ -3,8 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { ICalendlyEvent } from "../Calendar/AppointmentsVet";
 import { IVeterinaria } from "../Calendar/AppointmentsVet";
-import PetShopsList from "./AdminVetCards";
-import DeletePetShop from "./DeletePetshop";
+
 
 
 const AdminVet = () => {

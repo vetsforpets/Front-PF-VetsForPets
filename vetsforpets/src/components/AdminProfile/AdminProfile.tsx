@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PetDetails from "../pet/petDetails"; 
+import PetDetails from "../pet/petDetails";
 import PetPreview, { Pet } from "../pet/PetPreview";
 import Admin from "./Admin";
 import { useRouter } from "next/navigation";
@@ -33,11 +33,11 @@ export default function AdminProfile() {
   const [showVets, setShowVets] = useState(false);
 
   const [showAddPets, setShowAddPets] = useState(false);
-  const [showMaps, setShowMaps ] = useState(false);
-  const [showUserAndVets, setShowUserAndVets ] = useState(false);
+  const [showMaps, setShowMaps] = useState(false);
+  const [showUserAndVets, setShowUserAndVets] = useState(false);
 
   const [showStripeMetrics, setShowStripeMetrics] = useState(false);
-  const [showAppointments, setShowAppointments ] = useState(false);
+  const [showAppointments, setShowAppointments] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -66,95 +66,95 @@ export default function AdminProfile() {
     fetchData();
   }, [userData?.id, userData?.token, reloadPets]);
 
-  
- const handleSelectPet = (pet: Pet) => {
-  setSelectedPet(pet);
-};
 
-const handleProfileClick = () => {
-  setShowProfile(true);
-  setShowPets(false);
-  setShowVets(false);
+  const handleSelectPet = (pet: Pet) => {
+    setSelectedPet(pet);
+  };
 
-  setShowAddPets(false);
-  setShowMaps(false);
-  setShowUserAndVets(false)
+  const handleProfileClick = () => {
+    setShowProfile(true);
+    setShowPets(false);
+    setShowVets(false);
 
-  setShowStripeMetrics(false);
-  setShowAppointments(false);
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
 
-};
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
 
-const handlePetsClick = () => {
-  setShowPets(true);
-  setShowProfile(false);
-  setShowVets(false);
+  };
 
-  setShowAddPets(false);
-  setShowMaps(false);
-  setShowUserAndVets(false)
+  const handlePetsClick = () => {
+    setShowPets(true);
+    setShowProfile(false);
+    setShowVets(false);
 
-  setShowStripeMetrics(false);
-  setShowAppointments(false);
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
 
-};
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
 
-const handleStripeMetricsClick = () => {
-  setShowStripeMetrics(true);
-  setShowProfile(false);
-  setShowPets(false);
-  setShowVets(false);
-  setShowMaps(false);
-  setShowUserAndVets(false)
-};
+  };
 
-// const handleRedirectToPets = () => {
-//   setShowPets(true);
-//   setShowProfile(false);
-//   setShowCalendly(false);
-//   setShowAddPets(false);
-//   setShowMaps(false);
-//   setShowUserAndVets(false)
-//   router.push("/dashboard");
-// };
+  const handleStripeMetricsClick = () => {
+    setShowStripeMetrics(true);
+    setShowProfile(false);
+    setShowPets(false);
+    setShowVets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
+  };
 
-const handleVetsClick = () => {
-  setShowVets(true);
-  setShowProfile(false);
-  setShowPets(false);
+  // const handleRedirectToPets = () => {
+  //   setShowPets(true);
+  //   setShowProfile(false);
+  //   setShowCalendly(false);
+  //   setShowAddPets(false);
+  //   setShowMaps(false);
+  //   setShowUserAndVets(false)
+  //   router.push("/dashboard");
+  // };
 
-  setShowAddPets(false);
-  setShowMaps(false);
-  setShowUserAndVets(false)
+  const handleVetsClick = () => {
+    setShowVets(true);
+    setShowProfile(false);
+    setShowPets(false);
 
-  setShowStripeMetrics(false);
-  setShowAppointments(false);
+    setShowAddPets(false);
+    setShowMaps(false);
+    setShowUserAndVets(false)
 
-};
+    setShowStripeMetrics(false);
+    setShowAppointments(false);
 
-const handleMapsClick = () => {
-  setShowMaps(true);
-  setShowVets(false);
-  setShowProfile(false);
-  setShowPets(false);
-  setShowAddPets(false);
-  setShowUserAndVets(false)
-};
+  };
 
-const handleUserAndVetsClick = () => {
-  setShowUserAndVets(true)
-  setShowMaps(false);
-  setShowVets(false);
-  setShowProfile(false);
-  setShowPets(false);
+  const handleMapsClick = () => {
+    setShowMaps(true);
+    setShowVets(false);
+    setShowProfile(false);
+    setShowPets(false);
+    setShowAddPets(false);
+    setShowUserAndVets(false)
+  };
 
-  setShowAddPets(false);
+  const handleUserAndVetsClick = () => {
+    setShowUserAndVets(true)
+    setShowMaps(false);
+    setShowVets(false);
+    setShowProfile(false);
+    setShowPets(false);
 
-  setShowStripeMetrics(false);
+    setShowAddPets(false);
 
-};
+    setShowStripeMetrics(false);
 
-  
+  };
+
+
 
   const handleUpdatePet = (updatedPet: Pet) => {
     setSelectedPet(updatedPet); // Actualiza el estado del pet seleccionado
@@ -233,7 +233,7 @@ const handleUserAndVetsClick = () => {
               Mapa
             </a>
           </li>
-          
+
 
           <li className="p-3">
             <a
@@ -247,7 +247,7 @@ const handleUserAndVetsClick = () => {
           </li>
         </ul>
 
-        
+
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
@@ -292,25 +292,25 @@ const handleUserAndVetsClick = () => {
             )}
 
             {showStripeMetrics && (
-              <StripeMetrics token={userData.token}/>
+              <StripeMetrics token={userData.token} />
             )}
-            <MyComponent userData={userData} />
+            {showVets && (<MyComponent userData={userData} />)}
             {showMaps && <MapComponent />}
-            {showUserAndVets && <UserAndVets/>}
+            {showUserAndVets && <UserAndVets />}
 
 
 
             {showAddPets && (
-  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-    Funcionalidad para agregar mascotas próximamente.
-  </div>
-)}
+              <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+                Funcionalidad para agregar mascotas próximamente.
+              </div>
+            )}
 
-{showAppointments && (
-  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-    Funcionalidad para ver citas próximamente.
-  </div>
-)}
+            {showAppointments && (
+              <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+                Funcionalidad para ver citas próximamente.
+              </div>
+            )}
 
 
           </div>
