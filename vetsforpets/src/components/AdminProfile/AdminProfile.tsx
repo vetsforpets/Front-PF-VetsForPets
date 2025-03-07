@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PetDetails from "../pet/petDetails"; 
+import PetDetails from "../pet/petDetails";
 import PetPreview, { Pet } from "../pet/PetPreview";
 import Admin from "./Admin";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
-import CalendlySearch from "../Calendar/CalendlySearch";
+
 
 // import AppointmentsUser from "../Calendar/AppointmentsUser";
 import dynamic from "next/dynamic";
@@ -17,6 +17,7 @@ import UserAndVets from "./UsersAndVets";
 const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
+import { MyComponent } from "./VetGroup";
 
 
 export default function AdminProfile() {
@@ -29,21 +30,21 @@ export default function AdminProfile() {
 
   const [showProfile, setShowProfile] = useState(true);
   const [showPets, setShowPets] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
+  const [showVets, setShowVets] = useState(false);
 
   const [showAddPets, setShowAddPets] = useState(false);
-  const [showMaps, setShowMaps ] = useState(false);
-  const [showUserAndVets, setShowUserAndVets ] = useState(false);
+  const [showMaps, setShowMaps] = useState(false);
+  const [showUserAndVets, setShowUserAndVets] = useState(false);
 
   const [showStripeMetrics, setShowStripeMetrics] = useState(false);
-  const [showAppointments, setShowAppointments ] = useState(false);
+  const [showAppointments, setShowAppointments] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!user?.isAdmin) {
         router.push("/");
       }
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timeout);
   }, [user?.isAdmin]);
@@ -65,6 +66,7 @@ export default function AdminProfile() {
     fetchData();
   }, [userData?.id, userData?.token, reloadPets]);
 
+
   const handleSelectPet = (pet: Pet) => {
     setSelectedPet(pet);
   };
@@ -72,7 +74,7 @@ export default function AdminProfile() {
   const handleProfileClick = () => {
     setShowProfile(true);
     setShowPets(false);
-    setShowCalendly(false);
+    setShowVets(false);
 
     setShowAddPets(false);
     setShowMaps(false);
@@ -86,7 +88,7 @@ export default function AdminProfile() {
   const handlePetsClick = () => {
     setShowPets(true);
     setShowProfile(false);
-    setShowCalendly(false);
+    setShowVets(false);
 
     setShowAddPets(false);
     setShowMaps(false);
@@ -101,11 +103,10 @@ export default function AdminProfile() {
     setShowStripeMetrics(true);
     setShowProfile(false);
     setShowPets(false);
-    setShowCalendly(false);
+    setShowVets(false);
     setShowMaps(false);
     setShowUserAndVets(false)
   };
-
 
   // const handleRedirectToPets = () => {
   //   setShowPets(true);
@@ -117,9 +118,8 @@ export default function AdminProfile() {
   //   router.push("/dashboard");
   // };
 
-
-  const handleCalendlyClick = () => {
-    setShowCalendly(true);
+  const handleVetsClick = () => {
+    setShowVets(true);
     setShowProfile(false);
     setShowPets(false);
 
@@ -131,10 +131,10 @@ export default function AdminProfile() {
     setShowAppointments(false);
 
   };
-  
+
   const handleMapsClick = () => {
     setShowMaps(true);
-    setShowCalendly(false);
+    setShowVets(false);
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
@@ -144,7 +144,7 @@ export default function AdminProfile() {
   const handleUserAndVetsClick = () => {
     setShowUserAndVets(true)
     setShowMaps(false);
-    setShowCalendly(false);
+    setShowVets(false);
     setShowProfile(false);
     setShowPets(false);
 
@@ -153,7 +153,8 @@ export default function AdminProfile() {
     setShowStripeMetrics(false);
 
   };
-  
+
+
 
   const handleUpdatePet = (updatedPet: Pet) => {
     setSelectedPet(updatedPet); // Actualiza el estado del pet seleccionado
@@ -208,14 +209,14 @@ export default function AdminProfile() {
             <a
               href="#"
               className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handleCalendlyClick}
+              onClick={handleVetsClick}
             >
               <img
                 src="/calendar.svg"
                 alt="Calendly"
                 className="w-12 h-12 me-2"
               />
-              Membresias
+              Veterinarias y Turnos
             </a>
           </li>
           <li className="p-3">
@@ -232,7 +233,7 @@ export default function AdminProfile() {
               Mapa
             </a>
           </li>
-          
+
 
           <li className="p-3">
             <a
@@ -246,7 +247,7 @@ export default function AdminProfile() {
           </li>
         </ul>
 
-        
+
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
@@ -291,25 +292,25 @@ export default function AdminProfile() {
             )}
 
             {showStripeMetrics && (
-              <StripeMetrics token={userData.token}/>
+              <StripeMetrics token={userData.token} />
             )}
-            {showCalendly && <CalendlySearch />}
+            {showVets && (<MyComponent userData={userData} />)}
             {showMaps && <MapComponent />}
-            {showUserAndVets && <UserAndVets/>}
+            {showUserAndVets && <UserAndVets />}
 
 
 
             {showAddPets && (
-  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-    Funcionalidad para agregar mascotas próximamente.
-  </div>
-)}
+              <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+                Funcionalidad para agregar mascotas próximamente.
+              </div>
+            )}
 
-{showAppointments && (
-  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-    Funcionalidad para ver citas próximamente.
-  </div>
-)}
+            {showAppointments && (
+              <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+                Funcionalidad para ver citas próximamente.
+              </div>
+            )}
 
 
           </div>
