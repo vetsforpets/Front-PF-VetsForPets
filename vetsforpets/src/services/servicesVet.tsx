@@ -124,3 +124,35 @@ export const updatePetshop = async (
     throw new Error("Ocurrió un error desconocido al actualizar los datos");
   }
 };
+
+
+
+
+
+export const deletePetShop = async (id: string, token: string) => {
+  try {
+    const response = await fetch(`${apiURL}/petshop/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "No se pudo eliminar el pet shop");
+    }
+
+    return { success: true };
+
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error al eliminar el pet shop:', error.message);
+      return { error: error.message };
+    } else {
+      console.error('Error desconocido al eliminar el pet shop:', error);
+      return { error: 'Error desconocido' };
+    }
+  }
+};

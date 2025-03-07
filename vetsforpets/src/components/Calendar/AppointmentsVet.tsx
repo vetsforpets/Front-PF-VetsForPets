@@ -26,7 +26,7 @@ export interface IAppointment {
     invitees: IInvitee[];
 }
 
-interface IVeterinaria {
+export interface IVeterinaria {
     id: number;
     nombre: string;
     email: string;
@@ -34,7 +34,7 @@ interface IVeterinaria {
     calendlyToken?: string;
 }
 
-interface ICalendlyEvent {
+export interface ICalendlyEvent {
     uri: string;
     start_time: string;
     end_time: string;
