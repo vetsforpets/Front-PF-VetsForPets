@@ -216,7 +216,7 @@ export default function AdminProfile() {
                 alt="Calendly"
                 className="w-12 h-12 me-2"
               />
-              Membresias
+              Veterinarias y Turnos
             </a>
           </li>
           <li className="p-3">
