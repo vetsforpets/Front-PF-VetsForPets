@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PetCreateForm from "../pet/PetCreateForm";
-import PetDetails from "../pet/petDetails";
+import PetDetails from "../pet/petDetails"; 
 import PetPreview, { Pet } from "../pet/PetPreview";
 import Admin from "./Admin";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
@@ -14,10 +13,9 @@ import AppointmentsUser from "../Calendar/AppointmentsUser";
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
 
 export default function AdminProfile() {
-  const router = useRouter();
+  // const router = useRouter();
   const userData = useUserStore((state) => state.userData);
 
-  const [addingPet, setAddingPet] = useState(false);
   const [user, setUser] = useState<IUserData>();
   const [selectedPet, setSelectedPet] = useState<Pet>();
   const [reloadPets, setReloadPets] = useState(false);
@@ -81,15 +79,6 @@ export default function AdminProfile() {
     setShowPets(false);
     setShowCalendly(false);
     setShowAppointments(false);
-  };
-
-  const handleRedirectToPets = () => {
-    setShowPets(true);
-    setShowProfile(false);
-    setShowCalendly(false);
-    setShowStripeMetrics(false);
-    setShowAppointments(false);
-    router.push("/dashboard");
   };
 
   const handleCalendlyClick = () => {
