@@ -51,8 +51,6 @@ export interface IPet {
   profileImg?: string;
 }
 
-
-
 export interface IUserData {
   id: string;
   name: string;
@@ -70,7 +68,17 @@ export interface IUserData {
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
+
   userMembership: null | string;
+
+  emergencies: IUserEmergency[];
+}
+
+export interface IUserEmergency {
+  vetId: string;
+  pet: Pet;
+  chatId: string;
+
 }
 
 export interface IUserCredentials {

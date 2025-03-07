@@ -141,7 +141,8 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
           />
 
           <div className="flex items-center w-full h-12 px-3 py-2 rounded-2xl bg-customBeige">
-            {calculateAge(petData.birthdate)} años
+            {calculateAge(petData.birthdate)}{" "}
+            {calculateAge(petData.birthdate) === 1 ? "año" : "años"}
           </div>
 
           <Controller
@@ -215,23 +216,6 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
               </div>
             )}
           />
-
-          {/* <Controller
-            name="isSterilized"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="w-full px-3 py-2 border-none rounded-2xl disabled:opacity-100 bg-customBeige"
-                disabled={!isEditing}
-                value={field.value ? "true" : "false"}
-                onChange={(e) => field.onChange(e.target.value === "true")}
-              >
-                <option value="true">Esterilizado: Sí</option>
-                <option value="false">Esterilizado: No</option>
-              </select>
-            )}
-          /> */}
 
           <Controller
             name="isSterilized"

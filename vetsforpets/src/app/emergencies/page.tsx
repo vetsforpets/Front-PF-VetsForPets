@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { VetEmergencies } from "@/components/VetEmergencies/VetEmergencies";
 import { useUserStore } from "@/store";
 import React from "react";
+import { UserEmergencies } from "@/components/UserEmergencies/UserEmergencies";
 
 // Importación dinámica para deshabilitar SSR en el componente del mapa
 const MapComponent = dynamic(() => import("../../components/Maps/Maps"), {
@@ -17,7 +18,10 @@ export default function Emergencies() {
       {userData?.role === "PETSHOP" ? (
         <VetEmergencies />
       ) : (
-        <MapComponent />
+        <div>
+          <MapComponent />
+          <UserEmergencies />
+        </div>
       )}
     </>
   );
