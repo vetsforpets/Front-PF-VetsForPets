@@ -26,15 +26,23 @@ export interface IStripeMetricsFinancialResponse {
         }
     ] 
 }
-
-export interface IStripeMetricsTransactionResponse {
-        id: string
-        amount: string,
-        net: string,
-        currency: string,
+export interface IDTOStripeMetricsTransactionResponse {
+    data:[{
+            id: string,
+            amount: string,
+            net: string
+        }
+    ]
 }
 
 export interface IStripeMetricsUserActiveResponse {
     name: string,
+    lastName: string,
+    email: string,
+    dateOrder: Date ,
+}
+export interface IDTOStripeMetricsUserActiveResponse {
+    name: string,
+    lastName: string,
     email: string,
 }

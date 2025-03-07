@@ -1,10 +1,10 @@
-import { IStripeMetricsFinancialResponse, IStripeMetricsTransactionResponse, IStripeMetricsUserActiveResponse } from "@/interfaces/stripeTypes";
+import { IDTOStripeMetricsTransactionResponse, IDTOStripeMetricsUserActiveResponse, IStripeMetricsFinancialResponse } from "@/interfaces/stripeTypes";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 export async function fetchFinancialData(token: string ): Promise<IStripeMetricsFinancialResponse | void> {
     try {
        
-        const response = await fetch(`${apiURL}/payments/admin/reports/financial`, {
+        const response = await fetch(`${apiURL}/payments/admin/reports/balance`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export async function fetchFinancialData(token: string ): Promise<IStripeMetrics
           throw new Error("Ocurrió un error desconocido al obtener el balance");
         }
 }
-export async function fetchTransactionData(token: string ): Promise<IStripeMetricsTransactionResponse[] | void> {
+export async function fetchTransactionData(token: string ): Promise<IDTOStripeMetricsTransactionResponse> {
     try {
        
         const response = await fetch(`${apiURL}/payments/admin/reports/transactions`, {
@@ -42,7 +42,7 @@ export async function fetchTransactionData(token: string ): Promise<IStripeMetri
             throw new Error("Error al obtener los datos de las transacciones");
           }
           
-          const data: IStripeMetricsTransactionResponse[] = await response.json();
+          const data: IDTOStripeMetricsTransactionResponse = await response.json();
           console.log("Datos de las transacciones:", data); 
           return data; 
         } catch (error) {
@@ -53,10 +53,10 @@ export async function fetchTransactionData(token: string ): Promise<IStripeMetri
           throw new Error("Ocurrió un error desconocido al obtener las transacciones");
         }
 }
-export async function fetchUsersActiveData(token: string ): Promise<IStripeMetricsUserActiveResponse[] > {
+export async function fetchUsersActiveData(token: string ): Promise<IDTOStripeMetricsUserActiveResponse[] > {
     try {
        
-        const response = await fetch(`${apiURL}/payments/admin/reports/usersActive`, {
+        const response = await fetch(`${apiURL}/payments/admin/reports/premium`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +68,18 @@ export async function fetchUsersActiveData(token: string ): Promise<IStripeMetri
             throw new Error("Error al obtener los datos de los usuarios activos");
           }
           
-          const data: IStripeMetricsUserActiveResponse[] = await response.json();
+          const data = await response.json();
+          // const newData: IDTOStripeMetricsUserActiveResponse[] = data.map((user: IStripeMetricsUserActiveResponse)=> {
+            // const {name, lastName, email, dateOrder} = user
+            // const newDateOrder = dateOrder.toString()
+            // const newUser = {
+            //   name,
+            //   lastName,
+            //   email,
+            //   dateOrder: newDateOrder
+            // } 
+          //   return newData
+          // })
           console.log("Datos de usuarios activos:", data); 
           return data; 
         } catch (error) {
