@@ -1,4 +1,4 @@
-import { IDTOStripeMetricsTransactionResponse, IDTOStripeMetricsUserActiveResponse, IStripeMetricsFinancialResponse, IStripeMetricsUserActiveResponse } from "@/interfaces/stripeTypes";
+import { IDTOStripeMetricsTransactionResponse, IDTOStripeMetricsUserActiveResponse, IStripeMetricsFinancialResponse } from "@/interfaces/stripeTypes";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 export async function fetchFinancialData(token: string ): Promise<IStripeMetricsFinancialResponse | void> {
