@@ -2,16 +2,39 @@
 import Image from "next/image";
 import dog2 from "@/../public/images/dog2.png";
 import lupa from "@/../public/images/lupa.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useUserStore } from "@/store";
+import { getVetById } from "@/services/servicesVet";
+import GotEmergencieModal from "@/components/GotEmergencieModal/GotEmergencieModal";
 
 export function UpperBody() {
+  const { userData } = useUserStore();
+  const [emergenciesModalOpen, setEmergenciesModalOpen] =
+    useState<boolean>(false);
+
   useEffect(() => {
     AOS.init({
       duration: 1500,
       once: true,
     });
+  }, []);
+
+  useEffect(() => {
+    if (userData?.token && userData?.id && userData.role === "PETSHOP") {
+      const fetchVetEmergencies = async () => {
+        try {
+          const vet = await getVetById(userData.id, userData.token);
+          if (vet && vet.emergencies.length > 0) {
+            setEmergenciesModalOpen(true);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchVetEmergencies();
+    }
   }, []);
 
   return (
@@ -49,6 +72,10 @@ export function UpperBody() {
           </div>
         </div>
       </div>
+      <GotEmergencieModal
+        isOpen={emergenciesModalOpen}
+        onClose={() => setEmergenciesModalOpen(false)}
+      />
     </div>
   );
 }

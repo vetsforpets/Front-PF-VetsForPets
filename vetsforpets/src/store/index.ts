@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { IUserStored, IUserState, IVetState } from "./interfaces";
+import { IUserStored, IUserState, IEmergencyFlagState } from "./interfaces";
 
 // USERS
 
@@ -26,24 +26,24 @@ export const useUserStore = create<IUserState>()(
   )
 );
 
-// VETS
+// EMERGENCY FLAG
 
-export const useVetStore = create<IVetState>()(
+export const useEmergencyFlagStore = create<IEmergencyFlagState>()(
   devtools(
     persist(
       (set) => ({
-        vetId: null,
+        emergencyFlag: false,
 
-        setVetId: (data: string) => {
-          set({ vetId: data });
+        setEmergencyFlag: (data: boolean) => {
+          set({ emergencyFlag: data });
         },
 
-        clearVetId: () => {
-          set({ vetId: null });
+        clearEmergencyFlag: () => {
+          set({ emergencyFlag: false });
         },
       }),
       {
-        name: "vet-ID",
+        name: "emergency-flag",
         storage: createJSONStorage(() => localStorage),
       }
     )
