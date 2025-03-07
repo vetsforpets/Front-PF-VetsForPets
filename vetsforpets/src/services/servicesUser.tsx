@@ -150,3 +150,31 @@ export async function RegisterUser(
     throw new Error("Ocurrió un error desconocido");
   }
 }
+
+export const deleteUser = async (id: string, token: string) => {
+  try {
+    const response = await fetch(`${apiURL}/users/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "No se pudo eliminar el usuario");
+    }
+
+    return { success: true };
+
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error al eliminar el usuario:', error.message);
+      return { error: error.message };
+    } else {
+      console.error('Error desconocido al eliminar el usuario:', error);
+      return { error: 'Error desconocido' };
+    }
+  }
+};

@@ -113,7 +113,7 @@ const Maps = () => {
               setUserPosition([lat, lon]);
             }
           }
-          // Aquí se guarda el valor admin del usuario
+          
           if (userResponse?.isAdmin !== undefined) {
             setIsAdmin(userResponse.isAdmin);
             console.log("Es Admin", userResponse.isAdmin)
@@ -197,7 +197,6 @@ const Maps = () => {
     setNearestVet(nearest);
   }, [userPosition, veterinarias]);
 
-  // Usar useMemo para evitar recrear los iconos en cada render
   const vetIcon = useMemo(
     () =>
       new L.Icon({
@@ -224,11 +223,10 @@ const Maps = () => {
 
   const destinationVet = selectedVet || nearestVet;
 
-  // Efecto para limpiar el contenedor del mapa al desmontar el componente
   useEffect(() => {
     return () => {
       const container = document.getElementById("map-container") as LeafletHTMLElement | null;
-      // Si existe y tiene _leaflet_id, lo eliminamos para evitar la inicialización duplicada
+      
       if (container && container._leaflet_id) {
         container._leaflet_id = undefined;
       }
@@ -237,7 +235,7 @@ const Maps = () => {
 
   return (
     <div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center md:flex-row">
       {loading && <p>Cargando datos...</p>}
 {error && <p className="error">{error}</p>}
 
@@ -249,6 +247,7 @@ const Maps = () => {
           zoom={12.4}
           style={{ width: "70%", height: "600px" }}
           zoomControl={false}
+          className="z-0 ml-8"
         >
           <RecenterAutomatically lat={userPosition[0]} lng={userPosition[1]} />
           <ZoomControl position="topright" />
@@ -346,7 +345,6 @@ const Maps = () => {
 
   </>
 )}
-
           
         </MapContainer>
 
@@ -389,9 +387,6 @@ const Maps = () => {
     </p>
   </div>
 )}
-
-
-
 
 
   {destinationVet && !selectedUser && !isAdmin && (

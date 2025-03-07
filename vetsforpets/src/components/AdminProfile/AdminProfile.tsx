@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import PetDetails from "../pet/petDetails";
 import PetPreview, { Pet } from "../pet/PetPreview";
-import Admin from "./Admin";
+// import Admin from "./Admin";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
+
 
 
 // import AppointmentsUser from "../Calendar/AppointmentsUser";
@@ -18,6 +19,7 @@ const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
 import { MyComponent } from "./VetGroup";
+import { MyUserComponent } from "./UserGrup";
 
 
 export default function AdminProfile() {
@@ -182,7 +184,7 @@ export default function AdminProfile() {
               onClick={handleProfileClick}
             >
               <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
-              Usuarios
+              Usuarios y Mascotas
             </a>
           </li>
           <li className="p-3">
@@ -252,9 +254,12 @@ export default function AdminProfile() {
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
               <div className="flex justify-center">
-                <Admin />
+                {/* <Admin /> */}
+                <MyUserComponent userData={userData} /> 
               </div>
             )}
+
+            
             {showPets && (
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-14">
                 {user?.pets && user.pets.length > 0 ? (
@@ -295,10 +300,10 @@ export default function AdminProfile() {
               <StripeMetrics token={userData.token} />
             )}
             {showVets && (<MyComponent userData={userData} />)}
+            
             {showMaps && <MapComponent />}
+            
             {showUserAndVets && <UserAndVets />}
-
-
 
             {showAddPets && (
               <div className="p-4 mt-4 text-center bg-gray-200 rounded">
@@ -308,7 +313,7 @@ export default function AdminProfile() {
 
             {showAppointments && (
               <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-                Funcionalidad para ver citas próximamente.
+                Funcionalidad para ver turnos próximamente.
               </div>
             )}
 

@@ -62,11 +62,15 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isAdmin: boolean;
+  isActive: boolean
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
+
+  userMembership: null | string;
+
   emergencies: IUserEmergency[];
 }
 
@@ -74,6 +78,7 @@ export interface IUserEmergency {
   vetId: string;
   pet: Pet;
   chatId: string;
+
 }
 
 export interface IUserCredentials {
