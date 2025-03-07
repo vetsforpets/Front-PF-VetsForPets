@@ -25,14 +25,14 @@ export default function ProfileView() {
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showAddPets, setShowAddPets] = useState(false);
-  const [showAppointments, setShowAppointments ] = useState(false);
+  const [showAppointments, setShowAppointments] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (!userData?.id) {
         router.push("/");
       }
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, [userData, router]);
@@ -98,14 +98,13 @@ export default function ProfileView() {
     setShowAddPets(false);
     setShowAppointments(false);
   };
-  
+
   const handleAppointmentsClick = () => {
     setShowAppointments(true);
     setShowCalendly(false);
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
-    
   };
 
   const handleUpdatePet = (updatedPet: Pet) => {
@@ -244,7 +243,7 @@ export default function ProfileView() {
               />
             )}
             {showCalendly && <CalendlySearch />}
-            {showAppointments && <AppointmentsUser/>}
+            {showAppointments && <AppointmentsUser />}
           </div>
         </div>
       </div>
