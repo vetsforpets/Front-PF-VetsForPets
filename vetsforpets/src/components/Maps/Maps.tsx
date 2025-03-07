@@ -17,7 +17,6 @@ import { RequestEmergencyButton } from "../EmergencyButton/EmergencyButton";
 import { IUserApiResponse } from "@/services/interfaces";
 import { IVetFormData } from "@/interfaces/registerTypes";
 
-
 interface Vet {
   id: string,
   lat: number;
@@ -59,9 +58,6 @@ const Maps = () => {
   }>({type: null, data: null});
   
 
-
-
-
   useEffect(() => {
     const fetchAllUsersAndVets = async () => {
       if (!userData?.token) return;
@@ -88,9 +84,6 @@ const Maps = () => {
 
     fetchAllUsersAndVets();
   }, [userData?.token]); 
-
-
-
 
 
   useEffect(() => {
@@ -146,7 +139,6 @@ const Maps = () => {
         setLoadingVets(true);
         setErrorVets(null);
         const vetData = await getAllVets(userData.token);
-        console.log("Veterinarias obtenidas:", vetData);
   
         if (vetData && Array.isArray(vetData)) {
           const filteredVets = vetData
@@ -184,7 +176,6 @@ const Maps = () => {
   }, [userData?.token]);
   
   const actualizarUbicacionUsuario = (lat: number, lon: number) => {
-    console.log("Nueva ubicación del usuario:", lat, lon);
     setUserPosition([lat, lon]);
     setSelectedVet(null);
   };
