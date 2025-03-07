@@ -86,6 +86,7 @@ export default function AboutUs() {
       
       ]
     },
+    
     { 
       name: "Sebastian Sanjorge", 
       role: "Desarrollador Frontend", 
