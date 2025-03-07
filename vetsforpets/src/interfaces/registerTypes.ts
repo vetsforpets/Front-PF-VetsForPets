@@ -80,11 +80,6 @@ export interface IUserResponseData {
 //     foundation: "",
 //     businessHours: "",
 
-interface IBusinessHours {
-  opening: string;
-  closure: string;
-}
-
 export interface IVetFormData {
   id: string
   name: string;
