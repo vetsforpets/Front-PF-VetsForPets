@@ -39,7 +39,7 @@ const Footer = () => {
           <ul className="space-y-2 font-kiwi">
             <li>
               <Link
-                href="#"
+                href="/"
                 className="transition-colors duration-300 hover:text-customDarkGreen"
               >
                 Inicio
@@ -47,7 +47,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href="/about"
+                href="/emergencies"
                 className="transition-colors duration-300 hover:text-customGreen"
               >
                 Botón de emergencia
@@ -55,7 +55,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href="#"
+                href="aboutUs"
                 className="transition-colors duration-300 hover:text-customBrown"
               >
                 Sobre nosotros
@@ -63,7 +63,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                href="#"
+                href="/vets"
                 className="transition-colors duration-300 hover:text-customBeige"
               >
                 Veterinarias

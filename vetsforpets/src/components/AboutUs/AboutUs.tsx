@@ -21,15 +21,15 @@ export default function AboutUs() {
       role: "Desarrollador Backend", 
       img: "/team/elias.jpeg",
       socials: [
-        { name: "LinkedIn", url: "https://www.linkedin.com/in/eliasabad", icon: "icons/linkedin.png" },
-        { name: "GitHub", url: "https://github.com/eliasabad", icon: "/icons/github.png" },
+        { name: "LinkedIn", url: "https://www.linkedin.com/in/elias-nahuel-adad", icon: "icons/linkedin.png" },
+        { name: "GitHub", url: "https://github.com/EliasAdad", icon: "/icons/github.png" },
     
       ]
     },
     { 
       name: "Angélica Bengelsdorff", 
       role: "Desarrolladora Frontend", 
-      img: "/team/angie.jpeg",
+      img: "/team/angelica.jpeg",
       socials: [
         { name: "LinkedIn", url: "https://www.linkedin.com/in/angelicab", icon: "icons/linkedin.png" },
         { name: "GitHub", url: "https://github.com/angieb", icon: "icons/github.png" },
@@ -71,21 +71,22 @@ export default function AboutUs() {
       role: "Desarrollador Backend", 
       img: "/team/carlos.jpeg",
       socials: [
-        { name: "LinkedIn", url: "https://www.linkedin.com/in/eliasabad", icon: "icons/linkedin.png" },
-        { name: "GitHub", url: "https://github.com/eliasabad", icon: "/icons/github.png" },
+        { name: "LinkedIn", url: "https://www.linkedin.com/in/carlos-eduardo-figueira-214a64275/?locale=es_ES", icon: "icons/linkedin.png" },
+        { name: "GitHub", url: "https://github.com/Carlosf12", icon: "/icons/github.png" },
        
       ]
     },
     { 
       name: "Rivas Maria Paz", 
       role: "Desarrolladora Frontend", 
-      img: "/team/maria.jpeg",
+      img: "/team/maria.png",
       socials: [
-        { name: "LinkedIn", url: "https://www.linkedin.com/in/eliasabad", icon: "icons/linkedin.png" },
-        { name: "GitHub", url: "https://github.com/eliasabad", icon: "/icons/github.png" },
+        { name: "LinkedIn", url: "https://www.linkedin.com/in/maría-paz-rivas-3aabb32bb", icon: "icons/linkedin.png" },
+        { name: "GitHub", url: "https://github.com/Maria-Paz-Rivas", icon: "/icons/github.png" },
       
       ]
     },
+    
     { 
       name: "Sebastian Sanjorge", 
       role: "Desarrollador Frontend", 
