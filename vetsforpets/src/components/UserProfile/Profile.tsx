@@ -5,8 +5,9 @@ import { useUserStore } from "@/store";
 import React, { useEffect, useState } from "react";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
 import { toast } from "sonner";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import Image from "next/image";
+import LocationSearch from "../Maps/Search";
 
 interface IAppointment {
   id: string;
@@ -15,6 +16,11 @@ interface IAppointment {
   description: string;
   status: string;
   user: string;
+}
+
+interface ILocation {
+  latitude: number;
+  longitude: number;
 }
 
 interface IUserData {
@@ -28,6 +34,7 @@ interface IUserData {
   createdAt: string;
   imgProfile: string;
   isPremium: boolean;
+  location: ILocation[];
   appointments: IAppointment[];
   role: string;
 }
@@ -50,7 +57,7 @@ const Profile = () => {
         } catch (error) {
           console.error("Error al obtener usuarios:", error);
           setUsers([]);
-          setIsLoading(false)
+          setIsLoading(false);
         }
       }
     };
@@ -60,18 +67,15 @@ const Profile = () => {
 
   const user = userData && users.find((u) => u.id === userData.id);
 
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="flex items-center space-x-4">
-          <p className="mb-4 text-2xl font-bold text-customBrown">Cargando...</p>
-        <Image
-            src="/loading.svg"
-            width={100}
-            height={100}
-            alt="cargando"
-          />
-        </div> 
+          <p className="mb-4 text-2xl font-bold text-customBrown">
+            Cargando...
+          </p>
+          <Image src="/loading.svg" width={100} height={100} alt="cargando" />
+        </div>
       </div>
     );
   }
@@ -85,38 +89,77 @@ const Profile = () => {
     }
   };
 
+  // const handleSave = async () => {
+  //   if (editableUser) {
+  //     console.log("datos actualizados enviados.... ", editableUser)
+  //     try {
+  //       const updatedUser = await updateUser(
+  //         userData.id,
+  //         editableUser,
+  //         userData.token
+  //       );
+  //       console.log("Usuario actualizado:", updatedUser);
+  //       setUsers([updatedUser]);
+  //       toast.success("Perfil editado con éxito", {
+  //         duration: 3000,
+  //         style: {
+  //           color: "#155724",
+  //           background: "#d4edda",
+  //           borderRadius: "8px",
+  //           padding: "16px",
+  //           border: "1px solid #c3e6cb",
+  //         },
+  //       });
+  //       setIsEditing(false);
+  //     } catch (error) {
+  //       console.error("Error al guardar los cambios:", error);
+  //     }
+  //   }
+  // };
+
+
+
   const handleSave = async () => {
     if (editableUser) {
+      // Verificamos si location está definido y en el formato correcto
+      const updatedUser = {
+        ...editableUser,
+        location: Array.isArray(editableUser.location) && editableUser.location.length > 0
+          ? editableUser.location.map((loc) => ({
+              latitude: Number(loc.latitude),
+              longitude: Number(loc.longitude),
+            }))
+          : [{ latitude: 0, longitude: 0 }], // Si no tiene ubicación, enviamos un valor por defecto
+      };
+  
+      console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
+  
       try {
-        const updatedUser = await updateUser(
-          userData.id,
-          editableUser,
-          userData.token
-        );
-        console.log("Usuario actualizado:", updatedUser);
-        setUsers([updatedUser]);
-        toast.success("Perfil editado con éxito", {
-          duration: 3000,
-          style: {
-            color: "#155724",
-            background: "#d4edda",
-            borderRadius: "8px",
-            padding: "16px",
-            border: "1px solid #c3e6cb",
-          },
-        });
+        const response = await updateUser(userData.id, updatedUser, userData.token);
+        console.log("Usuario actualizado:", response);
+        setUsers([response]);
+        toast.success("Perfil editado con éxito", { duration: 3000 });
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
       }
     }
   };
+  
 
-  const handleChange = (field: keyof IUserData, value: string | number) => {
+  const handleChange = (field: keyof IUserData,  value: string | number | { latitude: number; longitude: number })  => {
     if (!editableUser) return;
+    
     setEditableUser((prev) => ({
       ...prev!,
-      [field]: field === "age" ? Number(value) : value,
+      [field]: field === "age" ? String(value) : value,
+    }));
+  };
+
+  const handleLocationSelect = (lat: number, lon: number) => {
+    setEditableUser((prev) => ({
+      ...prev!,
+      location: [{ latitude: Number(lat), longitude: Number(lon) }], 
     }));
   };
 
@@ -133,18 +176,15 @@ const Profile = () => {
     handleCloseModal();
   };
 
+
   return (
-    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 mt-4 xl:grid-cols-2 xl:mt-10 place-items-center">
+    <div className="grid w-full max-w-4xl grid-cols-1 gap-8 xl:grid-cols-2 place-items-center">
+      <div className="bg-customLightBrown flex flex-col items-center justify-center px-6 py-20 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 min-h-80 relative">
 
-
-
-
-      <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 h-80 relative">
         {isEditing ? (
           <div className="flex flex-col items-center">
             <CloudinaryUploader onImageUpload={handleImageUpload} />
           </div>
-          
         ) : (
           <Image
             src={user?.imgProfile || "/Generic avatar.png"}
@@ -223,6 +263,18 @@ const Profile = () => {
               />
             </div>
 
+            <div className="mt-4">
+  <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
+  <LocationSearch
+    onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+    onReset={() => handleChange("location", { latitude: 0, longitude: 0 })}
+    onSubmit={(e, resetSearch) => {
+      e.preventDefault();
+      resetSearch();
+    }}
+  />
+</div>            
+
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">
                 Teléfono:
@@ -251,6 +303,16 @@ const Profile = () => {
           <>
             <UserDetail label="Edad:" value={user.age.toString()} />
             <UserDetail label="Correo Electrónico:" value={user.email} />
+            
+            <UserDetail
+  label="Ubicación:"
+  value={
+    user.location && user.location.length > 0
+      ? user.location.map((loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`).join(" | ")
+      : "No disponible"
+  }
+/>
+    
             <UserDetail label="Teléfono:" value={user.phoneNumber} />
             <UserDetail
               label="Fecha de Registro:"

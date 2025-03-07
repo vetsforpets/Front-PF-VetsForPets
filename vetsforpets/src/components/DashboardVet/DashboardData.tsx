@@ -21,8 +21,8 @@ const DashboardData = () => {
         console.log("Buscando veterinaria con ID:", userData.id);
         try {
           const vet: IVetCredentials | null = await getVetById(
-            userData.token,
-            userData.id
+            userData.id,
+            userData.token
           );
 
           console.log("Respuesta de getVetById", vet);

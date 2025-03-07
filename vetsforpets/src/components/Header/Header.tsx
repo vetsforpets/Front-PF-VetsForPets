@@ -40,19 +40,17 @@ export function Header() {
         </button>
       </div>
       <div>
-        
         <button
-          onClick={() => handleNavigation("/vets")}
+          onClick={() => handleNavigation("/veterinary")}
           className="hidden sm:block customButton"
         >
           Veterinarias
         </button>
 
-      
         {isOpen && (
           <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
             <button
-              onClick={() => handleNavigation("/vets")}
+              onClick={() => handleNavigation("/veterinary")}
               className="customButton"
             >
               Veterinarias
@@ -108,35 +106,40 @@ export function Header() {
         <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] flex-grow">
           {isAuthenticated ? (
             <>
-           {userData.role === "PETSHOP" ? (
-  <button
-    onClick={() => handleNavigation("/dashboard-vet")}
-    className="w-full customButtonDos"
-  >
-    Perfil Veterinaria
-  </button>
-) : (
-  <button
-    onClick={() => handleNavigation("/dashboard")}
-    className="w-full customButtonDos"
-  >
-    Perfil Usuario
-  </button>
-)}
+              {userData.role === "PETSHOP" ? (
+                <button
+                  onClick={() => handleNavigation("/dashboard-vet")}
+                  className="w-full customButton"
+                >
+                  Perfil Veterinaria
+                </button>
+              ) : (
+                <>
+                <button
+                  onClick={() => handleNavigation("/dashboard")}
+                  className="w-full customButton"
+                  >
+                  Perfil Usuario
+                </button>
+                <button
+                  onClick={() => handleNavigation("/membership-card")}
+                  className="w-full customButton"
+                >
+                  Membresia
+                </button>
+                  </>
+              )}
 
-
-             
               <button
-                onClick={() => handleNavigation("/vets")}
-                className="mt-2 mb-2 customButtonDos sm:hidden"
+                onClick={() => handleNavigation("/veterinary")}
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Veterinarias
               </button>
 
-            
               <button
                 onClick={() => handleNavigation("/aboutUs")}
-                className="mt-2 mb-2 customButtonDos sm:hidden"
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Quienes Somos
               </button>
@@ -147,32 +150,30 @@ export function Header() {
             <>
               <button
                 onClick={() => handleNavigation("/login")}
-                className="w-full customButtonDos"
+                className="w-full customButton"
               >
                 Iniciar Sesión
               </button>
               <button
                 onClick={() => handleNavigation("/register")}
-                className="w-full customButtonDos"
+                className="w-full customButton"
               >
                 Crear Cuenta
               </button>
 
               <button
-                onClick={() => handleNavigation("/vets")}
-                className="mt-0 mb-2 customButtonDos sm:hidden"
+                onClick={() => handleNavigation("/veterinary")}
+                className="w-full mt-0 mb-2 customButton sm:hidden"
               >
                 Veterinarias
               </button>
 
               <button
                 onClick={() => handleNavigation("/aboutUs")}
-                className="mt-2 mb-2 customButtonDos sm:hidden"
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Quienes Somos
               </button>
-
-           
             </>
           )}
         </div>

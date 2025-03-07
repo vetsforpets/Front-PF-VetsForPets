@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { IVetCredentials } from "@/services/interfaces";
 import Image from "next/image";
-import ScheduledAppointments from "../Calendar/ScheduledAppointments";
 import { updatePetshop } from "@/services/servicesVet";
 import CloudinaryUploader from "../Cloudinary/Cloudinary";
-import ConfirmModal from "../ConfirnModal/ConfirmModal";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { useUserStore } from "@/store";
 import { toast } from "sonner";
+import AppointmentsVet from "../Calendar/AppointmentsVet";
+
+
 
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
@@ -62,15 +64,18 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editableVet, setEditableVet] = useState<IVetCredentials | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [veterinariaState, setVeterinaria] = useState<IVetCredentials>(veterinaria);
+  const [veterinariaState, setVeterinaria] =
+    useState<IVetCredentials>(veterinaria);
   const userData = useUserStore((state) => state.userData);
   const [showProfile, setShowProfile] = useState(true);
   const [showCalendly, setShowCalendly] = useState(false);
-
   useEffect(() => {
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
   }, [veterinaria]);
+
+  console.log("Ubicación en veterinariaState:", veterinariaState.location);
+  console.log("Ubicación en veterinariaState:", veterinariaState);
 
   const handleEdit = () => {
     setIsEditing(!isEditing);
@@ -85,16 +90,22 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
         editableVet.licenseNumber && !isNaN(Number(editableVet.licenseNumber))
           ? Number(editableVet.licenseNumber)
           : veterinaria.licenseNumber;
-
-      const updatedVet = { ...editableVet, licenseNumber: validLicenseNumber };
-
+  
+      const updatedVet: IVetCredentials = {
+        ...editableVet,
+        licenseNumber: validLicenseNumber,
+        emergencies: editableVet.emergencies ?? [], // Mantiene emergencies pero vacío
+      };
+  
+      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
+  
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
         console.log("Veterinaria actualizada:", response);
-
+  
         setVeterinaria(updatedVet);
         setEditableVet(updatedVet);
-
+  
         toast.success("Perfil editado con éxito", {
           duration: 3000,
           style: {
@@ -105,13 +116,15 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             border: "1px solid #c3e6cb",
           },
         });
-
+  
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
       }
     }
   };
+  
+  
 
   const handleChange = (
     field: keyof IVetCredentials,
@@ -138,16 +151,21 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
+
+  useEffect(() => {
+    console.log("Datos recibidos en veterinaria:", veterinaria);
+    setEditableVet(veterinaria);
+    setVeterinaria(veterinaria);
+  }, [veterinaria]);
+
   const handleProfileClick = () => {
     setShowProfile(true);
     setShowCalendly(false);
-
   };
 
   const handleCalendlyClick = () => {
     setShowCalendly(true);
     setShowProfile(false);
-
   };
 
   if (userData?.id === undefined) {
@@ -159,7 +177,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
           Perfil de Veterinaria
         </h1>
         <div className="flex items-start space-x-8">
-
           <div className="p-5 md:flex w-full max-w-sm md:w-[300px] lg:w-2/5 xl:w-1/4">
             <ul className="flex flex-col p-5 py-2 space-y-4 text-sm font-medium text-gray-500 ml-14 md:w-full">
               <li className="p-3">
@@ -168,7 +185,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleProfileClick}
                 >
-                  <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
+                  <Image
+                  src="/user.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
                   Mi Perfil
                 </a>
               </li>
@@ -178,33 +201,39 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
                   onClick={handleCalendlyClick}
                 >
-                  <img
-                    src="/calendar.svg"
-                    alt="Calendly"
-                    className="w-12 h-12 me-2"
-                  />
-                  Solicitar Turno
+                  <Image
+                  src="/calendar.svg"
+                  alt="Calendly"
+                  className="w-12 h-12 me-2"
+                  width={48}
+                  height={48}
+                />
+                  Mostrar Turnos
                 </a>
               </li>
             </ul>
           </div>
 
           <div className="w-full max-w-4xl mx-auto md:w-2/3 lg:w-3/5 xl:w-3/4">
-          {showProfile && (
-          <div>
-            <h2 className="mt-5 ml-3 text-2xl font-bold text-gray-800 ">Mi Perfil</h2>
-          </div>
-          )}
+            {showProfile && (
+              <div>
+                <h2 className="mt-5 ml-3 text-2xl font-bold text-gray-800">
+                  Mi Perfil
+                </h2>
+              </div>
+            )}
             <div className="grid w-full max-w-4xl grid-cols-1 gap-6 overflow-hidden md:grid-cols-2 rounded-2xl place-items-center">
               {showProfile && (
-                <div className="bg-customLightBrown flex flex-col items-center justify-center p-6 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-[350px] h-auto relative">
+                <div className="min-h-80 bg-customLightBrown flex flex-col items-center justify-center px-6 py-14 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-[350px] h-auto relative">
                   {isEditing ? (
                     <div className="flex flex-col items-center">
                       <CloudinaryUploader onImageUpload={handleImageUpload} />
                     </div>
                   ) : (
                     <Image
-                      src={veterinariaState?.imgProfile || "/Generic avatar.png"}
+                      src={
+                        veterinariaState?.imgProfile || "/Generic avatar.png"
+                      }
                       alt="Perfil"
                       width={1920}
                       height={500}
@@ -262,6 +291,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     editableVet={editableVet}
                     handleChange={handleChange}
                   />
+                  
                 </div>
               )}
             </div>
@@ -269,7 +299,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             {showProfile && isEditing && (
               <div className="mt-4 text-center">
                 <button
-                  className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700"
+                  className="px-4 py-2 text-white rounded-md customButton hover: bg-customBrown"
                   onClick={handleOpenModal}
                 >
                   Guardar cambios
@@ -284,13 +314,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                 onClose={handleCloseModal}
               />
             )}
-            {showCalendly && <ScheduledAppointments />}
+            {showCalendly && <AppointmentsVet />}
+            
           </div>
         </div>
       </>
     );
   }
-
-}
+};
 
 export default VetProfile;

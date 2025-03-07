@@ -16,3 +16,4 @@ export interface IVetState {
   setVetId: (data: string) => void;
   clearVetId: () => void;
 }
+

@@ -9,6 +9,48 @@ export interface IUserRegisterData {
   repeatPassword: string;
 }
 
+interface ILocation {
+  latitude: number;
+  longitude: number;
+}
+
+export interface IUserApiResponse {
+  id: string;
+  name: string;
+  lastName: string;
+  age: string;
+  location?: ILocation[];
+  pets: Pet[];
+  email: string;
+  phoneNumber: string;
+  isAdmin: boolean;
+  createdAt: string;
+  imgProfile: string;
+  isPremium: boolean;
+  isActive: boolean;
+  role: string;
+  userMembership: null | string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  pet?: { id: string; name: string; type: string }; 
+}
+export interface IPet {
+  id: string;
+  name: string;
+  age: number;
+  animalType: string;
+  birthdate: string;
+  breed: string;
+  sex: string;
+  isSterilized: boolean;
+  notes?: string;
+  profileImg?: string;
+}
+
 export interface IUserData {
   id: string;
   name: string;
@@ -19,10 +61,19 @@ export interface IUserData {
   phoneNumber: string;
   createdAt: string;
   imgProfile: string;
+  isAdmin: boolean;
   isPremium: boolean;
+  location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
+  emergencies: IUserEmergency[];
+}
+
+export interface IUserEmergency {
+  vetId: string;
+  pet: Pet;
+  chatId: string;
 }
 
 export interface IUserCredentials {
@@ -38,24 +89,26 @@ export interface IVetCredentials {
   phoneNumber: string;
   is24Hours: boolean;
   imgProfile: string;
-  location: string;
+  location: ILocation[];
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
   businessHours: null;
   emergencies: IEmergency[];
   role: string;
+  isActive: boolean;
 }
 
 export interface IEmergency {
   userId: string;
-  petId: string;
+  pet: Pet;
+  chatId: string;
 }
 
 export interface IDayOpening {
   monday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   tuesday: {
     open: string;
@@ -100,7 +153,7 @@ export interface IPetRegisterData {
   breed: string;
   sex: string;
   notes: string;
-  isSterilized: string;
+  isSterilized: boolean;
   profileImg: string;
 }
 
@@ -117,3 +170,29 @@ export interface IPetEditData {
   profileImg: string;
   userId: string;
 }
+
+
+export interface IVetLocation {
+  id: string;
+  street: string | null;
+  city: string | null;
+  state: string | null;
+  zipCode: string | null;
+  latitude: string;
+  longitude: string;
+}
+
+export interface IVet {
+  id: string;
+  name: string;
+  email: string;
+  veterinarian: string;
+  phoneNumber: string;
+  is24Hours: boolean;
+  imgProfile: string;
+  foundation: string;
+  role: string;
+  licenseNumber: string;
+  location: IVetLocation[];
+  isActive: boolean;
+  }
