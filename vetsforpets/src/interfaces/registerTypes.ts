@@ -86,6 +86,7 @@ interface IBusinessHours {
 }
 
 export interface IVetFormData {
+  id: string
   name: string;
   veterinarian?: string;
   email: string;

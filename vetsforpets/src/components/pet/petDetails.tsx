@@ -99,17 +99,16 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
     const birthDate = new Date(birthdate);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-  
+
     if (
       monthDiff < 0 ||
       (monthDiff === 0 && today.getDate() < birthDate.getDate())
     ) {
       age--;
     }
-  
+
     return age;
   };
-  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full">
@@ -141,11 +140,9 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
             )}
           />
 
-
           <div className="flex items-center w-full h-12 px-3 py-2 rounded-2xl bg-customBeige">
-              {calculateAge(petData.birthdate)} años
+            {calculateAge(petData.birthdate)} años
           </div>
-
 
           <Controller
             name="animalType"
@@ -197,20 +194,29 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
           <Controller
             name="sex"
             control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                className="w-full px-3 py-2 border-none rounded-2xl disabled:opacity-100 bg-customBeige"
-                disabled={!isEditing}
-              >
-                <option value="">Sexo</option>
-                <option value="Male">Macho</option>
-                <option value="Female">Hembra</option>
-              </select>
+            rules={{ required: "El sexo es obligatorio" }}
+            render={({ field, fieldState: { error } }) => (
+              <div>
+                <select
+                  {...field}
+                  id="sex"
+                  className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
+                  aria-label="Sexo"
+                >
+                  <option value="" disabled hidden>
+                    Sexo
+                  </option>
+                  <option value="Male">Macho</option>
+                  <option value="Female">Hembra</option>
+                </select>
+                {error && (
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
+                )}
+              </div>
             )}
           />
 
-          <Controller
+          {/* <Controller
             name="isSterilized"
             control={control}
             render={({ field }) => (
@@ -224,6 +230,44 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
                 <option value="true">Esterilizado: Sí</option>
                 <option value="false">Esterilizado: No</option>
               </select>
+            )}
+          /> */}
+
+          <Controller
+            name="isSterilized"
+            control={control}
+            rules={{ required: "Debe seleccionar si está esterilizado o no" }}
+            render={({
+              field: { onChange, value, ...restField },
+              fieldState: { error },
+            }) => (
+              <div>
+                <select
+                  {...restField}
+                  id="isSterilized"
+                  className="w-full px-3 py-2 border-none rounded-2xl bg-customBeige"
+                  aria-label="Esterilización"
+                  value={value !== undefined ? String(value) : ""}
+                  onChange={(e) =>
+                    onChange(
+                      e.target.value === "true"
+                        ? true
+                        : e.target.value === "false"
+                        ? false
+                        : undefined
+                    )
+                  }
+                >
+                  <option value="" disabled hidden>
+                    Esterilizado?
+                  </option>
+                  <option value="true">Esterilizado: Sí</option>
+                  <option value="false">Esterilizado: No</option>
+                </select>
+                {error && (
+                  <p className="mt-1 text-xs text-red-500">{error.message}</p>
+                )}
+              </div>
             )}
           />
 
