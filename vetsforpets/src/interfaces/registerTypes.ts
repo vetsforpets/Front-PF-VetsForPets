@@ -80,11 +80,6 @@ export interface IUserResponseData {
 //     foundation: "",
 //     businessHours: "",
 
-interface IBusinessHours {
-  open: string;
-  close: string;
-}
-
 export interface IVetFormData {
   id: string
   name: string;
@@ -98,7 +93,7 @@ export interface IVetFormData {
   location: ILocation[];
   licenseNumber?: string;
   foundation?: string;
-  businessHours?: IBusinessHours;
+  businessHours?: dayOpenings;
   isVet: boolean;
 }
 
@@ -116,32 +111,32 @@ export interface IVetFormDataPrev {
 }
 export interface dayOpenings {
   monday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
   tuesday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
   wednesday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
   thursday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
   friday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
   saturday: {
-    open: string;
-    close: string;
+    opening: string;
+  closure: string;
   };
-  Sunday: {
-    open: string;
-    close: string;
+  sunday: {
+    opening: string;
+  closure: string;
   };
 }
   export interface IVetResponseData {
