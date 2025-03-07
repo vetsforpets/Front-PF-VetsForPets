@@ -158,10 +158,6 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
       return;
     }
 
-    console.log(
-      "🚨 Solicitando emergencia a la veterinaria con ID:",
-      petshopId
-    );
     setLoading(true);
 
     try {
