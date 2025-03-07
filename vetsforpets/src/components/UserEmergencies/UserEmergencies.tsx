@@ -51,7 +51,7 @@ export function UserEmergencies() {
       {user?.emergencies && user.emergencies.length > 0 ? (
         user.emergencies.map((emergency, index) => (
           <div key={index} className="p-4 border rounded-md shadow">
-            <h3 className="text-md font-semibold">
+            <h3 className="font-semibold text-md">
               Chat con: {vetNames[emergency.vetId] || "Cargando..."}
             </h3>
             {emergency.pet && (

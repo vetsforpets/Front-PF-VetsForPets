@@ -69,9 +69,6 @@ const Maps = () => {
           getAllVets(userData.token),
         ]);
 
-        console.log("Usuarios obtenidos:", usersData);
-      console.log("Veterinarias obtenidas:", vetsData);
-
         setAllUsers(usersData);
         setAllVets(vetsData);
       } catch (err) {
@@ -85,10 +82,6 @@ const Maps = () => {
     fetchAllUsersAndVets();
   }, [userData?.token]); 
 
-
-  useEffect(() => {
-    console.log("Datos del usuario desde zustand:", userData);
-  }, [userData]);
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -116,7 +109,6 @@ const Maps = () => {
           
           if (userResponse?.isAdmin !== undefined) {
             setIsAdmin(userResponse.isAdmin);
-            console.log("Es Admin", userResponse.isAdmin)
           }
         }
       } catch (error) {
