@@ -41,7 +41,7 @@ export function Header() {
       </div>
       <div>
         <button
-          onClick={() => handleNavigation("/vets")}
+          onClick={() => handleNavigation("/veterinary")}
           className="hidden sm:block customButton"
         >
           Veterinarias
@@ -50,7 +50,7 @@ export function Header() {
         {isOpen && (
           <div className="absolute z-50 top-[60px] right-1 bg-[#FFFAD7] shadow-lg rounded-lg pt-9 p-4 flex flex-col items-center gap-4 w-[240px] sm:hidden">
             <button
-              onClick={() => handleNavigation("/vets")}
+              onClick={() => handleNavigation("/veterinary")}
               className="customButton"
             >
               Veterinarias
@@ -114,24 +114,32 @@ export function Header() {
                   Perfil Veterinaria
                 </button>
               ) : (
+                <>
                 <button
                   onClick={() => handleNavigation("/dashboard")}
                   className="w-full customButton"
-                >
+                  >
                   Perfil Usuario
                 </button>
+                <button
+                  onClick={() => handleNavigation("/membership-card")}
+                  className="w-full customButton"
+                >
+                  Membresia
+                </button>
+                  </>
               )}
 
               <button
-                onClick={() => handleNavigation("/vets")}
-                className="mt-2 mb-2 customButton w-full sm:hidden"
+                onClick={() => handleNavigation("/veterinary")}
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Veterinarias
               </button>
 
               <button
                 onClick={() => handleNavigation("/aboutUs")}
-                className="mt-2 mb-2 customButton w-full sm:hidden"
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Quienes Somos
               </button>
@@ -154,15 +162,15 @@ export function Header() {
               </button>
 
               <button
-                onClick={() => handleNavigation("/vets")}
-                className="mt-0 mb-2 customButton sm:hidden w-full"
+                onClick={() => handleNavigation("/veterinary")}
+                className="w-full mt-0 mb-2 customButton sm:hidden"
               >
                 Veterinarias
               </button>
 
               <button
                 onClick={() => handleNavigation("/aboutUs")}
-                className="mt-2 mb-2 customButton sm:hidden w-full"
+                className="w-full mt-2 mb-2 customButton sm:hidden"
               >
                 Quienes Somos
               </button>
