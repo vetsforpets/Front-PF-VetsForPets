@@ -4,9 +4,10 @@ import { useUserStore } from "@/store";
 import { useEffect, useState, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { fetchUserData } from "@/services/servicesUser"; // ✅ Importar servicio
+import { getVetById } from "@/services/servicesVet";
 
 interface Message {
-  sender: string; // ✅ Ahora mostrará el nombre en vez del email
+  sender: string;
   message: string;
   senderType: string;
 }
@@ -58,8 +59,6 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
 
     // 📌 Manejadores de eventos
     const handleMessageHistory = async (history: RawMessage[]) => {
-      console.log("📌 Historial de mensajes recibido:", history);
-
       // Mapeamos senderId a nombres
       const updatedMessages = await Promise.all(
         history.map(async (msg) => {
@@ -69,8 +68,10 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
             senderName = userName || "Tú";
           } else {
             try {
-              const senderData = await fetchUserData(msg.senderId, token);
-              senderName = senderData.name;
+              const senderData = await getVetById(msg.senderId, token);
+              if (senderData) {
+                senderName = senderData.name;
+              }
             } catch (error) {
               console.error(
                 `Error al obtener el nombre del sender ${msg.senderId}:`,
@@ -112,7 +113,6 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
     socket.on("error", handleError);
 
     // 📌 Unirse a la sala del chat
-    console.log("Uniéndose al chat:", chatId);
     socket.emit("joinRoom", vetId);
 
     return () => {
