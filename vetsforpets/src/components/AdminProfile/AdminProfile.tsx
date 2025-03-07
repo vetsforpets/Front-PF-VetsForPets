@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
-import CalendlySearch from "../Calendar/CalendlySearch";
+
 
 // import AppointmentsUser from "../Calendar/AppointmentsUser";
 import dynamic from "next/dynamic";
@@ -17,6 +17,7 @@ import UserAndVets from "./UsersAndVets";
 const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
+import { MyComponent } from "./VetGroup";
 
 
 export default function AdminProfile() {
@@ -29,7 +30,7 @@ export default function AdminProfile() {
 
   const [showProfile, setShowProfile] = useState(true);
   const [showPets, setShowPets] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
+  const [showVets, setShowVets] = useState(false);
 
   const [showAddPets, setShowAddPets] = useState(false);
   const [showMaps, setShowMaps ] = useState(false);
@@ -43,7 +44,7 @@ export default function AdminProfile() {
       if (!user?.isAdmin) {
         router.push("/");
       }
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timeout);
   }, [user?.isAdmin]);
@@ -65,94 +66,94 @@ export default function AdminProfile() {
     fetchData();
   }, [userData?.id, userData?.token, reloadPets]);
 
-  const handleSelectPet = (pet: Pet) => {
-    setSelectedPet(pet);
-  };
-
-  const handleProfileClick = () => {
-    setShowProfile(true);
-    setShowPets(false);
-    setShowCalendly(false);
-
-    setShowAddPets(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-
-    setShowStripeMetrics(false);
-    setShowAppointments(false);
-
-  };
-
-  const handlePetsClick = () => {
-    setShowPets(true);
-    setShowProfile(false);
-    setShowCalendly(false);
-
-    setShowAddPets(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-
-    setShowStripeMetrics(false);
-    setShowAppointments(false);
-
-  };
-
-  const handleStripeMetricsClick = () => {
-    setShowStripeMetrics(true);
-    setShowProfile(false);
-    setShowPets(false);
-    setShowCalendly(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-  };
-
-
-  // const handleRedirectToPets = () => {
-  //   setShowPets(true);
-  //   setShowProfile(false);
-  //   setShowCalendly(false);
-  //   setShowAddPets(false);
-  //   setShowMaps(false);
-  //   setShowUserAndVets(false)
-  //   router.push("/dashboard");
-  // };
-
-
-  const handleCalendlyClick = () => {
-    setShowCalendly(true);
-    setShowProfile(false);
-    setShowPets(false);
-
-    setShowAddPets(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-
-    setShowStripeMetrics(false);
-    setShowAppointments(false);
-
-  };
   
-  const handleMapsClick = () => {
-    setShowMaps(true);
-    setShowCalendly(false);
-    setShowProfile(false);
-    setShowPets(false);
-    setShowAddPets(false);
-    setShowUserAndVets(false)
-  };
+ const handleSelectPet = (pet: Pet) => {
+  setSelectedPet(pet);
+};
 
-  const handleUserAndVetsClick = () => {
-    setShowUserAndVets(true)
-    setShowMaps(false);
-    setShowCalendly(false);
-    setShowProfile(false);
-    setShowPets(false);
+const handleProfileClick = () => {
+  setShowProfile(true);
+  setShowPets(false);
+  setShowVets(false);
 
-    setShowAddPets(false);
+  setShowAddPets(false);
+  setShowMaps(false);
+  setShowUserAndVets(false)
 
-    setShowStripeMetrics(false);
+  setShowStripeMetrics(false);
+  setShowAppointments(false);
 
-  };
+};
+
+const handlePetsClick = () => {
+  setShowPets(true);
+  setShowProfile(false);
+  setShowVets(false);
+
+  setShowAddPets(false);
+  setShowMaps(false);
+  setShowUserAndVets(false)
+
+  setShowStripeMetrics(false);
+  setShowAppointments(false);
+
+};
+
+const handleStripeMetricsClick = () => {
+  setShowStripeMetrics(true);
+  setShowProfile(false);
+  setShowPets(false);
+  setShowVets(false);
+  setShowMaps(false);
+  setShowUserAndVets(false)
+};
+
+// const handleRedirectToPets = () => {
+//   setShowPets(true);
+//   setShowProfile(false);
+//   setShowCalendly(false);
+//   setShowAddPets(false);
+//   setShowMaps(false);
+//   setShowUserAndVets(false)
+//   router.push("/dashboard");
+// };
+
+const handleVetsClick = () => {
+  setShowVets(true);
+  setShowProfile(false);
+  setShowPets(false);
+
+  setShowAddPets(false);
+  setShowMaps(false);
+  setShowUserAndVets(false)
+
+  setShowStripeMetrics(false);
+  setShowAppointments(false);
+
+};
+
+const handleMapsClick = () => {
+  setShowMaps(true);
+  setShowVets(false);
+  setShowProfile(false);
+  setShowPets(false);
+  setShowAddPets(false);
+  setShowUserAndVets(false)
+};
+
+const handleUserAndVetsClick = () => {
+  setShowUserAndVets(true)
+  setShowMaps(false);
+  setShowVets(false);
+  setShowProfile(false);
+  setShowPets(false);
+
+  setShowAddPets(false);
+
+  setShowStripeMetrics(false);
+
+};
+
   
 
   const handleUpdatePet = (updatedPet: Pet) => {
@@ -208,7 +209,7 @@ export default function AdminProfile() {
             <a
               href="#"
               className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handleCalendlyClick}
+              onClick={handleVetsClick}
             >
               <img
                 src="/calendar.svg"
@@ -293,7 +294,7 @@ export default function AdminProfile() {
             {showStripeMetrics && (
               <StripeMetrics token={userData.token}/>
             )}
-            {showCalendly && <CalendlySearch />}
+            <MyComponent userData={userData} />
             {showMaps && <MapComponent />}
             {showUserAndVets && <UserAndVets/>}
 

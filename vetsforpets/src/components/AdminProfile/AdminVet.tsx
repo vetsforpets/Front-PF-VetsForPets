@@ -161,8 +161,6 @@ const AdminVet = () => {
                     )}
                 </div>
             )}
-            <PetShopsList />
-            <DeletePetShop />
         </div>
     );
 };
