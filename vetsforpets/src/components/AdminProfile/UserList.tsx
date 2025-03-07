@@ -20,6 +20,7 @@ interface IPet {
   birthdate: string;
   sex: string;
   isSterilized: boolean;
+  medicalRecord: string
 }
 
 const UserList = () => {
@@ -73,7 +74,6 @@ const UserList = () => {
     }
     try {
       const detailedUser = await fetchUserData(user.id, userData.token);
-      console.log("Usuario detallado:", detailedUser);
       
       setSelectedUser(detailedUser as unknown as IUserApiResponse);
       setIsUserModalOpen(true);
@@ -98,7 +98,6 @@ const UserList = () => {
     setIsPetPreviewOpen(false);
   };
 
-  // Cuando se hace clic en "ver" dentro del PetPreview, se abre el modal de PetDetails
   const handleViewPet = () => {
     setIsPetPreviewOpen(false);
     setIsPetDetailsOpen(true);
@@ -233,11 +232,8 @@ const UserList = () => {
               ×
             </button>
             {/* Se muestra el PetPreview, pasándole la mascota y un callback para ver los detalles */}
-            <PetPreview 
-  pet={{ ...selectedPet, breed: selectedPet.breed ?? '' }} 
-  onSelectPet={handleViewPet} 
-  setReloadPets={() => {}} 
-/>
+            <PetPreview pet={{ ...selectedPet, medicalRecord: selectedPet.medicalRecord ?? '' }} onSelectPet={handleViewPet} setReloadPets={() => {}} />
+
 
           </div>
         </div>
@@ -258,11 +254,12 @@ const UserList = () => {
       >
         ×
       </button>
-      <PetDetails 
-  pet={{ ...selectedPet, breed: selectedPet.breed ?? '' }} 
-  token={userData?.token} 
-  onUpdatePet={handleUpdatePet} 
+      <PetDetails
+  pet={{ ...selectedPet, medicalRecord: selectedPet.medicalRecord ?? "" }}
+  token={userData?.token}
+  onUpdatePet={handleUpdatePet}
 />
+
 
           </div>
         </div>

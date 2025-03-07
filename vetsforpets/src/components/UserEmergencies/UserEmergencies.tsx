@@ -138,16 +138,16 @@ export function VetEmergencies() {
         emergencyDetails.map((emergency, index) => (
           <div
             key={index}
-            className="p-4 bg-gray-100 rounded-lg shadow-md flex flex-col items-center"
+            className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-md"
           >
             <h2 className="text-lg font-semibold">{emergency.userName}</h2>
 
             {emergency.pet ? (
-              <div className="text-gray-600 text-center">
+              <div className="text-center text-gray-600">
                 <p>Mascota: {emergency.pet.name}</p>
                 <button
                   onClick={() => openModal(emergency.pet!)}
-                  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 mt-2 text-white bg-blue-500 rounded-md hover:bg-blue-700"
                 >
                   Ver detalles
                 </button>
@@ -164,12 +164,12 @@ export function VetEmergencies() {
       {/* Modal */}
       {selectedPet && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-bold mb-2">{selectedPet.name}</h2>
+          <div className="p-6 bg-white rounded-lg shadow-lg w-96">
+            <h2 className="mb-2 text-xl font-bold">{selectedPet.name}</h2>
             <img
               src={selectedPet.profileImg}
               alt={selectedPet.name}
-              className="w-32 h-32 rounded-full mx-auto mb-4"
+              className="w-32 h-32 mx-auto mb-4 rounded-full"
             />
             <p>
               <strong>Especie:</strong> {selectedPet.animalType}
@@ -195,7 +195,7 @@ export function VetEmergencies() {
             </p>
             <button
               onClick={closeModal}
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-700 w-full"
+              className="w-full px-4 py-2 mt-4 text-white bg-red-500 rounded-md hover:bg-red-700"
             >
               Cerrar
             </button>

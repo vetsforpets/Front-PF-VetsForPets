@@ -44,7 +44,6 @@ function VetFormRegister() {
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
     
-    console.log("📤 Datos enviados:", data);
     
     try {
     await RegisterVet(data);

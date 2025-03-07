@@ -49,6 +49,7 @@ export interface IPet {
   isSterilized: boolean;
   notes?: string;
   profileImg?: string;
+  medicalRecord?: string
 }
 
 
