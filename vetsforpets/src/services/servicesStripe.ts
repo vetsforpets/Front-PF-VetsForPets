@@ -17,7 +17,7 @@ export async function fetchFinancialData(token: string ): Promise<IStripeMetrics
           }
           
           const data: IStripeMetricsFinancialResponse = await response.json();
-          console.log("Balance Stripe:", data); 
+          // console.log("Balance Stripe:", data); 
           return data; 
         } catch (error) {
           if (error instanceof Error) {
@@ -43,7 +43,7 @@ export async function fetchTransactionData(token: string ): Promise<IDTOStripeMe
           }
           
           const data: IDTOStripeMetricsTransactionResponse = await response.json();
-          console.log("Datos de las transacciones:", data); 
+          // console.log("Datos de las transacciones:", data); 
           return data; 
         } catch (error) {
           if (error instanceof Error) {
@@ -80,7 +80,7 @@ export async function fetchUsersActiveData(token: string ): Promise<IDTOStripeMe
             // } 
           //   return newData
           // })
-          console.log("Datos de usuarios activos:", data); 
+          // console.log("Datos de usuarios activos:", data); 
           return data; 
         } catch (error) {
           if (error instanceof Error) {

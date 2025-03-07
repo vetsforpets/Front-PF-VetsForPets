@@ -17,7 +17,7 @@ export async function fetchOrderData(token: string ): Promise<IMembershipRespons
           }
           
           const data: IMembershipResponse[] = await response.json();
-          console.log("Datos de membresias:", data); 
+          // console.log("Datos de membresias:", data); 
           return data; 
         } catch (error) {
           if (error instanceof Error) {
