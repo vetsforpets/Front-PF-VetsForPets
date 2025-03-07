@@ -264,9 +264,6 @@ const Admin = () => {
             </div>
 
 
-
-
-
             <div className="mt-4">
   <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
   <LocationSearch
@@ -278,7 +275,6 @@ const Admin = () => {
     }}
   />
 </div>
-            
 
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">

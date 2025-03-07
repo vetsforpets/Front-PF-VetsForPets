@@ -19,6 +19,8 @@ export interface IUserApiResponse {
   name: string;
   lastName: string;
   age: string;
+  location?: ILocation[];
+  pets: Pet[];
   email: string;
   phoneNumber: string;
   isAdmin: boolean;
@@ -34,7 +36,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  pet?: { id: string; name: string; type: string }; // Ajusta según tu estructura
+  pet?: { id: string; name: string; type: string }; 
 }
 export interface IPet {
   id: string;
