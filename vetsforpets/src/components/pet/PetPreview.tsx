@@ -8,10 +8,10 @@ import Image from "next/image";
 export interface Pet {
   id: string;
   name: string;
-  age: number;
+  age?: number;
   animalType: string;
   birthdate: string;
-  breed: string;
+  breed?: string;
   sex: string;
   isSterilized: boolean;
   notes?: string;

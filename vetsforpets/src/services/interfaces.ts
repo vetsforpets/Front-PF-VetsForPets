@@ -64,11 +64,13 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isAdmin: boolean;
+  isActive: boolean
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
+  userMembership: null | string;
 }
 
 export interface IUserCredentials {

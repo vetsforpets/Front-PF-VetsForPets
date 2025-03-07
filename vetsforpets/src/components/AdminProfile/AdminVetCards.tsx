@@ -120,7 +120,6 @@ const PetShopsList = () => {
                             onClick={closeModal}
                             className="absolute text-xl font-bold top-2 right-2"
                         >
-                            ×
                         </button>
                         <div className="p-4">
                             <h2 className="mb-4 text-3xl font-bold">{selectedPetShop.name}</h2>
