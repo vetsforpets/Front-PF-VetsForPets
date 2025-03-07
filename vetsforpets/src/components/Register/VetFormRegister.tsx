@@ -33,34 +33,74 @@ function VetFormRegister() {
       ],
       licenseNumber: "",
       foundation: "",
-      businessHours: { open: "", close: "" },
+      businessHours: {
+        monday: {
+          opening: "00:00",
+          closure: "00:00"
+        },
+        tuesday: {
+          opening: "00:00",
+          closure: "00:00"
+        },
+        wednesday: {
+          opening: "08:00",
+          closure: "18:00"
+        },
+        thursday: {
+          opening: "08:00",
+          closure: "18:00"
+        },
+        friday: {
+          opening: "00:00",
+          closure: "00:00"
+        },
+        saturday: {
+          opening: "00:00",
+          closure: "00:00"
+        },
+        sunday: {
+          opening: "00:00",
+          closure: "00:00"
+        }
+      },
       isVet: true,
     },
     mode: "onChange",
   });
+  const days = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+  ];
+  type BusinessHoursKeys = keyof IVetFormData["businessHours"];
+  type BusinessHoursFieldKeys = `${BusinessHoursKeys}.opening` | `${BusinessHoursKeys}.closure`;
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<IVetFormData> = async (data: IVetFormData) => {
-    
-    console.log("📤 Datos enviados:", data);
-    
-    try {
-    await RegisterVet(data);
 
-    toast.success("Veterinaria registrado con éxito", {
-      duration: 3000,
-      style: {
-        color: "#155724",
-        background: "#d4edda",
-        borderRadius: "8px",
-        padding: "16px",
-        border: "1px solid #c3e6cb",
-      },
-    });
-    
-    router.push("/login");
+    console.log("📤 Datos enviados:", data);
+
+    try {
+      await RegisterVet(data);
+
+      toast.success("Veterinaria registrado con éxito", {
+        duration: 3000,
+        style: {
+          color: "#155724",
+          background: "#d4edda",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #c3e6cb",
+        },
+      });
+
+      router.push("/login");
     } catch (error) {
       toast.error(`${error}`, {
         duration: 3000,
@@ -253,7 +293,7 @@ function VetFormRegister() {
       />
 
 
-<Controller
+      <Controller
         name="location"
         control={control}
         rules={{
@@ -261,9 +301,9 @@ function VetFormRegister() {
         }}
         render={({ }) => (
           <div>
-            
+
             <LocationSearch
-              onSelect={(lat, lon, ) => {
+              onSelect={(lat, lon,) => {
                 handleLocationSelect(lat, lon);
               }}
               onReset={() => setValue("location", [{ latitude: 0, longitude: 0 }])}
@@ -272,11 +312,11 @@ function VetFormRegister() {
                 resetSearch();
               }}
             />
-            
+
           </div>
         )}
       />
-      
+
 
       <Controller
         name="phoneNumber"
@@ -306,6 +346,39 @@ function VetFormRegister() {
           </div>
         )}
       />
+
+      <div className="mt-6">
+        <h2 className="text-xl text-customBrown">Horario de atención</h2>
+        {days.map((day) => (
+          <div key={day} className="flex items-center gap-4 mt-4">
+            <label className="w-24 capitalize">{day}</label>
+            <Controller
+              name={`businessHours.${day}.opening` as BusinessHoursFieldKeys}
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  type="time"
+                  className="customInput"
+                />
+              )}
+            />
+            <span className="mx-2">-</span>
+            <Controller
+              name={`businessHours.${day}.closure` as BusinessHoursFieldKeys}
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  type="time"
+                  className="customInput"
+                />
+              )}
+            />
+          </div>
+        ))}
+      </div>
+
 
       <Controller
         name="password"
