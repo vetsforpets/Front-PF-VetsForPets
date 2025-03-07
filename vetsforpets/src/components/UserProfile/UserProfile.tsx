@@ -11,6 +11,7 @@ import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
 import CalendlySearch from "../Calendar/CalendlySearch";
 import AppointmentsUser from "../Calendar/AppointmentsUser";
+import Link from "next/link";
 
 export default function ProfileView() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function ProfileView() {
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const [showAddPets, setShowAddPets] = useState(false);
-  const [showAppointments, setShowAppointments ] = useState(false);
+  const [showAppointments, setShowAppointments] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -98,14 +99,14 @@ export default function ProfileView() {
     setShowAddPets(false);
     setShowAppointments(false);
   };
-  
+
   const handleAppointmentsClick = () => {
     setShowAppointments(true);
     setShowCalendly(false);
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
-    
+
   };
 
   const handleUpdatePet = (updatedPet: Pet) => {
@@ -220,8 +221,8 @@ export default function ProfileView() {
                     )}
                   </>
                 ) : (
-                  <div className="flex flex-col mx-auto items-center justify-center w-full text-center">
-                    <p className="text-lg text-gray-600 font-semibold mb-4">
+                  <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
+                    <p className="mb-4 text-lg font-semibold text-gray-600">
                       No tienes mascotas registradas aún.
                     </p>
                     <button
@@ -244,7 +245,16 @@ export default function ProfileView() {
               />
             )}
             {showCalendly && <CalendlySearch />}
-            {showAppointments && <AppointmentsUser/>}
+            {showAppointments && <AppointmentsUser />}
+          {user?.isAdmin &&
+
+            <Link href={"/dashboard-admin"}>
+              <button
+                className="px-6 py-3 mt-5 text-white bg-customBrown rounded-2xl hover:bg-opacity-90"
+              > Dashboard Administrador
+              </button>
+            </Link>
+          }
           </div>
         </div>
       </div>
