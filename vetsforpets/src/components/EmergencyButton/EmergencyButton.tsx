@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { updatePetshop, getVetById } from "@/services/servicesVet";
 import { fetchUserData, updateUser } from "@/services/servicesUser";
-import { useUserStore } from "@/store";
+import { useEmergencyFlagStore, useUserStore } from "@/store";
 import { Pet } from "../pet/PetPreview";
 import { toast } from "sonner";
 
@@ -14,6 +14,7 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
   petshopId,
 }) => {
   const { userData } = useUserStore();
+  const { emergencyFlag, setEmergencyFlag } = useEmergencyFlagStore();
   const token = userData?.token;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,9 +23,6 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [chatId, setChatId] = useState<string | null>(null);
   const [isPremium, setIsPremium] = useState<boolean | null>(null);
-  // const [userEmergencies, setUserEmergencies] = useState<
-  //   { vetId: string; chatId: string }[]
-  // >([]);
   const socketRef = useRef<Socket | null>(null);
 
   // Obtener la información del usuario y verificar si es premium
@@ -196,8 +194,7 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
         updateUser(userData.id, updatedUserData, userData.token),
       ]);
 
-      const updatedUser = await fetchUserData(userData.id, userData.token);
-      console.log("✅ Usuario actualizado:", updatedUser);
+      setEmergencyFlag(!emergencyFlag);
 
       toast.success(
         "Emergencia solicitada con éxito. Desliza abajo para abrir el chat",

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useUserStore } from "@/store";
+import { useEmergencyFlagStore, useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { getVetById } from "@/services/servicesVet"; // ✅ Importar servicio
 import { IUserData } from "@/services/interfaces";
@@ -9,6 +9,7 @@ import { UserChat } from "../Chat/UserChat";
 
 export function UserEmergencies() {
   const { userData } = useUserStore();
+  const { emergencyFlag } = useEmergencyFlagStore();
   const [user, setUser] = useState<IUserData | null>(null);
   const [vetNames, setVetNames] = useState<{ [key: string]: string }>({}); // ✅ Estado para almacenar nombres de veterinarias
 
@@ -41,7 +42,7 @@ export function UserEmergencies() {
 
       fetchUser();
     }
-  }, [userData?.id, userData?.token]);
+  }, [userData?.id, userData?.token, emergencyFlag]);
 
   return (
     <div className="flex flex-col gap-4 p-4 bg-white rounded-lg shadow-md">
