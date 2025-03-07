@@ -33,7 +33,7 @@ export default function ProfileView() {
       if (!userData?.id) {
         router.push("/");
       }
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timeout);
   }, [userData, router]);
@@ -106,7 +106,6 @@ export default function ProfileView() {
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
-
   };
 
   const handleUpdatePet = (updatedPet: Pet) => {
@@ -246,6 +245,7 @@ export default function ProfileView() {
             )}
             {showCalendly && <CalendlySearch />}
             {showAppointments && <AppointmentsUser />}
+
           {user?.isAdmin &&
 
             <Link href={"/dashboard-admin"}>
