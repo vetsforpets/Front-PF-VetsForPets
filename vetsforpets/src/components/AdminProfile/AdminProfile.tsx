@@ -16,8 +16,6 @@ import UserAndVets from "./UsersAndVets";
 
 const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
-
-import AppointmentsUser from "../Calendar/AppointmentsUser";
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
 
 
@@ -110,15 +108,15 @@ export default function AdminProfile() {
   };
 
 
-  const handleRedirectToPets = () => {
-    setShowPets(true);
-    setShowProfile(false);
-    setShowCalendly(false);
-    setShowAddPets(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-    router.push("/dashboard");
-  };
+  // const handleRedirectToPets = () => {
+  //   setShowPets(true);
+  //   setShowProfile(false);
+  //   setShowCalendly(false);
+  //   setShowAddPets(false);
+  //   setShowMaps(false);
+  //   setShowUserAndVets(false)
+  //   router.push("/dashboard");
+  // };
 
 
   const handleCalendlyClick = () => {
@@ -299,6 +297,21 @@ export default function AdminProfile() {
             {showCalendly && <CalendlySearch />}
             {showMaps && <MapComponent />}
             {showUserAndVets && <UserAndVets/>}
+
+
+
+            {showAddPets && (
+  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+    Funcionalidad para agregar mascotas próximamente.
+  </div>
+)}
+
+{showAppointments && (
+  <div className="p-4 mt-4 text-center bg-gray-200 rounded">
+    Funcionalidad para ver citas próximamente.
+  </div>
+)}
+
 
           </div>
         </div>
