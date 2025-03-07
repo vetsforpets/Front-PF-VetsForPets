@@ -54,7 +54,7 @@ const StripeMetrics = ({token}:{token: string}) => {
         {activeTab === "balance" && (
           <div className="bg-[#BC6C25] text-white text-center p-6 rounded-lg">
             <h2 className="text-4xl">Balance Total</h2>
-            <p className="text-5xl font-bold">${!!balance?.available || "Cargando..."}</p>
+            <p className="text-5xl font-bold">${balance?.available[0].amount || "Cargando..."}</p>
           </div>
         )}
         {activeTab === "transactions" && (
