@@ -11,6 +11,7 @@ import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
 import CalendlySearch from "../Calendar/CalendlySearch";
 import AppointmentsUser from "../Calendar/AppointmentsUser";
+import StripeMetrics from "../StripeMetrics/StripeMetrics";
 
 export default function AdminProfile() {
   const router = useRouter();
@@ -24,18 +25,18 @@ export default function AdminProfile() {
   const [showProfile, setShowProfile] = useState(true);
   const [showPets, setShowPets] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
-  const [showAddPets, setShowAddPets] = useState(false);
+  const [showStripeMetrics, setShowStripeMetrics] = useState(false);
   const [showAppointments, setShowAppointments ] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!user?.isAdmin) {
-        router.push("/");
-      }
-    }, 1000);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     if (!user?.isAdmin) {
+  //       router.push("/");
+  //     }
+  //   }, 2000);
 
-    return () => clearTimeout(timeout);
-  }, [user?.isAdmin]);
+  //   return () => clearTimeout(timeout);
+  // }, [user?.isAdmin]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +63,7 @@ export default function AdminProfile() {
     setShowProfile(true);
     setShowPets(false);
     setShowCalendly(false);
-    setShowAddPets(false);
+    setShowStripeMetrics(false);
     setShowAppointments(false);
   };
 
@@ -70,12 +71,12 @@ export default function AdminProfile() {
     setShowPets(true);
     setShowProfile(false);
     setShowCalendly(false);
-    setShowAddPets(false);
+    setShowStripeMetrics(false);
     setShowAppointments(false);
   };
 
-  const handleAddPetsClick = () => {
-    setShowAddPets(true);
+  const handleStripeMetricsClick = () => {
+    setShowStripeMetrics(true);
     setShowProfile(false);
     setShowPets(false);
     setShowCalendly(false);
@@ -86,7 +87,7 @@ export default function AdminProfile() {
     setShowPets(true);
     setShowProfile(false);
     setShowCalendly(false);
-    setShowAddPets(false);
+    setShowStripeMetrics(false);
     setShowAppointments(false);
     router.push("/dashboard");
   };
@@ -95,7 +96,7 @@ export default function AdminProfile() {
     setShowCalendly(true);
     setShowProfile(false);
     setShowPets(false);
-    setShowAddPets(false);
+    setShowStripeMetrics(false);
     setShowAppointments(false);
   };
   
@@ -104,7 +105,7 @@ export default function AdminProfile() {
     setShowCalendly(false);
     setShowProfile(false);
     setShowPets(false);
-    setShowAddPets(false);
+    setShowStripeMetrics(false);
     
   };
 
@@ -151,10 +152,10 @@ export default function AdminProfile() {
             <a
               href="#"
               className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handleAddPetsClick}
+              onClick={handleStripeMetricsClick}
             >
               <img src="/pets.svg" alt="Calendly" className="w-12 h-12 me-2" />
-              Turnos
+              Membresias
             </a>
           </li>
           <li className="p-3">
@@ -224,24 +225,13 @@ export default function AdminProfile() {
                     <p className="mb-4 text-lg font-semibold text-gray-600">
                       No tienes mascotas registradas aún.
                     </p>
-                    <button
-                      onClick={handleAddPetsClick}
-                      className="px-6 py-3 text-white bg-customBrown rounded-2xl hover:bg-opacity-90"
-                    >
-                      Agregar Mascota
-                    </button>
                   </div>
                 )}
               </div>
             )}
 
-            {showAddPets && (
-              <PetCreateForm
-                setAddingPet={setAddingPet}
-                addingPet={addingPet}
-                setReloadPets={setReloadPets}
-                onPetCreated={handleRedirectToPets}
-              />
+            {showStripeMetrics && (
+              <StripeMetrics token={userData.token}/>
             )}
             {showCalendly && <CalendlySearch />}
             {showAppointments && <AppointmentsUser/>}
