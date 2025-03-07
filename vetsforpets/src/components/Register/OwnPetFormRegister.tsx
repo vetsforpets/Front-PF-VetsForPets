@@ -46,9 +46,6 @@ function OwnPetFormRegister() {
   const onSubmit: SubmitHandler<IUserFormData> = async (
     data: IUserFormData
   ) => {
-    console.log("====================================");
-    console.log(data);
-    console.log("====================================");
     try {
       await RegisterUser(data);
       toast.success("Usuario registrado con éxito", {

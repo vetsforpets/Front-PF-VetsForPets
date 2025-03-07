@@ -91,6 +91,7 @@ export function UserEmergencies() {
 
       {user?.emergencies && user.emergencies.length > 0 ? (
         user.emergencies.map((emergency, index) => (
+
           <div
             key={index}
             className=" bg-customDarkGreen p-4 rounded-md shadow text-white "
@@ -111,6 +112,7 @@ export function UserEmergencies() {
                 Eliminar Emergencia
               </button>
             </div>
+
 
             {/* ✅ Renderizar un UserChat para cada emergencia */}
             <UserChat vetId={emergency.vetId} chatId={emergency.chatId} />

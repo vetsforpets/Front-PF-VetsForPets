@@ -17,8 +17,8 @@ const useDebouncedSearch = (query: string, delay: number) => {
 
 const LocationSearch = ({
   onSelect,
-}: // onReset,
-// onSubmit
+}: 
+
 {
   onSelect: (lat: number, lon: number ) => void;
   onReset: () => void;
@@ -45,8 +45,6 @@ const LocationSearch = ({
       setError("");
 
       try {
-        console.log("Buscando ubicaciones para:", debouncedQuery);
-
         const response = await fetch(
           `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
             debouncedQuery
@@ -59,8 +57,6 @@ const LocationSearch = ({
         if (!response.ok) throw new Error("Error al obtener los datos");
 
         const data = await response.json();
-
-        console.log("Resultados de búsqueda:", data);
 
         if (data.length === 0) {
           setError("No se encontraron ubicaciones.");
@@ -85,7 +81,6 @@ const LocationSearch = ({
   };
 
   const manejarSeleccion = (direccion: string, lat: string, lon: string) => {
-    console.log("Ubicación seleccionada:", direccion, lat, lon);
 
     setQuery(direccion);
     setTimeout(() => setSuggestions([]), 200);

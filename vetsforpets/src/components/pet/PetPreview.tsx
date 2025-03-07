@@ -16,6 +16,7 @@ export interface Pet {
   isSterilized: boolean;
   notes?: string;
   profileImg?: string;
+  medicalRecord: string;
 }
 
 interface PetPreviewProps {

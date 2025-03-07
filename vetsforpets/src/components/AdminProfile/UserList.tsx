@@ -20,6 +20,7 @@ interface IPet {
   birthdate: string;
   sex: string;
   isSterilized: boolean;
+  medicalRecord: string
 }
 
 const UserList = () => {
@@ -76,8 +77,6 @@ const UserList = () => {
     }
     try {
       const detailedUser = await fetchUserData(user.id, userData.token);
-      console.log("Usuario detallado:", detailedUser);
-
       setSelectedUser(detailedUser as unknown as IUserApiResponse);
       setIsUserModalOpen(true);
     } catch (error) {
@@ -100,7 +99,6 @@ const UserList = () => {
     setIsPetPreviewOpen(false);
   };
 
-  // Cuando se hace clic en "ver" dentro del PetPreview, se abre el modal de PetDetails
   const handleViewPet = () => {
     setIsPetPreviewOpen(false);
     setIsPetDetailsOpen(true);
@@ -232,34 +230,32 @@ const UserList = () => {
             >
               ×
             </button>
-            <PetPreview
-              pet={{ ...selectedPet, breed: selectedPet.breed ?? "" }}
-              onSelectPet={handleViewPet}
-              setReloadPets={() => {}}
-            />
+
+            {/* Se muestra el PetPreview, pasándole la mascota y un callback para ver los detalles */}
+            <PetPreview pet={{ ...selectedPet, medicalRecord: selectedPet.medicalRecord ?? '' }} onSelectPet={handleViewPet} setReloadPets={() => {}} />
           </div>
         </div>
       )}
 
       {isPetDetailsOpen && selectedPet && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-70"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) closePetDetails();
-          }}
-        >
-          <div className="relative w-full max-w-md max-h-[80vh] p-6 mx-4 bg-white rounded-lg overflow-y-auto shadow-lg">
-            <button
-              onClick={closePetDetails}
-              className="absolute text-xl font-bold top-2 right-2"
-            >
-              ×
-            </button>
-            <PetDetails
-              pet={{ ...selectedPet, breed: selectedPet.breed ?? "" }}
-              token={userData?.token}
-              onUpdatePet={handleUpdatePet}
-            />
+  <div
+    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-70"
+    onClick={(e) => {
+      if (e.target === e.currentTarget) closePetDetails();
+    }}
+  >
+    <div className="relative w-full max-w-md max-h-[80vh] p-6 mx-4 bg-white rounded-lg overflow-y-auto shadow-lg">
+      <button
+        onClick={closePetDetails}
+        className="absolute text-xl font-bold top-2 right-2"
+      >
+        ×
+      </button>
+      <PetDetails
+  pet={{ ...selectedPet, medicalRecord: selectedPet.medicalRecord ?? "" }}
+  token={userData?.token}
+  onUpdatePet={handleUpdatePet}
+/>
           </div>
         </div>
       )}
