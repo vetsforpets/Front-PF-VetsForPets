@@ -70,9 +70,9 @@ const AdminVet = () => {
         };
 
         fetchAppointments();
-    }, []);
+    }, [veterinarias]);
 
-    const handleVetClick = async (vetName: string, _vetUri: string) => {
+    const handleVetClick = async (vetName: string) => {
         setSelectedVet(vetName);
         setVetAppointmentsDetails(null);
         const vet = veterinarias.find((v) => v.nombre === vetName);
@@ -116,7 +116,7 @@ const AdminVet = () => {
                         <li
                             key={vetName}
                             className="p-4 border border-gray-300 rounded-lg shadow-lg bg-[#f1bd81]"
-                            onClick={() => handleVetClick(vetName, veterinarias.find(vet => vet.nombre === vetName)?.calendlyUserUri || '')}
+                            onClick={() => handleVetClick(vetName)}
                         >
                             <p className="text-lg font-medium text-gray-800">
                                 <strong>{vetName}:</strong> {count} turnos

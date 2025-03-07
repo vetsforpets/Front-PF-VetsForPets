@@ -18,11 +18,13 @@ const DeletePetShop = () => {
 
     const token = userData?.token;
 
-    if (!token) {
-        return <div>No se ha encontrado un token válido</div>;
-    }
-
     useEffect(() => {
+        if (!token) {
+            toast.error("No se ha encontrado un token válido");
+            setLoading(false);
+            return;
+        }
+
         const fetchPetShops = async () => {
             try {
                 const allVets = await getAllVets(token);
@@ -50,9 +52,14 @@ const DeletePetShop = () => {
         };
 
         fetchPetShops();
-    }, [token]);
+    }, [token]); // El token se monitorea para refrescar la data si cambia.
 
     const handleDelete = async (id: string) => {
+        if (!token) {
+            toast.error("No se ha encontrado un token válido para eliminar");
+            return;
+        }
+
         const confirmed = window.confirm("¿Estás seguro de que quieres eliminar esta veterinaria?");
         if (confirmed) {
             try {
@@ -61,7 +68,6 @@ const DeletePetShop = () => {
                     toast.error("No se pudo eliminar la veterinaria");
                 } else {
                     toast.success("Veterinaria eliminada con éxito");
-                    
                     setPetShops(prevPetShops => prevPetShops.filter(petShop => petShop.id !== id));
                 }
             } catch {
