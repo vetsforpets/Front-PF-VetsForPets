@@ -37,7 +37,7 @@ export interface IUser {
   id: string;
   name: string;
   email: string;
-  pet?: { id: string; name: string; type: string }; 
+  pet?: { id: string; name: string; type: string };
 }
 export interface IPet {
   id: string;
@@ -63,7 +63,7 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isAdmin: boolean;
-  isActive: boolean
+  isActive: boolean;
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
@@ -79,7 +79,6 @@ export interface IUserEmergency {
   vetId: string;
   pet: Pet;
   chatId: string;
-
 }
 
 export interface IUserCredentials {
@@ -117,28 +116,28 @@ export interface IDayOpening {
     closure: string;
   };
   tuesday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   wednesday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   thursday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   friday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   saturday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   Sunday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
 }
 
@@ -177,7 +176,6 @@ export interface IPetEditData {
   userId: string;
 }
 
-
 export interface IVetLocation {
   id: string;
   street: string | null;
@@ -201,4 +199,4 @@ export interface IVet {
   licenseNumber: string;
   location: IVetLocation[];
   isActive: boolean;
-  }
+}

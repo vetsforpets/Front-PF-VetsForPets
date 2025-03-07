@@ -143,14 +143,15 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
   };
 
   return (
-    <div className="w-full mt-4 border border-gray-300 rounded-lg p-4">
-      <h3 className="text-lg font-bold">Chat de Emergencia</h3>
+    <div className="w-full mt-4  rounded-lg p-4 bg-customBrown">
       <div className="h-64 overflow-y-auto bg-gray-100 p-2 rounded">
         {messages.map((msg, index) => (
           <p
             key={index}
             className={`p-2 ${
-              msg.senderType === "USER" ? "text-blue-600" : "text-green-600"
+              msg.senderType === "USER"
+                ? "text-customHardBrown"
+                : "text-customGreen"
             }`}
           >
             <strong>{msg.sender}:</strong> {msg.message}
@@ -165,7 +166,7 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
           onChange={(e) => setMessage(e.target.value)}
         />
         <button
-          className="p-2 bg-blue-500 text-white rounded-r"
+          className="p-2 bg-customHardBrown hover:bg-customLightBrown cursor-pointer text-white rounded-r"
           onClick={sendMessage}
           disabled={!message.trim()}
         >

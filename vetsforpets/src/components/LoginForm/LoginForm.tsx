@@ -150,11 +150,11 @@ export default function LoginForm() {
               Iniciar con{" "}
               <Image
                 src="/google.png"
-                width={50}
-                height={50}
+                width={35}
+                height={35}
                 alt="Google"
                 priority={true}
-                className="pt-0"
+                className="ps-1"
               />
             </span>
           </button>
