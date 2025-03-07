@@ -102,6 +102,7 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
 
     // Obtener los datos actuales de la veterinaria
     const petshopData = await getVetById(petshopId, userData.token);
+    console.log(petshopData);
     if (!petshopData) {
       setError("No se encontró la veterinaria.");
       return;
@@ -178,6 +179,33 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
         newVetEmergency,
       ];
       petshopData.licenseNumber = 12345;
+
+      // PUT - BusinessHours
+
+      // petshopData.businessHours = {
+      //   monday: { opening: "", closure: "" },
+      //   tuesday: { opening: "", closure: "" },
+      //   wednesday: { opening: "", closure: "" },
+      //   thursday: { opening: "", closure: "" },
+      //   friday: { opening: "", closure: "" },
+      //   saturday: { opening: "", closure: "" },
+      //   sunday: { opening: "", closure: "" },
+      // };
+
+      // petshopData.businessHours.monday.opening = "09:00";
+      // petshopData.businessHours.monday.closure = "20:00";
+      // petshopData.businessHours.tuesday.opening = "09:00";
+      // petshopData.businessHours.tuesday.closure = "20:00";
+      // petshopData.businessHours.wednesday.opening = "09:00";
+      // petshopData.businessHours.wednesday.closure = "20:00";
+      // petshopData.businessHours.thursday.opening = "09:00";
+      // petshopData.businessHours.thursday.closure = "20:00";
+      // petshopData.businessHours.friday.opening = "09:00";
+      // petshopData.businessHours.friday.closure = "20:00";
+      // petshopData.businessHours.saturday.opening = "10:00";
+      // petshopData.businessHours.saturday.closure = "18:00";
+      // petshopData.businessHours.sunday.opening = "cerrado";
+      // petshopData.businessHours.sunday.closure = "cerrado";
 
       // Agregar la emergencia al usuario
       const updatedUserData = {

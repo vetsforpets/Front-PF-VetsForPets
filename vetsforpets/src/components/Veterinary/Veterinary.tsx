@@ -1,17 +1,25 @@
-"use client"
+"use client";
 import dynamic from "next/dynamic";
 import CalendlySearch from "../Calendar/CalendlySearch";
+import { useUserStore } from "@/store";
 
 const Veterinary = () => {
+  const { userData } = useUserStore();
 
-    const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
+  const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
-    return (
+  return (
+    <>
+      {userData?.role === "USER" ? (
         <>
-        <MapComponent />
-        <CalendlySearch />
+          <MapComponent />
+          <CalendlySearch />
         </>
-  )
-}
+      ) : (
+        <MapComponent />
+      )}
+    </>
+  );
+};
 
-export default Veterinary
+export default Veterinary;

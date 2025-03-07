@@ -27,7 +27,9 @@ const UserList = () => {
   const [users, setUsers] = useState<IUserApiResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedUser, setSelectedUser] = useState<IUserApiResponse | null>(null);
+  const [selectedUser, setSelectedUser] = useState<IUserApiResponse | null>(
+    null
+  );
   const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false);
 
   // Estados para los modales de mascota
@@ -39,7 +41,9 @@ const UserList = () => {
 
   const fetchUsersList = useCallback(async () => {
     if (!userData?.token) {
-      console.warn("⚠ No hay token disponible. No se hará la llamada a la API.");
+      console.warn(
+        "⚠ No hay token disponible. No se hará la llamada a la API."
+      );
       setError("No se ha encontrado un token de usuario válido.");
       return;
     }
@@ -66,7 +70,6 @@ const UserList = () => {
     }
   }, [userData?.token, fetchUsersList]);
 
-  
   const openUserModal = async (user: IUserApiResponse) => {
     if (!userData?.token) {
       toast.error("No se ha encontrado un token válido.");
@@ -74,7 +77,6 @@ const UserList = () => {
     }
     try {
       const detailedUser = await fetchUserData(user.id, userData.token);
-      
       setSelectedUser(detailedUser as unknown as IUserApiResponse);
       setIsUserModalOpen(true);
     } catch (error) {
@@ -88,7 +90,6 @@ const UserList = () => {
     setSelectedUser(null);
   };
 
-  
   const openPetPreview = (pet: IPet) => {
     setSelectedPet(pet);
     setIsPetPreviewOpen(true);
@@ -123,7 +124,6 @@ const UserList = () => {
       setSelectedUser({ ...selectedUser, pets: updatedPets });
     }
   };
-  
 
   return (
     <div className="container p-4 mx-auto">
@@ -133,30 +133,29 @@ const UserList = () => {
       {error && <div className="text-center text-red-500">{error}</div>}
 
       <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3">
-  {users.length > 0 ? (
-    users.map((user) => (
-      <div
-        key={user.id}
-       className="p-4 w-full md:max-w-xs lg:max-w-sm mx-auto transition duration-200 border rounded-lg shadow-md hover:shadow-lg bg-[#f1bd81] flex flex-col justify-between"
-      >
-        <h2 className="mt-2 text-2xl font-semibold">
-          {user.name} {user.lastName}
-        </h2>
-        <button
-          onClick={() => openUserModal(user)}
-          className="w-full px-6 py-3 mt-4 text-base transition-colors border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown"
-        >
-          Mostrar información
-        </button>
+        {users.length > 0 ? (
+          users.map((user) => (
+            <div
+              key={user.id}
+              className="p-4 w-full md:max-w-xs lg:max-w-sm mx-auto transition duration-200 border rounded-lg shadow-md hover:shadow-lg bg-[#f1bd81] flex flex-col justify-between"
+            >
+              <h2 className="mt-2 text-2xl font-semibold">
+                {user.name} {user.lastName}
+              </h2>
+              <button
+                onClick={() => openUserModal(user)}
+                className="w-full px-6 py-3 mt-4 text-base transition-colors border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown"
+              >
+                Mostrar información
+              </button>
+            </div>
+          ))
+        ) : (
+          <div className="text-center col-span-full">
+            No se encontraron usuarios.
+          </div>
+        )}
       </div>
-    ))
-  ) : (
-    <div className="text-center col-span-full">
-      No se encontraron usuarios.
-    </div>
-  )}
-</div>
-
 
       {/* Modal de Usuario */}
       {isUserModalOpen && selectedUser && (
@@ -219,27 +218,25 @@ const UserList = () => {
       {/* Modal de PetPreview */}
       {isPetPreviewOpen && selectedPet && (
         <div
-          className="fixed inset-0 flex items-center justify-center max-w-full bg-black bg-opacity-50 backdrop-blur-md z-60"
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-60"
           onClick={(e) => {
             if (e.target === e.currentTarget) closePetPreview();
           }}
         >
-          <div className="relative w-full max-w-xl p-6 mx-4 bg-white rounded-lg">
+          <div className="relative w-full max-w-md max-h-[80vh] p-6 mx-4 bg-white rounded-lg overflow-y-auto shadow-lg">
             <button
               onClick={closePetPreview}
               className="absolute text-xl font-bold top-2 right-2"
             >
               ×
             </button>
+
             {/* Se muestra el PetPreview, pasándole la mascota y un callback para ver los detalles */}
             <PetPreview pet={{ ...selectedPet, medicalRecord: selectedPet.medicalRecord ?? '' }} onSelectPet={handleViewPet} setReloadPets={() => {}} />
-
-
           </div>
         </div>
       )}
 
-      {/* Modal de PetDetails */}
       {isPetDetailsOpen && selectedPet && (
   <div
     className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-70"
@@ -247,7 +244,7 @@ const UserList = () => {
       if (e.target === e.currentTarget) closePetDetails();
     }}
   >
-    <div className="relative w-full max-w-xl p-6 mx-4 bg-white rounded-lg ">
+    <div className="relative w-full max-w-md max-h-[80vh] p-6 mx-4 bg-white rounded-lg overflow-y-auto shadow-lg">
       <button
         onClick={closePetDetails}
         className="absolute text-xl font-bold top-2 right-2"
@@ -259,8 +256,6 @@ const UserList = () => {
   token={userData?.token}
   onUpdatePet={handleUpdatePet}
 />
-
-
           </div>
         </div>
       )}
@@ -269,5 +264,3 @@ const UserList = () => {
 };
 
 export default UserList;
-
-
