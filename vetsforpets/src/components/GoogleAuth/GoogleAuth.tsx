@@ -23,14 +23,10 @@ export function GoogleAuth() {
       }
 
       try {
-        console.log("🔄 Enviando código a backend:", code);
         const data = await loginUserWithGoogle(code);
-        console.log("✅ Respuesta del backend:", data);
 
         if (data && data.token) {
           const decodedToken = jwtDecode(data.token);
-
-          console.log("🔍 Token decodificado:", decodedToken);
 
           if (decodedToken.sub) {
             const user = await fetchUserData(decodedToken.sub, data.token);
@@ -41,7 +37,7 @@ export function GoogleAuth() {
               role: user.role,
               email: user.email,
             };
-            console.log(userData);
+
             setUserData(userData);
 
             toast.success("¡Inicio de sesión con Google exitoso!", {

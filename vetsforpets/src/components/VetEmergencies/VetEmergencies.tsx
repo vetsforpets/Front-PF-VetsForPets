@@ -8,6 +8,7 @@ import { getVetById, updatePetshop } from "@/services/servicesVet";
 import { IVetCredentials } from "@/services/interfaces";
 import { VetChat } from "../Chat/VetChat";
 import { Pet } from "../pet/PetPreview";
+import Image from "next/image";
 
 export function VetEmergencies() {
   const { userData } = useUserStore();
@@ -15,6 +16,7 @@ export function VetEmergencies() {
   const [vetData, setVetData] = useState<IVetCredentials | null>(null);
   const [userNames, setUserNames] = useState<{ [key: string]: string }>({});
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
+  const [isMedicalModalOpen, setMedicalModalOpen] = useState(false);
 
   useEffect(() => {
     if (userData?.id && userData.token) {
@@ -157,8 +159,15 @@ export function VetEmergencies() {
 
       {selectedPet && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md shadow-lg w-96">
+          <div className="bg-customBrown p-6 rounded-md shadow-lg w-96">
             <h2 className="text-lg font-bold">Detalles de la Mascota</h2>
+            <Image
+              src={selectedPet.profileImg || "/Cat.svg"}
+              alt={`Imagen de ${selectedPet.name}`}
+              width={200}
+              height={200}
+              className="object-cover w-40 h-40 rounded-full shadow-lg"
+            />
             <p>
               <strong>Nombre:</strong> {selectedPet.name}
             </p>
@@ -175,13 +184,61 @@ export function VetEmergencies() {
               <strong>Esterilizado:</strong>{" "}
               {selectedPet.isSterilized ? "Sí" : "No"}
             </p>
+            <p>
+              <strong>Libreta Sanitaria:</strong>{" "}
+              {selectedPet.medicalRecord ? (
+                <a
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMedicalModalOpen(true);
+                  }}
+                  className="block"
+                >
+                  <Image
+                    src={selectedPet.medicalRecord}
+                    alt={`Estudio médico de ${selectedPet.name}`}
+                    width={200}
+                    height={200}
+                    className="object-cover w-40 h-40 rounded-full shadow-lg"
+                  />
+                </a>
+              ) : (
+                <p className="text-center text-gray-600">Aún no agregada</p>
+              )}
+            </p>
 
             <button
               onClick={() => setSelectedPet(null)}
-              className="mt-4 p-2 bg-red-500 text-white rounded-md"
+              className="mt-4 p-2 bg-customDarkGreen text-white rounded-md"
             >
               Cerrar
             </button>
+          </div>
+        </div>
+      )}
+      {isMedicalModalOpen && selectedPet && selectedPet.medicalRecord && (
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-80"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setMedicalModalOpen(false);
+          }}
+        >
+          <div className="relative w-full max-w-3xl p-4 mx-4 bg-white rounded-lg">
+            <button
+              type="button"
+              onClick={() => setMedicalModalOpen(false)}
+              className="absolute text-2xl font-bold text-gray-700 top-2 right-2"
+            >
+              ×
+            </button>
+            <Image
+              src={selectedPet.medicalRecord}
+              alt={`Estudio médico de ${selectedPet.name}`}
+              width={800}
+              height={800}
+              className="object-contain w-full"
+            />
           </div>
         </div>
       )}

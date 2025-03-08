@@ -29,7 +29,6 @@ const PetShopsList = () => {
 
     try {
       const allVets = await getAllVets(userData.token);
-      console.log("Veterinarias obtenidas:", allVets);
 
       const detailedVets = await Promise.all(
         allVets.map(async (vet: IVet) => {
@@ -44,7 +43,6 @@ const PetShopsList = () => {
       );
 
       const activePetShops = detailedVets.filter((vet) => vet?.isActive);
-      console.log("Veterinarias activas:", activePetShops);
 
       setPetShops(activePetShops);
     } catch (error) {

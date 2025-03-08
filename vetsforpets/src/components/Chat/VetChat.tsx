@@ -59,8 +59,6 @@ export function VetChat({ chatId }: VetChatProps) {
 
     // 📌 Manejadores de eventos
     const handleMessageHistory = async (history: RawMessage[]) => {
-      console.log("📌 Historial de mensajes recibido:", history);
-
       // Mapeamos senderId a nombres
       const updatedMessages = await Promise.all(
         history.map(async (msg) => {

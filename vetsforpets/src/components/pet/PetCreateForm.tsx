@@ -42,7 +42,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
       breed: "",
       sex: "",
       notes: "",
-      isSterilized: undefined,
+      isSterilized: false,
       profileImg: "",
     },
     mode: "onChange",
@@ -235,7 +235,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
             )}
           />
 
-          <Controller
+          {/* <Controller
             name="isSterilized"
             control={control}
             rules={{ required: "Debe seleccionar si está esterilizado o no" }}
@@ -265,7 +265,7 @@ const PetCreateForm: React.FC<petCreateFormProps> = ({
                 )}
               </div>
             )}
-          />
+          /> */}
 
           <Controller
             name="notes"

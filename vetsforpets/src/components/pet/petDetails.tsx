@@ -106,7 +106,10 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
     const birthDate = new Date(birthdate);
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
       age--;
     }
     return age;
@@ -121,16 +124,26 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
               <div className="flex flex-col items-center space-y-6">
                 {/* Subir imagen de perfil */}
                 <div className="flex flex-col items-center">
-                  <span className="mb-3 font-bold">¿Deseas actualizar la imagen de perfil?</span>
+                  <span className="mb-3 font-bold">
+                    ¿Deseas actualizar la imagen de perfil?
+                  </span>
                   <div className="mb-4">
-                    <CloudinaryUploader onImageUpload={handleImageUpload} inputId="profile-img-input" />
+                    <CloudinaryUploader
+                      onImageUpload={handleImageUpload}
+                      inputId="profile-img-input"
+                    />
                   </div>
                 </div>
                 {/* Subir estudio médico */}
                 <div className="flex flex-col items-center">
-                  <span className="mb-3 font-bold">Subir libreta sanitaria</span>
+                  <span className="mb-3 font-bold">
+                    Subir libreta sanitaria
+                  </span>
                   <div className="mb-4">
-                    <CloudinaryUploader onImageUpload={handleMedicalUpload} inputId="medical-record-input" />
+                    <CloudinaryUploader
+                      onImageUpload={handleMedicalUpload}
+                      inputId="medical-record-input"
+                    />
                   </div>
                 </div>
               </div>
@@ -150,27 +163,29 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
                 <div className="flex flex-col items-center">
                   <h3 className="text-lg font-bold">Libreta Sanitaria</h3>
                   <div className="flex flex-col items-center">
-  {petData.medicalRecord ? (
-    <a
-      href="#"
-      onClick={(e) => {
-        e.preventDefault();
-        setMedicalModalOpen(true);
-      }}
-      className="block"
-    >
-      <Image
-        src={petData.medicalRecord}
-        alt={`Estudio médico de ${petData.name}`}
-        width={200}
-        height={200}
-        className="object-cover w-40 h-40 rounded-full shadow-lg"
-      />
-    </a>
-  ) : (
-    <p className="text-center text-gray-600">Aún no agregada</p>
-  )}
-</div>
+                    {petData.medicalRecord ? (
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMedicalModalOpen(true);
+                        }}
+                        className="block"
+                      >
+                        <Image
+                          src={petData.medicalRecord}
+                          alt={`Estudio médico de ${petData.name}`}
+                          width={200}
+                          height={200}
+                          className="object-cover w-40 h-40 rounded-full shadow-lg"
+                        />
+                      </a>
+                    ) : (
+                      <p className="text-center text-gray-600">
+                        Aún no agregada
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
@@ -257,7 +272,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
                 </div>
               )}
             />
-            <Controller
+            {/* <Controller
               name="isSterilized"
               control={control}
               rules={{ required: "Debe seleccionar si está esterilizado o no" }}
@@ -293,7 +308,7 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
                   )}
                 </div>
               )}
-            />
+            /> */}
             <Controller
               name="notes"
               control={control}
@@ -347,13 +362,13 @@ const PetDetails: React.FC<PetDetailsProps> = ({ pet, token, onUpdatePet }) => {
           }}
         >
           <div className="relative w-full max-w-3xl p-4 mx-4 bg-white rounded-lg">
-             <button
+            <button
               type="button"
               onClick={() => setMedicalModalOpen(false)}
               className="absolute text-2xl font-bold text-gray-700 top-2 right-2"
             >
               ×
-            </button> 
+            </button>
             <Image
               src={petData.medicalRecord}
               alt={`Estudio médico de ${petData.name}`}

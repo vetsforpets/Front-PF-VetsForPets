@@ -12,7 +12,6 @@ export function LogoutButton() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleLogout = () => {
     clearUserData();
-    console.log("Sesión cerrada con éxito");
     router.push("/login");
 
     toast.success("Sesión cerrada con éxito", {
