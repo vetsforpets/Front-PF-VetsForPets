@@ -20,7 +20,7 @@ import RecenterAutomatically from "./RecenterAutomatically";
 import Image from "next/image";
 import { getVetById } from "@/services/servicesVet";
 import { RequestEmergencyButton } from "../EmergencyButton/EmergencyButton";
-import { IUserApiResponse } from "@/services/interfaces";
+import { IDayOpening, IUserApiResponse } from "@/services/interfaces";
 import { IVetFormData } from "@/interfaces/registerTypes";
 import { usePathname } from "next/navigation";
 
@@ -32,6 +32,7 @@ interface Vet {
   nombre: string;
   nroDeTelefono: string;
   veterinarian: string;
+  businessHours: IDayOpening;
 }
 
 interface VetWithDistance extends Vet {
@@ -62,6 +63,12 @@ const Maps = () => {
 
   const pathname = usePathname();
 
+  const [showBusinessHours, setShowBusinessHours] = useState(false);
+
+  const toggleBusinessHours = () => {
+    setShowBusinessHours(!showBusinessHours);
+  };
+
   const [selectedEntity, setSelectedEntity] = useState<{
     type: "USER" | "VET" | null;
     data: IUserApiResponse | Vet | IVetFormData | null;
@@ -77,7 +84,6 @@ const Maps = () => {
           fetchUsers(userData.token),
           getAllVets(userData.token),
         ]);
-
 
         setAllUsers(usersData);
         setAllVets(vetsData);
@@ -157,6 +163,7 @@ const Maps = () => {
                   veterinarian: vet.veterinarian
                     ? vet.veterinarian
                     : "Veterinario no especificado",
+                  businessHours: vet.businessHours || "sin horarios",
                 };
               }
               return null;
@@ -213,6 +220,8 @@ const Maps = () => {
       }),
     []
   );
+
+  console.log(allVets);
 
   const userIcon = useMemo(
     () =>
@@ -366,7 +375,7 @@ const Maps = () => {
           )}
         </MapContainer>
 
-        <div className="m-8">
+        <div className="mx-8">
           {!isAdmin && (
             <Formulario onUbicacionSeleccionada={actualizarUbicacionUsuario} />
           )}
@@ -414,7 +423,7 @@ const Maps = () => {
 
           {selectedEntity.type === "VET" && selectedEntity.data && (
             <div className="customInput">
-              <h3 className="m-3 text-lg">
+              <h3 className="m-3 mt-0 text-lg">
                 🏥 Veterinaria: {(selectedEntity.data as Vet).nombre}
               </h3>
               <Image
@@ -455,6 +464,33 @@ const Maps = () => {
               <p className="m-3 text-lg">
                 📞 Teléfono: {destinationVet.nroDeTelefono}
               </p>
+              <div className="p-6 mt-6 bg-white rounded-lg shadow-md w-full">
+                <button
+                  onClick={toggleBusinessHours}
+                  className="w-full text-left font-bold text-customBrown border-b pb-2"
+                >
+                  📅 Horarios {showBusinessHours ? "▲" : "▼"}
+                </button>
+                {showBusinessHours && (
+                  <div className="space-y-4 mt-4">
+                    {Object.entries(destinationVet.businessHours).map(
+                      ([day, hours]) => (
+                        <div
+                          key={day}
+                          className="flex items-center justify-between p-3 rounded-lg bg-gray-50"
+                        >
+                          <span className="font-medium text-gray-700 capitalize">
+                            {day}
+                          </span>
+                          <span className="text-gray-600">
+                            {hours.opening} - {hours.closure}
+                          </span>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
               {userPosition && (
                 <p className="m-3 text-lg">
                   🏥 Distancia:{" "}

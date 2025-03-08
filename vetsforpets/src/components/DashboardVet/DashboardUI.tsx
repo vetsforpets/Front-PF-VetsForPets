@@ -72,9 +72,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     setVeterinaria(veterinaria);
   }, [veterinaria]);
 
-  console.log("Ubicación en veterinariaState:", veterinariaState.location);
-  console.log("Ubicación en veterinariaState:", veterinariaState);
-
   const handleEdit = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
@@ -94,8 +91,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
         licenseNumber: validLicenseNumber,
         emergencies: editableVet.emergencies ?? [], // Mantiene emergencies pero vacío
       };
-
-      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
 
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
@@ -148,7 +143,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
   };
 
   useEffect(() => {
-    console.log("Datos recibidos en veterinaria:", veterinaria);
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
   }, [veterinaria]);
@@ -289,12 +283,11 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                     />
                   </div>
 
-                  {/* <div className="p-6 mt-6 bg-white rounded-lg shadow-md ">
+                  <div className="p-6 mt-6 bg-white rounded-lg shadow-md w-full">
                     <h2 className="mb-6 text-2xl font-bold text-customBrown">
                       Horario de atención
                     </h2>
                     <div className="space-y-4 ">
-                      
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">Lunes</span>
                         <span className="text-gray-600">
@@ -313,7 +306,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                         </span>
                       </div>
 
-                      
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">
                           Miércoles
@@ -324,7 +316,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                         </span>
                       </div>
 
-                 
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">
                           Jueves
@@ -335,7 +326,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                         </span>
                       </div>
 
-  
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">
                           Viernes
@@ -345,7 +335,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                           {veterinariaState.businessHours.friday.closure}
                         </span>
                       </div>
-
 
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">
@@ -357,7 +346,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                         </span>
                       </div>
 
-
                       <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
                         <span className="font-medium text-gray-700">
                           Domingo
@@ -368,7 +356,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                         </span>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </>
               )}
             </div>

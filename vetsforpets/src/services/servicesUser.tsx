@@ -64,7 +64,6 @@ export const updateUser = async (
       },
       body: JSON.stringify(updatedData),
     });
-    console.log("respuesta del put", response);
     if (!response.ok) {
       throw new Error("Error al actualizar los datos del usuario");
     }
@@ -154,10 +153,10 @@ export async function RegisterUser(
 export const deleteUser = async (id: string, token: string) => {
   try {
     const response = await fetch(`${apiURL}/users/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
 
@@ -167,14 +166,13 @@ export const deleteUser = async (id: string, token: string) => {
     }
 
     return { success: true };
-
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error('Error al eliminar el usuario:', error.message);
+      console.error("Error al eliminar el usuario:", error.message);
       return { error: error.message };
     } else {
-      console.error('Error desconocido al eliminar el usuario:', error);
-      return { error: 'Error desconocido' };
+      console.error("Error desconocido al eliminar el usuario:", error);
+      return { error: "Error desconocido" };
     }
   }
 };

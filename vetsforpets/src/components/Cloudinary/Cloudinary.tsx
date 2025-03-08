@@ -8,7 +8,10 @@ interface CloudinaryUploaderProps {
   inputId?: string;
 }
 
-function CloudinaryUploader({ onImageUpload, inputId = "file-input"  }: CloudinaryUploaderProps) {
+function CloudinaryUploader({
+  onImageUpload,
+  inputId = "file-input",
+}: CloudinaryUploaderProps) {
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -71,7 +74,10 @@ function CloudinaryUploader({ onImageUpload, inputId = "file-input"  }: Cloudina
           ) : isPDF(imageUrl) ? (
             // Mostrar botón para ver PDF
             <a href={imageUrl} target="_blank" rel="noopener noreferrer">
-              <button className="w-full px-4 py-2 transition-all rounded-md shadow-md sm:w-auto sm:text-xs sm:px-3 sm:py-2 md:text-sm lg:text-lg customButton hover:bg-gray-300">
+              <button
+                type="button"
+                className="w-full px-4 py-2 transition-all rounded-md shadow-md sm:w-auto sm:text-xs sm:px-3 sm:py-2 md:text-sm lg:text-lg customButton hover:bg-gray-300"
+              >
                 Ver PDF
               </button>
             </a>

@@ -31,6 +31,7 @@ export interface IUserApiResponse {
   isActive: boolean;
   role: string;
   userMembership: null | string;
+  businessHours: IDayOpening;
 }
 
 export interface IUser {
@@ -50,7 +51,7 @@ export interface IPet {
   isSterilized: boolean;
   notes?: string;
   profileImg?: string;
-  medicalRecord?: string
+  medicalRecord?: string;
 }
 
 export interface IUserData {
@@ -136,7 +137,7 @@ export interface IDayOpening {
     opening: string;
     closure: string;
   };
-  Sunday: {
+  sunday: {
     opening: string;
     closure: string;
   };

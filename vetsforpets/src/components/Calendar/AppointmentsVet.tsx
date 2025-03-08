@@ -155,9 +155,6 @@ function AppointmentsVet() {
     return veterinarias.find((vet) => vet.email === userEmail);
   }, [userEmail, veterinarias]);
 
-  console.log("Correo del usuario:", userEmail);
-  console.log("Veterinaria asociada:", veterinariaUsuario);
-
   useEffect(() => {
     const fetchAppointments = async () => {
       if (!veterinariaUsuario) {

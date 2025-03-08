@@ -18,14 +18,12 @@ const DashboardData = () => {
   useEffect(() => {
     if (userData?.token && userData?.id) {
       const getVetData = async () => {
-        console.log("Buscando veterinaria con ID:", userData.id);
         try {
           const vet: IVetCredentials | null = await getVetById(
             userData.id,
             userData.token
           );
 
-          console.log("Respuesta de getVetById", vet);
           if (vet) {
             setVeterinaria(vet);
           } else {

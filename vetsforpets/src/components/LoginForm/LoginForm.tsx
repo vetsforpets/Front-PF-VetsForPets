@@ -16,7 +16,7 @@ interface LoginFormInputs {
 }
 
 export default function LoginForm() {
-  const { setUserData, userData } = useUserStore();
+  const { setUserData } = useUserStore();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -37,7 +37,7 @@ export default function LoginForm() {
           role: data.user.role,
           email: data.user.email,
         });
-        console.log(userData, data.token, data.user);
+
         reset();
         toast.success("Usuario logueado con éxito", {
           duration: 3000,
