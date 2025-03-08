@@ -140,6 +140,13 @@ export function VetChat({ chatId }: VetChatProps) {
     setMessage("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Evita el salto de línea
+      sendMessage();
+    }
+  };
+
   return (
     <div className="w-full rounded-lg p-4">
       <div className="h-64 overflow-y-auto bg-gray-100 p-2 rounded">
@@ -159,8 +166,9 @@ export function VetChat({ chatId }: VetChatProps) {
       <div className="flex mt-2">
         <input
           type="text"
-          className="flex-1 p-2 rounded-l"
+          className="flex-1 p-2 rounded-l text-customGreen"
           value={message}
+          onKeyDown={handleKeyDown}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button

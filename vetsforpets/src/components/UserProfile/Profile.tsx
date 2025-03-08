@@ -89,22 +89,26 @@ const Profile = () => {
     }
   };
 
-
   const handleSave = async () => {
     if (editableUser) {
-      
       const updatedUser = {
         ...editableUser,
-        location: Array.isArray(editableUser.location) && editableUser.location.length > 0
-          ? editableUser.location.map((loc) => ({
-              latitude: Number(loc.latitude),
-              longitude: Number(loc.longitude),
-            }))
-          : [{ latitude: 0, longitude: 0 }], 
+        location:
+          Array.isArray(editableUser.location) &&
+          editableUser.location.length > 0
+            ? editableUser.location.map((loc) => ({
+                latitude: Number(loc.latitude),
+                longitude: Number(loc.longitude),
+              }))
+            : [{ latitude: 0, longitude: 0 }],
       };
-  
+
       try {
-        const response = await updateUser(userData.id, updatedUser, userData.token);
+        const response = await updateUser(
+          userData.id,
+          updatedUser,
+          userData.token
+        );
         setUsers([response]);
         toast.success("Perfil editado con éxito", { duration: 3000 });
         setIsEditing(false);
@@ -113,11 +117,13 @@ const Profile = () => {
       }
     }
   };
-  
 
-  const handleChange = (field: keyof IUserData,  value: string | number | { latitude: number; longitude: number })  => {
+  const handleChange = (
+    field: keyof IUserData,
+    value: string | number | { latitude: number; longitude: number }
+  ) => {
     if (!editableUser) return;
-    
+
     setEditableUser((prev) => ({
       ...prev!,
       [field]: field === "age" ? String(value) : value,
@@ -127,7 +133,7 @@ const Profile = () => {
   const handleLocationSelect = (lat: number, lon: number) => {
     setEditableUser((prev) => ({
       ...prev!,
-      location: [{ latitude: Number(lat), longitude: Number(lon) }], 
+      location: [{ latitude: Number(lat), longitude: Number(lon) }],
     }));
   };
 
@@ -144,11 +150,9 @@ const Profile = () => {
     handleCloseModal();
   };
 
-
   return (
     <div className="grid w-full max-w-4xl grid-cols-1 gap-8 xl:grid-cols-2 place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center px-6 py-20 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 min-h-80 relative">
-
         {isEditing ? (
           <div className="flex flex-col items-center">
             <CloudinaryUploader onImageUpload={handleImageUpload} />
@@ -232,16 +236,20 @@ const Profile = () => {
             </div>
 
             <div className="mt-4">
-  <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
-  <LocationSearch
-    onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
-    onReset={() => handleChange("location", { latitude: 0, longitude: 0 })}
-    onSubmit={(e, resetSearch) => {
-      e.preventDefault();
-      resetSearch();
-    }}
-  />
-</div>            
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
+                Ubicación:
+              </label>
+              <LocationSearch
+                onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+                onReset={() =>
+                  handleChange("location", { latitude: 0, longitude: 0 })
+                }
+                onSubmit={(e, resetSearch) => {
+                  e.preventDefault();
+                  resetSearch();
+                }}
+              />
+            </div>
 
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">
@@ -271,16 +279,16 @@ const Profile = () => {
           <>
             <UserDetail label="Edad:" value={user.age.toString()} />
             <UserDetail label="Correo Electrónico:" value={user.email} />
-            
-            <UserDetail
+
+            {/* <UserDetail
   label="Ubicación:"
   value={
     user.location && user.location.length > 0
       ? user.location.map((loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`).join(" | ")
       : "No disponible"
   }
-/>
-    
+/> */}
+
             <UserDetail label="Teléfono:" value={user.phoneNumber} />
             <UserDetail
               label="Fecha de Registro:"
