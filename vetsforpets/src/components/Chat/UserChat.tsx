@@ -142,6 +142,13 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
     setMessage("");
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Evita el salto de línea
+      sendMessage();
+    }
+  };
+
   return (
     <div className="w-full mt-4  rounded-lg p-4 bg-customBrown">
       <div className="h-64 overflow-y-auto bg-gray-100 p-2 rounded">
@@ -158,12 +165,13 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
           </p>
         ))}
       </div>
-      <div className="flex mt-2">
+      <div className="flex mt-2 text-customHardBrown">
         <input
           type="text"
-          className="flex-1 p-2 border rounded-l"
+          className="flex-1 p-2 border rounded-l "
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <button
           className="p-2 bg-customHardBrown hover:bg-customLightBrown cursor-pointer text-white rounded-r"
