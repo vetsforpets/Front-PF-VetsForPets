@@ -29,7 +29,7 @@ export default function LoginForm() {
   const onSubmit: SubmitHandler<LoginFormInputs> = async (userCredentials) => {
     try {
       const data = await loginUser(userCredentials);
-      console.log(data);
+
       if (data.user) {
         setUserData({
           token: data.token,
