@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import PetDetails from "../pet/petDetails";
 import PetPreview, { Pet } from "../pet/PetPreview";
-import Admin from "./Admin";
+// import Admin from "./Admin";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store";
 import { fetchUserData } from "@/services/servicesUser";
 import { IUserData } from "@/services/interfaces";
-
 
 // import AppointmentsUser from "../Calendar/AppointmentsUser";
 import dynamic from "next/dynamic";
@@ -18,7 +17,7 @@ const MapComponent = dynamic(() => import("../Maps/Maps"), { ssr: false });
 
 import StripeMetrics from "../StripeMetrics/StripeMetrics";
 import { MyComponent } from "./VetGroup";
-
+import { MyUserComponent } from "./UserGrup";
 
 export default function AdminProfile() {
   const router = useRouter();
@@ -66,7 +65,6 @@ export default function AdminProfile() {
     fetchData();
   }, [userData?.id, userData?.token, reloadPets]);
 
-
   const handleSelectPet = (pet: Pet) => {
     setSelectedPet(pet);
   };
@@ -78,25 +76,10 @@ export default function AdminProfile() {
 
     setShowAddPets(false);
     setShowMaps(false);
-    setShowUserAndVets(false)
+    setShowUserAndVets(false);
 
     setShowStripeMetrics(false);
     setShowAppointments(false);
-
-  };
-
-  const handlePetsClick = () => {
-    setShowPets(true);
-    setShowProfile(false);
-    setShowVets(false);
-
-    setShowAddPets(false);
-    setShowMaps(false);
-    setShowUserAndVets(false)
-
-    setShowStripeMetrics(false);
-    setShowAppointments(false);
-
   };
 
   const handleStripeMetricsClick = () => {
@@ -105,7 +88,7 @@ export default function AdminProfile() {
     setShowPets(false);
     setShowVets(false);
     setShowMaps(false);
-    setShowUserAndVets(false)
+    setShowUserAndVets(false);
   };
 
   // const handleRedirectToPets = () => {
@@ -125,11 +108,10 @@ export default function AdminProfile() {
 
     setShowAddPets(false);
     setShowMaps(false);
-    setShowUserAndVets(false)
+    setShowUserAndVets(false);
 
     setShowStripeMetrics(false);
     setShowAppointments(false);
-
   };
 
   const handleMapsClick = () => {
@@ -138,11 +120,11 @@ export default function AdminProfile() {
     setShowProfile(false);
     setShowPets(false);
     setShowAddPets(false);
-    setShowUserAndVets(false)
+    setShowUserAndVets(false);
   };
 
   const handleUserAndVetsClick = () => {
-    setShowUserAndVets(true)
+    setShowUserAndVets(true);
     setShowMaps(false);
     setShowVets(false);
     setShowProfile(false);
@@ -151,10 +133,7 @@ export default function AdminProfile() {
     setShowAddPets(false);
 
     setShowStripeMetrics(false);
-
   };
-
-
 
   const handleUpdatePet = (updatedPet: Pet) => {
     setSelectedPet(updatedPet); // Actualiza el estado del pet seleccionado
@@ -182,19 +161,10 @@ export default function AdminProfile() {
               onClick={handleProfileClick}
             >
               <img src="/user.svg" alt="Calendly" className="w-12 h-12 me-2" />
-              Usuarios
+              Usuarios y Mascotas
             </a>
           </li>
-          <li className="p-3">
-            <a
-              href="#"
-              className="inline-flex items-center w-full px-4 py-3 text-base border text-customDarkGreen rounded-2xl border-customBrown bg-customBeige hover:bg-customLightBrown active"
-              onClick={handlePetsClick}
-            >
-              <img src="/pets.svg" alt="Calendly" className="w-12 h-12 me-2" />
-              Emergencias
-            </a>
-          </li>
+
           <li className="p-3">
             <a
               href="#"
@@ -234,7 +204,6 @@ export default function AdminProfile() {
             </a>
           </li>
 
-
           <li className="p-3">
             <a
               href="#"
@@ -247,14 +216,15 @@ export default function AdminProfile() {
           </li>
         </ul>
 
-
         <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
               <div className="flex justify-center">
-                <Admin />
+                {/* <Admin /> */}
+                <MyUserComponent userData={userData} />
               </div>
             )}
+
             {showPets && (
               <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-14">
                 {user?.pets && user.pets.length > 0 ? (
@@ -291,14 +261,12 @@ export default function AdminProfile() {
               </div>
             )}
 
-            {showStripeMetrics && (
-              <StripeMetrics token={userData.token} />
-            )}
-            {showVets && (<MyComponent userData={userData} />)}
+            {showStripeMetrics && <StripeMetrics token={userData.token} />}
+            {showVets && <MyComponent userData={userData} />}
+
             {showMaps && <MapComponent />}
+
             {showUserAndVets && <UserAndVets />}
-
-
 
             {showAddPets && (
               <div className="p-4 mt-4 text-center bg-gray-200 rounded">
@@ -308,11 +276,9 @@ export default function AdminProfile() {
 
             {showAppointments && (
               <div className="p-4 mt-4 text-center bg-gray-200 rounded">
-                Funcionalidad para ver citas próximamente.
+                Funcionalidad para ver turnos próximamente.
               </div>
             )}
-
-
           </div>
         </div>
       </div>

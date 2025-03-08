@@ -89,39 +89,10 @@ const Profile = () => {
     }
   };
 
-  // const handleSave = async () => {
-  //   if (editableUser) {
-  //     console.log("datos actualizados enviados.... ", editableUser)
-  //     try {
-  //       const updatedUser = await updateUser(
-  //         userData.id,
-  //         editableUser,
-  //         userData.token
-  //       );
-  //       console.log("Usuario actualizado:", updatedUser);
-  //       setUsers([updatedUser]);
-  //       toast.success("Perfil editado con éxito", {
-  //         duration: 3000,
-  //         style: {
-  //           color: "#155724",
-  //           background: "#d4edda",
-  //           borderRadius: "8px",
-  //           padding: "16px",
-  //           border: "1px solid #c3e6cb",
-  //         },
-  //       });
-  //       setIsEditing(false);
-  //     } catch (error) {
-  //       console.error("Error al guardar los cambios:", error);
-  //     }
-  //   }
-  // };
-
-
 
   const handleSave = async () => {
     if (editableUser) {
-      // Verificamos si location está definido y en el formato correcto
+      
       const updatedUser = {
         ...editableUser,
         location: Array.isArray(editableUser.location) && editableUser.location.length > 0
@@ -129,14 +100,11 @@ const Profile = () => {
               latitude: Number(loc.latitude),
               longitude: Number(loc.longitude),
             }))
-          : [{ latitude: 0, longitude: 0 }], // Si no tiene ubicación, enviamos un valor por defecto
+          : [{ latitude: 0, longitude: 0 }], 
       };
-  
-      console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
   
       try {
         const response = await updateUser(userData.id, updatedUser, userData.token);
-        console.log("Usuario actualizado:", response);
         setUsers([response]);
         toast.success("Perfil editado con éxito", { duration: 3000 });
         setIsEditing(false);

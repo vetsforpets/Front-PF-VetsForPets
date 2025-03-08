@@ -3,7 +3,6 @@ import { IVetCredentials } from "./interfaces";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
-
 export const getAllVets = async (token: string) => {
   try {
     const response = await fetch(`${apiURL}/petshop`, {
@@ -14,29 +13,27 @@ export const getAllVets = async (token: string) => {
       },
     });
 
-    console.log("Respuesta de la API:", response);
-
     if (!response.ok) {
       const errorMessage = await response.text();
-      throw new Error(`Error en la API: ${response.status} - ${response.statusText} - ${errorMessage}`);
+      throw new Error(
+        `Error en la API: ${response.status} - ${response.statusText} - ${errorMessage}`
+      );
     }
 
     const data = await response.json();
-    console.log("Datos de veterinarias recibidos:", data);
     return data;
   } catch (error) {
     console.error("Error al obtener la lista de veterinarias:", error);
-    throw new Error("Ocurrió un error al obtener los datos de las veterinarias");
+    throw new Error(
+      "Ocurrió un error al obtener los datos de las veterinarias"
+    );
   }
 };
-
 
 export async function getVetById(
   id: string,
   token: string
 ): Promise<IVetCredentials | null> {
-  console.log(id);
-
   try {
     const response = await fetch(`${apiURL}/petshop/${id}`, {
       method: "GET",
@@ -51,9 +48,7 @@ export async function getVetById(
     }
 
     const data: IVetCredentials = await response.json();
-    console.log("Datos de veterinarias:", data);
     return data;
-
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error al buscar veterinaria por ID:", error);
@@ -62,7 +57,6 @@ export async function getVetById(
     throw new Error("Ocurrió un error desconocido al obtener los datos");
   }
 }
-
 
 export async function RegisterVet(
   vetRegisterData: IVetFormDataPrev
@@ -77,9 +71,7 @@ export async function RegisterVet(
       },
       body: JSON.stringify(vetRegisterData),
     });
-    console.log("====================================");
-    console.log(response);
-    console.log("====================================");
+
     if (!response.ok) {
       const error = await response.json();
       throw new Error(`${error.message}`);
@@ -101,7 +93,6 @@ export const updatePetshop = async (
   token: string
 ) => {
   try {
-    console.log("Enviando datos a la API para actualizar la veterinaria:", updatedData);
     const response = await fetch(`${apiURL}/petshop/${petshopId}`, {
       method: "PUT",
       headers: {
@@ -110,7 +101,6 @@ export const updatePetshop = async (
       },
       body: JSON.stringify(updatedData),
     });
-    console.log("Respuesta completa del servidor:", response);
 
     if (!response.ok) {
       const errorMessage = await response.text(); // Obtiene el mensaje de error del backend
@@ -125,17 +115,13 @@ export const updatePetshop = async (
   }
 };
 
-
-
-
-
 export const deletePetShop = async (id: string, token: string) => {
   try {
     const response = await fetch(`${apiURL}/petshop/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
 
@@ -145,14 +131,13 @@ export const deletePetShop = async (id: string, token: string) => {
     }
 
     return { success: true };
-
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error('Error al eliminar el pet shop:', error.message);
+      console.error("Error al eliminar el pet shop:", error.message);
       return { error: error.message };
     } else {
-      console.error('Error desconocido al eliminar el pet shop:', error);
-      return { error: 'Error desconocido' };
+      console.error("Error desconocido al eliminar el pet shop:", error);
+      return { error: "Error desconocido" };
     }
   }
 };

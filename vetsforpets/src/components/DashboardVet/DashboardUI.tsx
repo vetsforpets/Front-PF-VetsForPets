@@ -8,8 +8,6 @@ import { useUserStore } from "@/store";
 import { toast } from "sonner";
 import AppointmentsVet from "../Calendar/AppointmentsVet";
 
-
-
 interface DashboardUIProps {
   veterinaria: IVetCredentials;
   token: string;
@@ -38,8 +36,8 @@ const VetDetail = ({
         ? "true"
         : "false"
       : Array.isArray(editableVet?.[field])
-        ? JSON.stringify(editableVet?.[field])
-        : editableVet?.[field] ?? "";
+      ? JSON.stringify(editableVet?.[field]) // Convierte arrays a string
+      : editableVet?.[field]?.toString() ?? ""; // Convierte otros tipos a string
 
   return (
     <div>
@@ -74,9 +72,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     setVeterinaria(veterinaria);
   }, [veterinaria]);
 
-  console.log("Ubicación en veterinariaState:", veterinariaState.location);
-  console.log("Ubicación en veterinariaState:", veterinariaState);
-
   const handleEdit = () => {
     setIsEditing(!isEditing);
     if (!isEditing) {
@@ -90,22 +85,20 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
         editableVet.licenseNumber && !isNaN(Number(editableVet.licenseNumber))
           ? Number(editableVet.licenseNumber)
           : veterinaria.licenseNumber;
-  
+
       const updatedVet: IVetCredentials = {
         ...editableVet,
         licenseNumber: validLicenseNumber,
         emergencies: editableVet.emergencies ?? [], // Mantiene emergencies pero vacío
       };
-  
-      console.log("Datos enviados al actualizar la veterinaria:", updatedVet);
-  
+
       try {
         const response = await updatePetshop(veterinaria.id, updatedVet, token);
         console.log("Veterinaria actualizada:", response);
-  
+
         setVeterinaria(updatedVet);
         setEditableVet(updatedVet);
-  
+
         toast.success("Perfil editado con éxito", {
           duration: 3000,
           style: {
@@ -116,15 +109,13 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
             border: "1px solid #c3e6cb",
           },
         });
-  
+
         setIsEditing(false);
       } catch (error) {
         console.error("Error al guardar los cambios:", error);
       }
     }
   };
-  
-  
 
   const handleChange = (
     field: keyof IVetCredentials,
@@ -151,9 +142,7 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
     handleCloseModal();
   };
 
-
   useEffect(() => {
-    console.log("Datos recibidos en veterinaria:", veterinaria);
     setEditableVet(veterinaria);
     setVeterinaria(veterinaria);
   }, [veterinaria]);
@@ -186,12 +175,12 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   onClick={handleProfileClick}
                 >
                   <Image
-                  src="/user.svg"
-                  alt="Calendly"
-                  className="w-12 h-12 me-2"
-                  width={48}
-                  height={48}
-                />
+                    src="/user.svg"
+                    alt="Calendly"
+                    className="w-12 h-12 me-2"
+                    width={48}
+                    height={48}
+                  />
                   Mi Perfil
                 </a>
               </li>
@@ -202,12 +191,12 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                   onClick={handleCalendlyClick}
                 >
                   <Image
-                  src="/calendar.svg"
-                  alt="Calendly"
-                  className="w-12 h-12 me-2"
-                  width={48}
-                  height={48}
-                />
+                    src="/calendar.svg"
+                    alt="Calendly"
+                    className="w-12 h-12 me-2"
+                    width={48}
+                    height={48}
+                  />
                   Mostrar Turnos
                 </a>
               </li>
@@ -258,41 +247,117 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
                 </div>
               )}
               {showProfile && (
-                <div className="flex flex-col w-full m-6 space-y-2">
-                  <VetDetail
-                    label="Veterinario a cargo:"
-                    value={veterinariaState.veterinarian}
-                    field="veterinarian"
-                    isEditing={isEditing}
-                    editableVet={editableVet}
-                    handleChange={handleChange}
-                  />
-                  <VetDetail
-                    label="Número de matrícula:"
-                    value={veterinariaState.licenseNumber.toString()}
-                    field="licenseNumber"
-                    isEditing={isEditing}
-                    editableVet={editableVet}
-                    handleChange={handleChange}
-                  />
-                  <VetDetail
-                    label="Email:"
-                    value={veterinariaState.email}
-                    field="email"
-                    isEditing={isEditing}
-                    editableVet={editableVet}
-                    handleChange={handleChange}
-                  />
-                  <VetDetail
-                    label="Teléfono:"
-                    value={veterinariaState.phoneNumber}
-                    field="phoneNumber"
-                    isEditing={isEditing}
-                    editableVet={editableVet}
-                    handleChange={handleChange}
-                  />
-                  
-                </div>
+                <>
+                  <div className="flex flex-col w-full m-6 space-y-2">
+                    <VetDetail
+                      label="Veterinario a cargo:"
+                      value={veterinariaState.veterinarian}
+                      field="veterinarian"
+                      isEditing={isEditing}
+                      editableVet={editableVet}
+                      handleChange={handleChange}
+                    />
+                    <VetDetail
+                      label="Número de matrícula:"
+                      value={veterinariaState.licenseNumber.toString()}
+                      field="licenseNumber"
+                      isEditing={isEditing}
+                      editableVet={editableVet}
+                      handleChange={handleChange}
+                    />
+                    <VetDetail
+                      label="Email:"
+                      value={veterinariaState.email}
+                      field="email"
+                      isEditing={isEditing}
+                      editableVet={editableVet}
+                      handleChange={handleChange}
+                    />
+                    <VetDetail
+                      label="Teléfono:"
+                      value={veterinariaState.phoneNumber}
+                      field="phoneNumber"
+                      isEditing={isEditing}
+                      editableVet={editableVet}
+                      handleChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="p-6 mt-6 bg-white rounded-lg shadow-md w-full">
+                    <h2 className="mb-6 text-2xl font-bold text-customBrown">
+                      Horario de atención
+                    </h2>
+                    <div className="space-y-4 ">
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">Lunes</span>
+                        <span className="text-gray-600">
+                          {veterinariaState?.businessHours?.monday?.opening} -{" "}
+                          {veterinariaState.businessHours.monday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Martes
+                        </span>
+                        <span className="text-gray-600 ">
+                          {veterinariaState.businessHours.tuesday.opening} -{" "}
+                          {veterinariaState.businessHours.tuesday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Miércoles
+                        </span>
+                        <span className="text-gray-600">
+                          {veterinariaState.businessHours.wednesday.opening} -{" "}
+                          {veterinariaState.businessHours.wednesday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Jueves
+                        </span>
+                        <span className="text-gray-600">
+                          {veterinariaState.businessHours.thursday.opening} -{" "}
+                          {veterinariaState.businessHours.thursday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Viernes
+                        </span>
+                        <span className="text-gray-600">
+                          {veterinariaState.businessHours.friday.opening} -{" "}
+                          {veterinariaState.businessHours.friday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Sábado
+                        </span>
+                        <span className="text-gray-600">
+                          {veterinariaState.businessHours.saturday.opening} -{" "}
+                          {veterinariaState.businessHours.saturday.closure}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
+                        <span className="font-medium text-gray-700">
+                          Domingo
+                        </span>
+                        <span className="text-gray-600">
+                          {veterinariaState.businessHours.sunday.opening} -{" "}
+                          {veterinariaState.businessHours.sunday.closure}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
 
@@ -315,7 +380,6 @@ const VetProfile = ({ veterinaria, token }: DashboardUIProps) => {
               />
             )}
             {showCalendly && <AppointmentsVet />}
-            
           </div>
         </div>
       </>

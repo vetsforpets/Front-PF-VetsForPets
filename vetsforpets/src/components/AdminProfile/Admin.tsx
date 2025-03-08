@@ -89,54 +89,28 @@ const Admin = () => {
     }
   };
 
-  // const handleSave = async () => {
-  //   if (editableUser) {
-  //     console.log("datos actualizados enviados.... ", editableUser)
-  //     try {
-  //       const updatedUser = await updateUser(
-  //         userData.id,
-  //         editableUser,
-  //         userData.token
-  //       );
-  //       console.log("Usuario actualizado:", updatedUser);
-  //       setUsers([updatedUser]);
-  //       toast.success("Perfil editado con éxito", {
-  //         duration: 3000,
-  //         style: {
-  //           color: "#155724",
-  //           background: "#d4edda",
-  //           borderRadius: "8px",
-  //           padding: "16px",
-  //           border: "1px solid #c3e6cb",
-  //         },
-  //       });
-  //       setIsEditing(false);
-  //     } catch (error) {
-  //       console.error("Error al guardar los cambios:", error);
-  //     }
-  //   }
-  // };
-
-
-
   const handleSave = async () => {
     if (editableUser) {
       // Verificamos si location está definido y en el formato correcto
       const updatedUser = {
         ...editableUser,
-        location: Array.isArray(editableUser.location) && editableUser.location.length > 0
-          ? editableUser.location.map((loc) => ({
-              latitude: Number(loc.latitude),
-              longitude: Number(loc.longitude),
-            }))
-          : [{ latitude: 0, longitude: 0 }], // 🔹 Si no tiene ubicación, enviamos un valor por defecto
+        location:
+          Array.isArray(editableUser.location) &&
+          editableUser.location.length > 0
+            ? editableUser.location.map((loc) => ({
+                latitude: Number(loc.latitude),
+                longitude: Number(loc.longitude),
+              }))
+            : [{ latitude: 0, longitude: 0 }], // 🔹 Si no tiene ubicación, enviamos un valor por defecto
       };
-  
-      console.log("Datos enviados a updateUser:", updatedUser); // 🔹 Verificar estructura correcta antes de enviar
-  
+
       try {
-        const response = await updateUser(userData.id, updatedUser, userData.token);
-        console.log("Usuario actualizado:", response);
+        const response = await updateUser(
+          userData.id,
+          updatedUser,
+          userData.token
+        );
+
         setUsers([response]);
         toast.success("Perfil editado con éxito", { duration: 3000 });
         setIsEditing(false);
@@ -145,11 +119,13 @@ const Admin = () => {
       }
     }
   };
-  
 
-  const handleChange = (field: keyof IUserData,  value: string | number | { latitude: number; longitude: number })  => {
+  const handleChange = (
+    field: keyof IUserData,
+    value: string | number | { latitude: number; longitude: number }
+  ) => {
     if (!editableUser) return;
-    
+
     setEditableUser((prev) => ({
       ...prev!,
       [field]: field === "age" ? String(value) : value,
@@ -159,7 +135,7 @@ const Admin = () => {
   const handleLocationSelect = (lat: number, lon: number) => {
     setEditableUser((prev) => ({
       ...prev!,
-      location: [{ latitude: Number(lat), longitude: Number(lon) }], 
+      location: [{ latitude: Number(lat), longitude: Number(lon) }],
     }));
   };
 
@@ -176,11 +152,9 @@ const Admin = () => {
     handleCloseModal();
   };
 
-
   return (
     <div className="grid w-full max-w-4xl grid-cols-1 gap-8 xl:grid-cols-2 place-items-center">
       <div className="bg-customLightBrown flex flex-col items-center justify-center px-6 py-20 rounded-3xl shadow-[6px_12px_10.8px_rgba(188,108,37,0.25)] w-80 min-h-80 relative">
-
         {isEditing ? (
           <div className="flex flex-col items-center">
             <CloudinaryUploader onImageUpload={handleImageUpload} />
@@ -263,18 +237,21 @@ const Admin = () => {
               />
             </div>
 
-
             <div className="mt-4">
-  <label className="block py-1 pl-4 font-semibold text-customBrown">Ubicación:</label>
-  <LocationSearch
-    onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
-    onReset={() => handleChange("location", { latitude: 0, longitude: 0 })}
-    onSubmit={(e, resetSearch) => {
-      e.preventDefault();
-      resetSearch();
-    }}
-  />
-</div>
+              <label className="block py-1 pl-4 font-semibold text-customBrown">
+                Ubicación:
+              </label>
+              <LocationSearch
+                onSelect={(lat, lon) => handleLocationSelect(lat, lon)}
+                onReset={() =>
+                  handleChange("location", { latitude: 0, longitude: 0 })
+                }
+                onSubmit={(e, resetSearch) => {
+                  e.preventDefault();
+                  resetSearch();
+                }}
+              />
+            </div>
 
             <div>
               <label className="block py-1 pl-4 font-semibold text-customBrown">
@@ -304,16 +281,20 @@ const Admin = () => {
           <>
             <UserDetail label="Edad:" value={user.age.toString()} />
             <UserDetail label="Correo Electrónico:" value={user.email} />
-            
+
             <UserDetail
-  label="Ubicación:"
-  value={
-    user.location && user.location.length > 0
-      ? user.location.map((loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`).join(" | ")
-      : "No disponible"
-  }
-/>
-    
+              label="Ubicación:"
+              value={
+                user.location && user.location.length > 0
+                  ? user.location
+                      .map(
+                        (loc) => `Lat: ${loc.latitude}, Lon: ${loc.longitude}`
+                      )
+                      .join(" | ")
+                  : "No disponible"
+              }
+            />
+
             <UserDetail label="Teléfono:" value={user.phoneNumber} />
             <UserDetail
               label="Fecha de Registro:"

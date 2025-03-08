@@ -59,8 +59,6 @@ export function VetChat({ chatId }: VetChatProps) {
 
     // 📌 Manejadores de eventos
     const handleMessageHistory = async (history: RawMessage[]) => {
-      console.log("📌 Historial de mensajes recibido:", history);
-
       // Mapeamos senderId a nombres
       const updatedMessages = await Promise.all(
         history.map(async (msg) => {
@@ -143,14 +141,15 @@ export function VetChat({ chatId }: VetChatProps) {
   };
 
   return (
-    <div className="w-full mt-4 border border-gray-300 rounded-lg p-4">
-      <h3 className="text-lg font-bold">Chat de Emergencia</h3>
+    <div className="w-full rounded-lg p-4">
       <div className="h-64 overflow-y-auto bg-gray-100 p-2 rounded">
         {messages.map((msg, index) => (
           <p
             key={index}
             className={`p-2 ${
-              msg.senderType === "USER" ? "text-blue-600" : "text-green-600"
+              msg.senderType === "USER"
+                ? "text-customHardBrown"
+                : "text-customGreen"
             }`}
           >
             <strong>{msg.sender}:</strong> {msg.message}
@@ -160,12 +159,12 @@ export function VetChat({ chatId }: VetChatProps) {
       <div className="flex mt-2">
         <input
           type="text"
-          className="flex-1 p-2 border rounded-l"
+          className="flex-1 p-2 rounded-l"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button
-          className="p-2 bg-blue-500 text-white rounded-r"
+          className="p-2 bg-customHardBrown hover:bg-customLightBrown cursor-pointer text-white rounded-r"
           onClick={sendMessage}
           disabled={!message.trim()}
         >

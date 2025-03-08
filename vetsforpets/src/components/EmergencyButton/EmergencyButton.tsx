@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { updatePetshop, getVetById } from "@/services/servicesVet";
-import { fetchUserData, updateUser } from "@/services/servicesUser"; // Se importan los servicios
-import { useUserStore } from "@/store";
+import { fetchUserData, updateUser } from "@/services/servicesUser";
+import { useEmergencyFlagStore, useUserStore } from "@/store";
 import { Pet } from "../pet/PetPreview";
 import { toast } from "sonner";
 
@@ -14,6 +14,7 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
   petshopId,
 }) => {
   const { userData } = useUserStore();
+  const { emergencyFlag, setEmergencyFlag } = useEmergencyFlagStore();
   const token = userData?.token;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,21 +22,24 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [chatId, setChatId] = useState<string | null>(null);
+  const [isPremium, setIsPremium] = useState<boolean | null>(null);
   const socketRef = useRef<Socket | null>(null);
 
-  // Obtener las mascotas del usuario
+  // Obtener la información del usuario y verificar si es premium
   useEffect(() => {
-    const fetchPets = async () => {
+    const fetchUserInfo = async () => {
       if (userData?.id && userData?.token) {
         try {
-          const data = await fetchUserData(userData.id, userData.token);
-          setPets(data.pets || []);
+          const user = await fetchUserData(userData.id, userData.token);
+          setIsPremium(user.isPremium ?? false);
+          setPets(user.pets || []);
+          // setUserEmergencies(user.emergencies || []); // Obtener emergencias activas del usuario
         } catch (error) {
-          console.error("Error al obtener mascotas del usuario:", error);
+          console.error("Error al obtener datos del usuario:", error);
         }
       }
     };
-    fetchPets();
+    fetchUserInfo();
   }, [userData?.id, userData?.token]);
 
   // Conectarse al WebSocket y manejar eventos
@@ -51,7 +55,6 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
     socketRef.current = socket;
 
     const handleJoinedRoom = (roomId: string) => {
-      console.log("🟢 Sala de chat asignada:", roomId);
       setChatId(roomId);
     };
 
@@ -64,17 +67,11 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
     };
   }, [userData?.token]);
 
-  useEffect(() => {
-    console.log("📌 Estado actual de chatId:", chatId);
-  }, [chatId]);
-
-  // 📌 Ahora `joinRoom` se ejecuta cuando se abre el modal
   const handleOpenModal = () => {
     setShowModal(true);
     setError(null);
 
     if (socketRef.current) {
-      console.log("🟢 Enviando `joinRoom` al abrir el modal...");
       socketRef.current.emit("joinRoom", petshopId);
     }
   };
@@ -90,29 +87,72 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
       return;
     }
 
-    console.log(
-      "🚨 Solicitando emergencia a la veterinaria con ID:",
-      petshopId
-    );
+    // Obtener los datos actuales del usuario
+    const user = await fetchUserData(userData.id, userData.token);
+    if (!user) {
+      setError("No se encontraron los datos del usuario.");
+      return;
+    }
+
+    // Obtener los datos actuales de la veterinaria
+    const petshopData = await getVetById(petshopId, userData.token);
+    if (!petshopData) {
+      setError("No se encontró la veterinaria.");
+      return;
+    }
+
+    if (user.emergencies) {
+      const hasExistingEmergencyWithVet = user.emergencies.some(
+        (emergency) => emergency.vetId === petshopId
+      );
+
+      if (hasExistingEmergencyWithVet) {
+        toast.error("Ya tienes una emergencia activa con esta veterinaria.", {
+          duration: 3000,
+          style: {
+            color: "#721c24",
+            background: "#f8d7da",
+            borderRadius: "8px",
+            padding: "16px",
+            border: "1px solid #f5c6cb",
+          },
+        });
+        return;
+      }
+    }
+
+    // Verificar el límite de emergencias
+    if ((user.emergencies?.length || 0) >= 3) {
+      toast.error("No puedes tener más de 3 emergencias activas.", {
+        duration: 3000,
+        style: {
+          color: "#721c24",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
+      return;
+    }
+
+    if ((petshopData.emergencies?.length || 0) >= 3) {
+      toast.error("Esta veterinaria ya tiene demasiadas emergencias activas.", {
+        duration: 3000,
+        style: {
+          color: "#721c24",
+          background: "#f8d7da",
+          borderRadius: "8px",
+          padding: "16px",
+          border: "1px solid #f5c6cb",
+        },
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      // Obtener los datos actuales de la veterinaria
-      const petshopData = await getVetById(petshopId, userData.token);
-      if (!petshopData) {
-        throw new Error("No se encontró la veterinaria.");
-      }
-
-      // Obtener los datos actuales del usuario
-      const user = await fetchUserData(userData.id, userData.token);
-      if (!user) {
-        throw new Error("No se encontraron los datos del usuario.");
-      }
-
-      if (typeof petshopData.licenseNumber === "string") {
-        petshopData.licenseNumber = Number(petshopData.licenseNumber);
-      }
-
       // Nueva emergencia a agregar
       const newVetEmergency = {
         userId: userData.id,
@@ -131,14 +171,14 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
         ...(petshopData.emergencies || []),
         newVetEmergency,
       ];
+      petshopData.licenseNumber = 12345;
 
       // Agregar la emergencia al usuario
       const updatedUserData = {
-        ...user, // Se mantiene el resto de los datos del usuario
+        ...user,
+
         emergencies: [...(user.emergencies || []), newUserEmergency],
       };
-
-      console.log("Emergencia a agregar:", updatedUserData);
 
       // Actualizar veterinaria y usuario en paralelo
       await Promise.all([
@@ -146,19 +186,21 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
         updateUser(userData.id, updatedUserData, userData.token),
       ]);
 
-      const updatedUser = await fetchUserData(userData.id, userData.token);
-      console.log("✅ Usuario actualizado:", updatedUser);
+      setEmergencyFlag(!emergencyFlag);
 
-      toast.success("Emergencia solicitada con éxito.", {
-        duration: 3000,
-        style: {
-          color: "#155724",
-          background: "#d4edda",
-          borderRadius: "8px",
-          padding: "16px",
-          border: "1px solid #c3e6cb",
-        },
-      });
+      toast.success(
+        "Emergencia solicitada con éxito. Desliza abajo para abrir el chat",
+        {
+          duration: 5000,
+          style: {
+            color: "#155724",
+            background: "#d4edda",
+            borderRadius: "8px",
+            padding: "16px",
+            border: "1px solid #c3e6cb",
+          },
+        }
+      );
 
       setShowModal(false);
     } catch (err) {
@@ -173,11 +215,21 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
     <div className="flex flex-col items-center">
       <button
         onClick={handleOpenModal}
-        disabled={loading}
-        className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-700 disabled:bg-gray-400 blink"
+        disabled={loading || isPremium === false}
+        className={`px-4 py-2 text-white rounded-md shadow-md ${
+          isPremium
+            ? "bg-red-500 hover:bg-red-700"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
       >
         {loading ? "Solicitando..." : "Solicitar Emergencia"}
       </button>
+
+      {isPremium === false && (
+        <p className="mt-2 text-sm text-red-600">
+          ❌ Los usuarios no premium no pueden solicitar emergencias.
+        </p>
+      )}
 
       {showModal && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50">
@@ -205,7 +257,7 @@ export const RequestEmergencyButton: React.FC<RequestEmergencyButtonProps> = ({
             <button
               onClick={handleRequestEmergency}
               className="w-full px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-700"
-              disabled={!selectedPet || !chatId} // Se deshabilita hasta que el chatId esté listo
+              disabled={!selectedPet || !chatId}
             >
               Confirmar Emergencia
             </button>

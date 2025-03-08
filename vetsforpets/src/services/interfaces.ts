@@ -1,4 +1,5 @@
 import { Pet } from "@/components/pet/PetPreview";
+import { dayOpenings } from "@/interfaces/registerTypes";
 
 export interface IUserRegisterData {
   name: string;
@@ -30,13 +31,14 @@ export interface IUserApiResponse {
   isActive: boolean;
   role: string;
   userMembership: null | string;
+  businessHours: IDayOpening;
 }
 
 export interface IUser {
   id: string;
   name: string;
   email: string;
-  pet?: { id: string; name: string; type: string }; 
+  pet?: { id: string; name: string; type: string };
 }
 export interface IPet {
   id: string;
@@ -49,6 +51,7 @@ export interface IPet {
   isSterilized: boolean;
   notes?: string;
   profileImg?: string;
+  medicalRecord?: string;
 }
 
 export interface IUserData {
@@ -62,11 +65,15 @@ export interface IUserData {
   createdAt: string;
   imgProfile: string;
   isAdmin: boolean;
+  isActive: boolean;
   isPremium: boolean;
   location: ILocation[];
   appointments: IAppointment[];
   pets: Pet[];
   role: string;
+
+  userMembership: null | string;
+
   emergencies: IUserEmergency[];
 }
 
@@ -93,7 +100,7 @@ export interface IVetCredentials {
   createdAt: string;
   veterinarian: string;
   licenseNumber: number;
-  businessHours: null;
+  businessHours: dayOpenings;
   emergencies: IEmergency[];
   role: string;
   isActive: boolean;
@@ -111,28 +118,28 @@ export interface IDayOpening {
     closure: string;
   };
   tuesday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   wednesday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   thursday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   friday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
   saturday: {
-    open: string;
-    close: string;
+    opening: string;
+    closure: string;
   };
-  Sunday: {
-    open: string;
-    close: string;
+  sunday: {
+    opening: string;
+    closure: string;
   };
 }
 
@@ -171,7 +178,6 @@ export interface IPetEditData {
   userId: string;
 }
 
-
 export interface IVetLocation {
   id: string;
   street: string | null;
@@ -195,4 +201,4 @@ export interface IVet {
   licenseNumber: string;
   location: IVetLocation[];
   isActive: boolean;
-  }
+}
