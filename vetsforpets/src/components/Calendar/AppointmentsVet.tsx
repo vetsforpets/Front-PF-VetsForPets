@@ -69,10 +69,10 @@ function AppointmentsVet() {
       {
         id: 2,
         nombre: "Veterinaria Dr Paso",
-        email: "veterinariapaso65@gmail.com",
-        url: "https://calendly.com/veterinariapaso65",
+        email: "veterinariadrpaso02@gmail.com",
+        url: "https://calendly.com/veterinariadrpaso02",
         calendlyUserUri:
-          "https://api.calendly.com/users/aa1e5196-3a71-4b07-9cb0-3f836fd998df",
+          "https://api.calendly.com/users/da7ea90e-d6b9-4778-8431-4bf658e73326",
         calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_PASO,
       },
       {
@@ -261,16 +261,6 @@ function AppointmentsVet() {
               <p className="text-lg font-medium text-gray-800">
                 <strong>Fin:</strong>{" "}
                 {new Date(appointment.end_time).toLocaleString()}
-              </p>
-              <p
-                className={`text-lg font-semibold ${
-                  appointment.status === "active"
-                    ? "text-green-600"
-                    : "text-red-600 dark:text-red-400"
-                }`}
-              >
-                <strong>Estado:</strong>{" "}
-                {appointment.status === "active" ? "Activo" : "Cancelado"}
               </p>
 
               {appointment.invitees && appointment.invitees.length > 0 ? (

@@ -28,7 +28,7 @@ const CalendlySearch = () => {
       {
         id: 2,
         nombre: "Veterinaria Dr.Paso",
-        url: "https://calendly.com/veterinariapaso65?primary_color=DDA15E",
+        url: "https://calendly.com/veterinariadrpaso02?primary_color=DDA15E",
       },
       {
         id: 3,
