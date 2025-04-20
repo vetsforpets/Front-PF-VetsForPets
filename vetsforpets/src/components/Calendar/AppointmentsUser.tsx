@@ -58,9 +58,9 @@ function AppointmentsUser() {
             {
                 id: 1,
                 nombre: "Veterinaria Layus",
-                email: "veterinarialayus@gmail.com",
-                url: "https://calendly.com/veterinarialayus",
-                calendlyUserUri: "https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
+                email: "veterinarialayus01@gmail.com",
+                url: "https://calendly.com/veterinarialayus01",
+                calendlyUserUri: "https://api.calendly.com/users/092dfca1-32d1-4668-9c17-72e90a90753d",
                 calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_LAYUS,
             },
             {
@@ -106,9 +106,9 @@ function AppointmentsUser() {
             {
                 id: 7,
                 nombre: "Veterinaria Alberti",
-                email: "veterinariaalberti95@gmail.com",
-                url: "https://calendly.com/veterinariaalberti95",
-                calendlyUserUri: "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
+                email: "veterinariaalberti01@gmail.com",
+                url: "https://calendly.com/veterinariaalberti01",
+                calendlyUserUri: "https://api.calendly.com/users/1369ebc0-766d-408c-a88a-1092458065bb",
                 calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ALBERTI,
             },
             {
