@@ -58,17 +58,17 @@ function AppointmentsUser() {
             {
                 id: 1,
                 nombre: "Veterinaria Layus",
-                email: "veterinarialayus@gmail.com",
-                url: "https://calendly.com/veterinarialayus",
-                calendlyUserUri: "https://api.calendly.com/users/78ef42db-1481-4042-adea-cd88f8e2fd1f",
+                email: "veterinarialayus01@gmail.com",
+                url: "https://calendly.com/veterinarialayus01",
+                calendlyUserUri: "https://api.calendly.com/users/092dfca1-32d1-4668-9c17-72e90a90753d",
                 calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_LAYUS,
             },
             {
                 id: 2,
                 nombre: "Veterinaria Dr Paso",
-                email: "veterinariapaso65@gmail.com",
-                url: "https://calendly.com/veterinariapaso65",
-                calendlyUserUri: "https://api.calendly.com/users/aa1e5196-3a71-4b07-9cb0-3f836fd998df",
+                email: "veterinariadrpaso02@gmail.com",
+                url: "https://calendly.com/veterinariadrpaso02",
+                calendlyUserUri: "https://api.calendly.com/users/da7ea90e-d6b9-4778-8431-4bf658e73326",
                 calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_PASO,
             },
             {
@@ -106,9 +106,9 @@ function AppointmentsUser() {
             {
                 id: 7,
                 nombre: "Veterinaria Alberti",
-                email: "veterinariaalberti95@gmail.com",
-                url: "https://calendly.com/veterinariaalberti95",
-                calendlyUserUri: "https://api.calendly.com/users/76e49f90-162b-41ea-8638-bd8c21794f93",
+                email: "veterinariaalberti01@gmail.com",
+                url: "https://calendly.com/veterinariaalberti01",
+                calendlyUserUri: "https://api.calendly.com/users/1369ebc0-766d-408c-a88a-1092458065bb",
                 calendlyToken: process.env.NEXT_PUBLIC_CALENDLY_TOKEN_ALBERTI,
             },
             {
@@ -264,15 +264,6 @@ function AppointmentsUser() {
                             <p className="text-lg font-medium text-gray-800">
                                 <strong>Fin:</strong>{" "}
                                 {new Date(appointment.end_time).toLocaleString()}
-                            </p>
-                            <p
-                                className={`text-lg font-semibold ${appointment.status === "active"
-                                    ? "text-green-600"
-                                    : "text-red-600 dark:text-red-400"
-                                    }`}
-                            >
-                                <strong>Estado:</strong>{" "}
-                                {appointment.status === "active" ? "Activo" : "Cancelado"}
                             </p>
 
                             {appointment.invitees && appointment.invitees.length > 0 ? (
