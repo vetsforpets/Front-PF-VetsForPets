@@ -38,12 +38,12 @@ export default function AboutUs() {
       socials: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/angelicab",
+          url: "https://www.linkedin.com/in/angelica-bengelsdorff/",
           icon: "icons/linkedin.png",
         },
         {
           name: "GitHub",
-          url: "https://github.com/angieb",
+          url: "https://github.com/ABengelsdorff",
           icon: "icons/github.png",
         },
       ],
@@ -55,7 +55,7 @@ export default function AboutUs() {
       socials: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/cristiancamelo",
+          url: "https://www.linkedin.com/in/cristian-camelo-91011b20b/",
           icon: "icons/linkedin.png",
         },
         {
@@ -72,12 +72,12 @@ export default function AboutUs() {
       socials: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/hugoeseverri",
+          url: "https://www.linkedin.com/in/hugo-omar-eseverri/",
           icon: "icons/linkedin.png",
         },
         {
           name: "GitHub",
-          url: "https://github.com/hugoe",
+          url: "https://github.com/HugoEseverri/",
           icon: "icons/github.png",
         },
       ],
@@ -89,12 +89,12 @@ export default function AboutUs() {
       socials: [
         {
           name: "LinkedIn",
-          url: "https://www.linkedin.com/in/juanesparza",
+          url: "https://www.linkedin.com/in/juan-david-esparza-castillo/",
           icon: "icons/linkedin.png",
         },
         {
           name: "GitHub",
-          url: "https://github.com/juanesparza",
+          url: "https://github.com/JDXE22",
           icon: "icons/github.png",
         },
       ],
