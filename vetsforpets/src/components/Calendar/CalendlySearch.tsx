@@ -23,12 +23,12 @@ const CalendlySearch = () => {
       {
         id: 1,
         nombre: "Veterinaria Layus",
-        url: "https://calendly.com/veterinarialayus?primary_color=DDA15E",
+        url: "https://calendly.com/veterinarialayus01?primary_color=DDA15E",
       },
       {
         id: 2,
         nombre: "Veterinaria Dr.Paso",
-        url: "https://calendly.com/veterinariapaso65?primary_color=DDA15E",
+        url: "https://calendly.com/veterinariadrpaso02?primary_color=DDA15E",
       },
       {
         id: 3,
@@ -53,7 +53,7 @@ const CalendlySearch = () => {
       {
         id: 7,
         nombre: "Veterinaria Alberti",
-        url: "https://calendly.com/veterinariaalberti95?primary_color=DDA15E",
+        url: "https://calendly.com/veterinariaalberti01?primary_color=DDA15E",
       },
       {
         id: 8,
