@@ -132,7 +132,7 @@ const UserList = () => {
       {loading && <div className="text-center text-gray-600">Cargando...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
 
-      <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 mt-4">
         {users.length > 0 ? (
           users.map((user) => (
             <div
@@ -171,7 +171,7 @@ const UserList = () => {
               ×
             </button>
             <div className="p-4">
-              <h2 className="mb-4 text-3xl font-bold text-center">
+              <h2 className="w-full mb-4 text-3xl font-bold text-center">
                 {selectedUser.name} {selectedUser.lastName}
               </h2>
               {selectedUser.imgProfile && (

@@ -216,7 +216,7 @@ export default function AdminProfile() {
           </li>
         </ul>
 
-        <div className="flex-1 p-4 bg-customBeige bg-opacity-20">
+        <div className="flex-1 p-4 overflow-auto">
           <div className="max-w-6xl mx-auto space-y-4">
             {showProfile && (
               <div className="flex justify-center">
