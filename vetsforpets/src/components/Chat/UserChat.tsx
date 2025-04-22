@@ -48,12 +48,17 @@ export function UserChat({ vetId, chatId }: UserChatProps) {
 
   useEffect(() => {
     if (!token || !chatId) return;
-
-    const socket = io("wss://vetsforpets-api.onrender.com", {
+    const socket = io("https://vetsforpets-api.onrender.com", {
       path: "/socket.io/",
       transports: ["websocket"],
       auth: { token },
     });
+
+    // const socket = io("wss://vetsforpets-api.onrender.com", {
+    //   path: "/socket.io/",
+    //   transports: ["websocket"],
+    //   auth: { token },
+    // });
 
     socketRef.current = socket;
 
